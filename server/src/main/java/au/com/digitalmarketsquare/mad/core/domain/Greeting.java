@@ -1,7 +1,7 @@
 /**
  * Created by tiden on 9/3/14.
  */
-package hello;
+package au.com.digitalmarketsquare.mad.core.domain;
 public class Greeting {
     private final long id;
     private final String content;
