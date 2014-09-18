@@ -1,6 +1,7 @@
 package au.com.digitalmarketsquare.mad.web.controller;
 
 import au.com.digitalmarketsquare.mad.core.domain.Greeting;
+import au.com.digitalmarketsquare.mad.core.domain.List;
 import au.com.digitalmarketsquare.mad.core.service.DemoService;
 import au.com.digitalmarketsquare.mad.event.demo.DemoPrintEvent;
 import au.com.digitalmarketsquare.mad.event.demo.DemoPrintedEvent;
@@ -34,5 +35,11 @@ public class GreetingController {
     ) {
         DemoPrintEvent demoPrintEvent = new DemoPrintEvent(name);
         return demoService.printContent(demoPrintEvent);
-    };
+    }
+    @RequestMapping("/main")
+    public List main(
+            @RequestParam(value = "name", required = false, defaultValue = "world") String name
+    ) {
+        return new List();
+    }
 }
