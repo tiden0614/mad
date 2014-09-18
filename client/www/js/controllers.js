@@ -48,6 +48,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ForecastListCtrl', function($scope) {
+  //TODO this is fake data; fetch them from the server
   $scope.forecastList = [
     {day: '8', month: '9', weekday: 'Mon', rainfall_chance: '70%', rainfall_amount: '2~5mm', sky: 'sunny', temp:''},
     {day: '9', month: '9', weekday: 'Tue', rainfall_chance: '50%', rainfall_amount: '1~3mm', sky: 'cloudy', temp:'14C'},
