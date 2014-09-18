@@ -1,0 +1,64 @@
+/* Empty. Add your own CSS if you like */
+.forecast-list ion-item {
+  border-bottom: 2px solid white;
+}
+
+.forecast-item .item-content {
+  background: #2B59A2
+}
+
+.forecast-item>a {
+  background: blue;
+}
+
+.forecast-list .forecast-item-statics-container {
+  display: inline-block;
+}
+
+.forecast-list .forecast-item-statics-container * {
+  color: white;
+}
+
+.forecast-list .forecast-item-icon-container {
+  display: inline-block;
+  margin-right: 30px;
+}
+.forecast-list .forecast-item-icon-container .weather-icon{
+  display: block;
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+}
+
+.weather-icon-cloudy {
+  background-image: url(../img/weather/1.svg);
+}
+
+.weather-icon-sunny {
+  background-image: url(../img/weather/2.svg);
+}
+
+.weather-icon-thunder {
+  background-image: url(../img/weather/3.svg);
+}
+
+.weather-icon-rainy {
+  background-image: url(../img/weather/6.svg);
+}
+
+.weather-icon-fog {
+  background-image: url(../img/weather/4.svg);
+}
+
+.weather-icon-degree {
+  background-image: url(../img/weather/10.svg);
+}
+
+.weather-icon-hurricane {
+  background-image: url(../img/weather/11.svg);
+}
+
+.weather-icon-smallrain {
+  background-image: url(../img/weather/14.svg);
+}
+

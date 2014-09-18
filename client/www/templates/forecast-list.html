@@ -1,0 +1,18 @@
+<ion-view title="Playlists">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list class="forecast-list">
+      <ion-item ng-repeat="forecast in forecastList" href="#/app/forecastList/{{forecast.id}}" class="forecast-item">
+        <div class="forecast-item-icon-container">
+          <div class="weather-icon weather-icon-{{forecast.sky}}"></div>
+        </div>
+        <div class="forecast-item-statics-container">
+          <h1>{{forecast.weekday}} {{forecast.day}}.{{forecast.month}}</h1>
+          <p>{{forecast.rainfall_chance}}/{{forecast.rainfall_amount}}</p>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
