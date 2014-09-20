@@ -9,7 +9,7 @@ public class List {
 
     public List() {
 
-        for(i=0;i<7;i++){
+        /*for(i=0;i<7;i++){
             listItem[i] = new ListItem();
             listItem[i].setCurrentTemp("21 C");
             listItem[i].setMaxTemp("25 C");
@@ -17,9 +17,11 @@ public class List {
             listItem[i].setHumidity("70%");
             listItem[i].setRainfallAmount("20mm");
             listItem[i].setRainfallChance("10%");
-        }
+        } */
 
     }
+
+
 
     public List(ListItem[] listItem) {
         this.listItem = listItem;

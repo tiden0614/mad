@@ -1,15 +1,14 @@
 package au.com.digitalmarketsquare.mad.event.list;
 
-import au.com.digitalmarketsquare.mad.core.domain.List;
 import au.com.digitalmarketsquare.mad.core.domain.raw.WeatherList;
 
 /**
- * Created by Gao Jiang on 2014/9/18.
+ * Created by Gao Jiang on 2014/9/20.
  */
-public class MainListEvent {
+public class DataPackageListEvent {
     private WeatherList weatherList;
 
-    public MainListEvent() {
+    public DataPackageListEvent() {
     }
 
     public WeatherList getWeatherList() {
