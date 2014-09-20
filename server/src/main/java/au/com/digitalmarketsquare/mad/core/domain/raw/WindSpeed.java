@@ -1,16 +1,20 @@
 package au.com.digitalmarketsquare.mad.core.domain.raw;
 
 /**
- * Created by Gao Jiang on 2014/9/18.
+ * Created by Administrator on 2014/9/19.
  */
-public class CurrentTemp {
+public class WindSpeed {
     private int time;
     private float xPara;
     private float yPara;
-    private float temp;
+    private float speed;
 
-    public CurrentTemp(float temp) {
-        this.temp = temp;
+    public WindSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public WindSpeed() {
+        this.speed = 55;
     }
 
     public int getTime() {
@@ -37,11 +41,11 @@ public class CurrentTemp {
         this.yPara = yPara;
     }
 
-    public float getTemp() {
-        return temp;
+    public float getSpeed() {
+        return speed;
     }
 
-    public void setTemp(float temp) {
-        this.temp = temp;
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }

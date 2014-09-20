@@ -1,25 +1,22 @@
 package au.com.digitalmarketsquare.mad.event.list;
 
 import au.com.digitalmarketsquare.mad.core.domain.List;
+import au.com.digitalmarketsquare.mad.core.domain.ListItem;
 
 /**
  * Created by Gao Jiang on 2014/9/18.
  */
 public class MainListEvent {
-    private List list;
+  /*  private ListItem[] listItems;
 
     public MainListEvent() {
     }
 
-    public MainListEvent(List list) {
-        this.list = list;
+    public ListItem[] getListItems() {
+        return listItems;
     }
 
-    public List getList() {
-        return list;
-    }
-
-    public void setList(List list) {
-        this.list = list;
-    }
+    public void setListItems(ListItem[] listItems) {
+        this.listItems = listItems;
+    }*/
 }

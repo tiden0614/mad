@@ -1,16 +1,20 @@
 package au.com.digitalmarketsquare.mad.core.domain.raw;
 
 /**
- * Created by Gao Jiang on 2014/9/18.
+ * Created by Administrator on 2014/9/19.
  */
-public class CurrentTemp {
+public class WindDirect {
     private int time;
     private float xPara;
     private float yPara;
-    private float temp;
+    private float dir;
 
-    public CurrentTemp(float temp) {
-        this.temp = temp;
+    public WindDirect(float dir) {
+        this.dir = dir;
+    }
+
+    public WindDirect() {
+        this.dir = 90;
     }
 
     public int getTime() {
@@ -37,11 +41,11 @@ public class CurrentTemp {
         this.yPara = yPara;
     }
 
-    public float getTemp() {
-        return temp;
+    public float getDir() {
+        return dir;
     }
 
-    public void setTemp(float temp) {
-        this.temp = temp;
+    public void setDir(float dir) {
+        this.dir= dir;
     }
 }

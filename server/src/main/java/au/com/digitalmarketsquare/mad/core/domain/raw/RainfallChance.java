@@ -1,16 +1,20 @@
 package au.com.digitalmarketsquare.mad.core.domain.raw;
 
 /**
- * Created by Gao Jiang on 2014/9/18.
+ * Created by Administrator on 2014/9/19.
  */
-public class CurrentTemp {
+public class RainfallChance {
     private int time;
     private float xPara;
     private float yPara;
-    private float temp;
+    private float chance;
 
-    public CurrentTemp(float temp) {
-        this.temp = temp;
+    public RainfallChance(float chance) {
+        this.chance = chance;
+    }
+
+    public RainfallChance() {
+        this.chance = 50;
     }
 
     public int getTime() {
@@ -37,11 +41,11 @@ public class CurrentTemp {
         this.yPara = yPara;
     }
 
-    public float getTemp() {
-        return temp;
+    public float getChance() {
+        return chance;
     }
 
-    public void setTemp(float temp) {
-        this.temp = temp;
+    public void setChance(float chance) {
+        this.chance = chance;
     }
 }

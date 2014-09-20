@@ -1,20 +1,20 @@
 package au.com.digitalmarketsquare.mad.core.domain.raw;
 
 /**
- * Created by Gao Jiang on 2014/9/18.
+ * Created by Administrator on 2014/9/19.
  */
-public class MinTemp {
+public class Humidity {
     private int time;
     private float xPara;
     private float yPara;
-    private float temp;
+    private float humi;
 
-    public MinTemp(float temp) {
-        this.temp = temp;
+    public Humidity(float humi) {
+        this.humi = humi;
     }
 
-    public MinTemp() {
-        this.temp = 8;
+    public Humidity() {
+        this.humi = 70;
     }
 
     public int getTime() {
@@ -25,12 +25,12 @@ public class MinTemp {
         this.time = time;
     }
 
-    public float getxPara() {
-        return xPara;
+    public float getHumi() {
+        return humi;
     }
 
-    public void setxPara(float xPara) {
-        this.xPara = xPara;
+    public void setHumi(float humi) {
+        this.humi = humi;
     }
 
     public float getyPara() {
@@ -41,11 +41,11 @@ public class MinTemp {
         this.yPara = yPara;
     }
 
-    public float getTemp() {
-        return temp;
+    public float getxPara() {
+        return xPara;
     }
 
-    public void setTemp(float temp) {
-        this.temp = temp;
+    public void setxPara(float xPara) {
+        this.xPara = xPara;
     }
 }
