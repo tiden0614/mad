@@ -9,7 +9,12 @@ public class MinTemp {
     private float yPara;
     private float temp;
 
+    public MinTemp(float temp) {
+        this.temp = temp;
+    }
+
     public MinTemp() {
+        this.temp = 8;
     }
 
     public int getTime() {

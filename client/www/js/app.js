@@ -67,6 +67,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
+    .state('app.forecastDetail', {
+      url: "/forecastList/:forecastId",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/forecast.html",
+          controller: 'ForecastDetailCtrl'
+        }
+      }
+    })
+
     .state('app.forecastList', {
       url: '/forecastList',
       views: {

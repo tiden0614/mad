@@ -7,9 +7,11 @@ public class Humidity {
     private int time;
     private float xPara;
     private float yPara;
+
     private float humidity; //presented by percent
 
     public Humidity() {
+
     }
 
     public int getTime() {
@@ -20,12 +22,14 @@ public class Humidity {
         this.time = time;
     }
 
+
     public float getxPara() {
         return xPara;
     }
 
     public void setxPara(float xPara) {
         this.xPara = xPara;
+
     }
 
     public float getyPara() {
@@ -36,6 +40,7 @@ public class Humidity {
         this.yPara = yPara;
     }
 
+
     public float getHumidity() {
         return humidity;
     }
@@ -44,4 +49,5 @@ public class Humidity {
         this.humidity = humidity;
     }
 }
+
 

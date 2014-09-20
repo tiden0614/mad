@@ -9,7 +9,12 @@ public class MaxTemp {
     private float yPara;
     private float temp;
 
+    public MaxTemp(float temp) {
+        this.temp = temp;
+    }
+
     public MaxTemp() {
+        this.temp = 24;
     }
 
     public int getTime() {

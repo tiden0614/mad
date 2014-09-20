@@ -9,7 +9,8 @@ public class CurrentTemp {
     private float yPara;
     private float temp;
 
-    public CurrentTemp() {
+    public CurrentTemp(float temp) {
+        this.temp = temp;
     }
 
     public int getTime() {

@@ -1,21 +1,23 @@
 package au.com.digitalmarketsquare.mad.core.domain;
 
+import org.springframework.stereotype.Repository;
+
 /**
  * Created by Gao Jiang on 2014/9/18.
  */
+@Repository
 public class ListItem {
-    private String currentTemp;
-    private String maxTemp;
-    private String minTemp;
-    private String rainfallAmount;
-    private String rainfallChance;
-    private String humidity;
+    private float currentTemp;
+    private float maxTemp;
+    private float minTemp;
+    private float rainfallAmount;
+    private float rainfallChance;
+    private float humidity;
 
     public ListItem() {
-
     }
 
-    public ListItem(String currentTemp, String maxTemp, String minTemp, String rainfallAmount, String rainfallChance, String humidity) {
+    public ListItem(float currentTemp, float maxTemp, float minTemp, float rainfallAmount, float rainfallChance, float humidity) {
 
         this.currentTemp = currentTemp;
         this.maxTemp = maxTemp;
@@ -25,51 +27,51 @@ public class ListItem {
         this.humidity = humidity;
     }
 
-    public String getCurrentTemp() {
+    public float getCurrentTemp() {
         return currentTemp;
     }
 
-    public void setCurrentTemp(String currentTemp) {
+    public void setCurrentTemp(float currentTemp) {
         this.currentTemp = currentTemp;
     }
 
-    public String getMaxTemp() {
+    public float getMaxTemp() {
         return maxTemp;
     }
 
-    public void setMaxTemp(String maxTemp) {
+    public void setMaxTemp(float maxTemp) {
         this.maxTemp = maxTemp;
     }
 
-    public String getMinTemp() {
+    public float getMinTemp() {
         return minTemp;
     }
 
-    public void setMinTemp(String minTemp) {
+    public void setMinTemp(float minTemp) {
         this.minTemp = minTemp;
     }
 
-    public String getRainfallAmount() {
+    public float getRainfallAmount() {
         return rainfallAmount;
     }
 
-    public void setRainfallAmount(String rainfallAmount) {
+    public void setRainfallAmount(float rainfallAmount) {
         this.rainfallAmount = rainfallAmount;
     }
 
-    public String getRainfallChance() {
+    public float getRainfallChance() {
         return rainfallChance;
     }
 
-    public void setRainfallChance(String rainfallChance) {
+    public void setRainfallChance(float rainfallChance) {
         this.rainfallChance = rainfallChance;
     }
 
-    public String getHumidity() {
+    public float getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(String humidity) {
+    public void setHumidity(float humidity) {
         this.humidity = humidity;
     }
 }

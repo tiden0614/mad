@@ -1,7 +1,11 @@
 package au.com.digitalmarketsquare.mad.core.domain.raw;
 
 /**
+<<<<<<< HEAD
  * Created by Gao Jiang on 2014/9/18.
+=======
+ * Created by Administrator on 2014/9/19.
+>>>>>>> d92deb51f0fbef5bca9c59401378c941ca59f641
  */
 public class RainfallChance {
     private int time;
@@ -10,6 +14,7 @@ public class RainfallChance {
     private float chance;//percent
 
     public RainfallChance() {
+
     }
 
     public int getTime() {

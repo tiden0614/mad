@@ -10,6 +10,7 @@ public class RainfallAmount {
     private float amount; //mm
 
     public RainfallAmount() {
+
     }
 
     public int getTime() {
@@ -20,12 +21,14 @@ public class RainfallAmount {
         this.time = time;
     }
 
+
     public float getxPara() {
         return xPara;
     }
 
     public void setxPara(float xPara) {
         this.xPara = xPara;
+
     }
 
     public float getyPara() {
@@ -36,11 +39,13 @@ public class RainfallAmount {
         this.yPara = yPara;
     }
 
+
     public float getAmount() {
         return amount;
     }
 
     public void setAmount(float amount) {
         this.amount = amount;
+
     }
 }
