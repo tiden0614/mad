@@ -4,13 +4,18 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
     <ion-list class="forecast-list">
-      <ion-item ng-repeat="forecast in forecastList" href="#/app/forecastList/{{forecast.id}}" class="forecast-item">
+      <ion-item ng-repeat="forecast in overallForecastList" href="#/app/forecastList/{{forecast.id}}" class="forecast-item">
         <div class="forecast-item-icon-container">
           <div class="weather-icon weather-icon-{{forecast.sky}}"></div>
+          <div class="forecast-item-min-max-temp">{{forecast.minTemp}}~{{forecast.maxTemp}}</div>
         </div>
         <div class="forecast-item-statics-container">
-          <h1>{{forecast.weekday}} {{forecast.day}}.{{forecast.month}}</h1>
-          <p>{{forecast.rainfall_chance}}/{{forecast.rainfall_amount}}</p>
+            <div style="display:inline-block;">
+              <h1>{{forecast.weekday}} {{forecast.day}}/{{forecast.month}}</h1>
+              <p>Rain: {{forecast.rainfall_chance}}% of {{forecast.rainfall_amount}}mm</p>
+              <p>Humidity: {{forecast.humidity}}%</p>
+            </div>
+            <span>{{forecast.currentTemp}}</span>
         </div>
       </ion-item>
     </ion-list>

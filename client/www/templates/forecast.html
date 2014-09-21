@@ -1,5 +1,36 @@
-<ion-view title="{{forecastId}}">
+<ion-view title="Detailed Information">
   <ion-content class="has-header">
-    <h1>Forecast</h1>
+    <ion-list>
+        <ion-item class="detail-forecast-item item-complex">
+            <a class="item-content" href="#">
+                <div class="detail-forecast-item-icon-container">
+                    <div class="detail-weather-icon weather-icon-{{overallForecast.sky}}"></div>
+                    <div class="forecast-item-min-max-temp">{{overallForecast.minTemp}}~{{overallForecast.maxTemp}}</div>
+                </div>
+                <div class="detail-forecast-item-statics-container">
+                    <div style="display:inline-block;">
+                        <h1>{{overallForecast.weekday}} {{overallForecast.day}}/{{overallForecast.month}}</h1>
+                        <p>Rain: {{overallForecast.rainfall_chance}}% of {{overallForecast.rainfall_amount}}mm</p>
+                        <p>Humidity: {{overallForecast.humidity}}%</p>
+                    </div>
+                    <span>{{overallForecast.currentTemp}}</span>
+                </div>
+            </a>
+        </ion-item>
+
+        <ion-item class="item-complex">
+            <!--
+                This part displays detailed all-day temperature information
+                TODO: using a fixed pic now, need to draw the whole thing.
+            -->
+            <ion-scroll class = "temperature-detail-scroll" zooming="false" direction="x" scroll-bar="false" has-bouncing="false">
+                <div style="width: 1490px; height: 205px">
+                    <img height=100% width=100% src="./img/daily_temp.jpg" alt="daily_temp"/>
+                </div>
+            </ion-scroll>
+
+
+        </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

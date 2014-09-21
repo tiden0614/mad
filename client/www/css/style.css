@@ -3,27 +3,28 @@
   border-bottom: 2px solid white;
 }
 
-.forecast-item .item-content {
+.forecast-item .item-content, .detail-forecast-item .item-content {
   background: #2B59A2
 }
 
-.forecast-item>a {
+.forecast-item>a, .detail-forecast-item>a {
   background: blue;
 }
 
-.forecast-list .forecast-item-statics-container {
+.forecast-list .forecast-item-statics-container, .detail-forecast-item-statics-container {
   display: inline-block;
 }
 
-.forecast-list .forecast-item-statics-container * {
+.forecast-list .forecast-item-statics-container *, .detail-forecast-item .detail-forecast-item-statics-container *{
   color: white;
+  margin-bottom: 0;
 }
 
-.forecast-list .forecast-item-icon-container {
+.forecast-list .forecast-item-icon-container, .detail-forecast-item-icon-container {
   display: inline-block;
   margin-right: 30px;
 }
-.forecast-list .forecast-item-icon-container .weather-icon{
+.forecast-list .forecast-item-icon-container .weather-icon, .detail-weather-icon{
   display: block;
   width: 80px;
   height: 80px;
@@ -62,3 +63,18 @@
   background-image: url(../img/weather/14.svg);
 }
 
+.detail-forecast-item-statics-container>span, .forecast-item-statics-container>span{
+    font-size: 80px;
+    text-align:center;
+    margin-left: 15px;
+}
+
+.forecast-item-min-max-temp {
+    text-align: center;
+    color: white;
+}
+
+.temperature-detail-scroll {
+    height : 205px;
+    width : device-width;
+}

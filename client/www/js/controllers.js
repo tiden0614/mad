@@ -45,21 +45,31 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ForecastDetailCtrl', function($scope) {
-
+    //TODO fake data
+    $scope.overallForecast = forecastData[1];
+    //$scope.detailForecast = getDetailForecastData()[1]
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
 .controller('ForecastListCtrl', function($scope) {
-  //TODO this is fake data; fetch them from the server
-  $scope.forecastList = [
-    {id: '0', day: '8', month: '9', weekday: 'Mon', rainfall_chance: '70%', rainfall_amount: '2~5mm', sky: 'sunny', temp:''},
-    {id: '1', day: '9', month: '9', weekday: 'Tue', rainfall_chance: '50%', rainfall_amount: '1~3mm', sky: 'cloudy', temp:'14C'},
-    {id: '2', day: '10', month: '9', weekday: 'Wed', rainfall_chance: '90%', rainfall_amount: '8~10mm', sky: 'thunder', temp:''},
-    {id: '3', day: '11', month: '9', weekday: 'Thu', rainfall_chance: '90%', rainfall_amount: '5~7mm', sky: 'rainy', temp:''},
-    {id: '4', day: '12', month: '9', weekday: 'Fri', rainfall_chance: '70%', rainfall_amount: '3~5mm', sky: 'rainy', temp:''},
-    {id: '5', day: '13', month: '9', weekday: 'Sat', rainfall_chance: '2%', rainfall_amount: '1~3mm', sky: 'sunny', temp:''},
-    {id: '6', day: '14', month: '9', weekday: 'Sun', rainfall_chance: '0%', rainfall_amount: '', sky: 'hurricane', temp:''}
-  ];
+
+  $scope.overallForecastList = forecastData;
 });
+
+var forecastData = getOverallForecastData();
+
+function getOverallForecastData(){
+    //TODO this is fake data; fetch them from the server
+    var result = [
+                     {id: '0', day: '8', month: '9', weekday: 'Mon', humidity: '45', rainfall_chance: '70', rainfall_amount: '3', sky: 'sunny', currentTemp:'', minTemp:'4', maxTemp:'19\u00b0C'},
+                     {id: '1', day: '9', month: '9', weekday: 'Tue', humidity: '65', rainfall_chance: '50', rainfall_amount: '1', sky: 'cloudy', currentTemp:'14\u00b0C', minTemp:'5', maxTemp:'16\u00b0C'},
+                     {id: '2', day: '10', month: '9', weekday: 'Wed', humidity: '34', rainfall_chance: '90', rainfall_amount: '10', sky: 'thunder', currentTemp:'', minTemp:'7', maxTemp:'16\u00b0C'},
+                     {id: '3', day: '11', month: '9', weekday: 'Thu', humidity: '55', rainfall_chance: '90', rainfall_amount: '7', sky: 'rainy', currentTemp:'', minTemp:'5', maxTemp:'10\u00b0C'},
+                     {id: '4', day: '12', month: '9', weekday: 'Fri', humidity: '23', rainfall_chance: '70', rainfall_amount: '5', sky: 'rainy', currentTemp:'', minTemp:'3', maxTemp:'8\u00b0C'},
+                     {id: '5', day: '13', month: '9', weekday: 'Sat', humidity: '57', rainfall_chance: '2', rainfall_amount: '1', sky: 'sunny', currentTemp:'', minTemp:'5', maxTemp:'16\u00b0C'},
+                     {id: '6', day: '14', month: '9', weekday: 'Sun', humidity: '18', rainfall_chance: '0', rainfall_amount: '1', sky: 'hurricane', currentTemp:'', minTemp:'4', maxTemp:'10\u00b0C'}
+                   ];
+    return result;
+}
