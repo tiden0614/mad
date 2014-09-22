@@ -9,23 +9,28 @@
 
   <ion-side-menu side="left">
     <header class="bar bar-header bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title">Locations</h1>
     </header>
     <ion-content class="has-header">
       <ion-list>
-        <ion-item nav-clear menu-close ng-click="login()">
-          Login
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/search">
-          Search
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/browse">
-          Browse
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/playlists">
-          Playlists
-        </ion-item>
+          <ion-item ng-repeat="location in locationList" nav-clear menu-close href="#/app/forecasts/">
+              {{location.location_name}}
+          </ion-item>
       </ion-list>
     </ion-content>
+
+    <ion-footer-bar>
+            <button class="button button-full button-positive" ng-click="login()">Setting</button>
+    </ion-footer-bar>
   </ion-side-menu>
+    
+      <ion-side-menu side="right">
+    <header class="bar bar-header bar-stable">
+      <h1 class="title">Search</h1>
+    </header>
+    <ion-content class="has-header">
+        Search
+    </ion-content>
+  </ion-side-menu>
+    
 </ion-side-menus>
