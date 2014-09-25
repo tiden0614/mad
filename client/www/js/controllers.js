@@ -1,6 +1,10 @@
 angular.module('farmers.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, LocationList) {
+.controller('AppCtrl', function($scope, $ionicModal, $state, $timeout, LocationList) {
+
+  $scope.search = function(){
+    $state.transitionTo('app.search');
+  }
 
   $scope.locationList = LocationList.all();
 
@@ -43,7 +47,13 @@ angular.module('farmers.controllers', [])
   $scope.alert = function(){
     $state.transitionTo('app.alert');
   };
+
+  $scope.search = function(){
+    $state.transitionTo('app.search');
+  }
 })
 
 .controller('AlertCtrl', function($scope, $state){
-});
+})
+
+

@@ -13,24 +13,15 @@
     </header>
     <ion-content class="has-header">
       <ion-list>
-          <ion-item ng-repeat="location in locationList" nav-clear menu-close href="#/app/forecasts/">
+          <ion-item ng-repeat="location in locationList" nav-clear menu-close href="#/app/forecasts/{{location.locationId}}">
               {{location.location_name}}
           </ion-item>
       </ion-list>
+
+      <button menu-toggle="right"class="button button-icon icon ion-search" ng-click="search()"></button>
     </ion-content>
 
     <ion-footer-bar>
             <button class="button button-full button-positive" ng-click="login()">Setting</button>
     </ion-footer-bar>
   </ion-side-menu>
-    
-      <ion-side-menu side="right">
-    <header class="bar bar-header bar-stable">
-      <h1 class="title">Search</h1>
-    </header>
-    <ion-content class="has-header">
-        Search
-    </ion-content>
-  </ion-side-menu>
-    
-</ion-side-menus>

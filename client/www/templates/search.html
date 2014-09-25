@@ -1,8 +1,19 @@
-<ion-view title="Search">
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
-  <ion-content class="has-header">
-    <h1>Search</h1>
-  </ion-content>
-</ion-view>
+<!DOCTYPE html>
+<!--
+TODO: incorporate js to mapcontroller.js
+-->
+
+<div class="map-container" id="map-container">
+    <ion-view title="Search location">
+        <ion-nav-buttons side="left">
+            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+        <ion-content class="has-header map-container" onload="alert('map container load')">
+            <div id="search-bar">
+                <input id="location" type="textbox" placeholder="Input location here">
+                <button ng-click="searchLocation()" class="button button-location" ng-show="true">Go</button>
+            </div>
+            <div id="map-canvas"></div>
+        </ion-content>
+    </ion-view>
+</div>
