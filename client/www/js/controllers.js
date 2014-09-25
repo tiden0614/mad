@@ -50,7 +50,25 @@ angular.module('farmers.controllers', [])
 
   $scope.search = function(){
     $state.transitionTo('app.search');
-  }
+  };
+	
+	$scope.expand = function(id) {
+		var expandItem = jQuery(".forecast-list [data-forecast-id=" + id + "]");
+		if(expandItem.hasClass("opened")) {
+			expandItem.removeClass("opened");
+		} else {
+      jQuery(".forecast-list .forecast-item").removeClass("opened");
+			// expandItem.parents(".scroll").animate({
+			// 	scrollTop: expandItem.offset().top
+			// }, 1000);
+			//expandItem.parents("div.scroll").scrollDiv.css("-webkit-transform", "translated3d(0px, -" + expandItem.position().top + "px, 0px) scale(1)");
+			expandItem.addClass("opened");
+			if(!expandItem.hasClass("data-loaded")) {
+				$scope.forecastList[id].detail = ForecastList.getForecastDetail(id);
+				expandItem.addClass("data-loaded");
+			}			
+		} 
+	};
 })
 
 .controller('AlertCtrl', function($scope, $state){

@@ -3,8 +3,27 @@
   border-bottom: 2px solid white;
 }
 
+.forecast-list ion-item .item-content {
+	padding: 0;
+}
+
+.forecast-list .forecast-brief-container {padding: 20px 23px;}
+
 .forecast-item .item-content, .detail-forecast-item .item-content {
   background: #2B59A2
+}
+
+.forecast-item.opened .forecast-detail-container {
+/*	display: block;*/
+	height: 200px;
+}
+
+.forecast-item .forecast-detail-container {
+	/*display: none;*/
+	background: white;
+	color: black;
+	transition: height 1s;
+	height: 0;
 }
 
 .forecast-item>a, .detail-forecast-item>a {
