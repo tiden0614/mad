@@ -1,37 +1,40 @@
 <ion-view title="Forecasts">
-    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
-    <ion-nav-buttons side="left">
-        <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
-    </ion-nav-buttons>
-    <ion-nav-buttons side="right">
-        <button class="button button-icon icon ion-alert-circled" ng-click="alert()"></button>
-        <button menu-toggle="right"class="button button-icon icon ion-search" ng-click="search()"></button>
-    </ion-nav-buttons>
+  <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon icon ion-alert-circled" ng-click="alert()"></button>
+    <button menu-toggle="right" class="button button-icon icon ion-search" ng-click="search()"></button>
+  </ion-nav-buttons>
 
-    <ion-content class="has-header">
-        <ion-list class="forecast-list">
-            <ion-item ng-repeat="forecast in forecastList" href="#/app/forecastList/{{forecast.id}}" class="forecast-item" data-forecast-id="{{forecast.id}}" ng-click="expand({{forecast.id}})">
-                <div class="forecast-brief-container">
-                	<div class="forecast-item-icon-container">
-                	    <div class="weather-icon weather-icon-{{forecast.sky}}"></div>
-                	    <div class="forecast-item-min-max-temp">{{forecast.minTemp}}~{{forecast.maxTemp}}</div>
-                	</div>
-                	<div class="forecast-item-statics-container">
-                	    <div style="display:inline-block;">
-                	        <h1>{{forecast.weekday}} {{forecast.day}}/{{forecast.month}}</h1>
-                	        <p>Rain: {{forecast.rainfall_chance}}% of {{forecast.rainfall_amount}}mm</p>
-                	        <p>Humidity: {{forecast.humidity}}%</p>
-                	    </div>
-                	    <!-- <span>{{forecast.currentTemp}}</span> -->
-                	</div>
-                </div>
-								<div class="forecast-detail-container" id="forecast-detail-{{forecast.id}}">
-									<h4>Rainfall Chance: {{forecast.detail.rainfall_chance}}</h4>
-									<h4>Rainfall Amount: {{forecast.detail.rainfall_amount}}</h4>
-									<h4>Humidity: {{forecast.detail.humidity}}</h4>
-									<h4>Date: {{forecast.detail.day}}/{{forecast.detail.month}}/{{forecast.detail.year}}</h4>
-								</div>
-            </ion-item>
-        </ion-list>
-    </ion-content>
+  <ion-content class="has-header">
+    <ion-list class="forecast-list">
+      <ion-item ng-repeat="forecast in forecastList" href="#/app/forecastList/{{forecast.id}}"
+                class="forecast-item" data-forecast-id="{{forecast.id}}" ng-click="expand('{{forecast.id}}')">
+        <div class="forecast-brief-container">
+          <div class="forecast-item-icon-container">
+            <div class="weather-icon weather-icon-{{forecast.sky}}"></div>
+            <div class="forecast-item-min-max-temp">{{forecast.minTemp}}~{{forecast.maxTemp}}</div>
+          </div>
+          <div class="forecast-item-statics-container">
+            <div style="display:inline-block;">
+              <h1>{{forecast.weekday}} {{forecast.day}}/{{forecast.month}}</h1>
+
+              <p>Rain: {{forecast.rainfall_chance}}% of {{forecast.rainfall_amount}}mm</p>
+
+              <p>Humidity: {{forecast.humidity}}%</p>
+            </div>
+            <!-- <span>{{forecast.currentTemp}}</span> -->
+          </div>
+        </div>
+        <div class="forecast-detail-container" id="forecast-detail-{{forecast.id}}">
+          <h4>Rainfall Chance: {{forecast.detail.rainfall_chance}}</h4>
+          <h4>Rainfall Amount: {{forecast.detail.rainfall_amount}}</h4>
+          <h4>Humidity: {{forecast.detail.humidity}}</h4>
+          <h4>Date: {{forecast.detail.day}}/{{forecast.detail.month}}/{{forecast.detail.year}}</h4>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-view>
