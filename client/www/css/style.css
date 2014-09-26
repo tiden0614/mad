@@ -7,6 +7,38 @@
   background: #2B59A2
 }
 
+.head-login{
+    margin-top: 80px;
+    text-align:center;
+    text-shadow: 1px 1px 20px #000000;
+}
+
+.head-sign{
+    margin-top: 80px;
+    text-align:center;
+}
+
+.bottom-line{
+   text-align:center;
+   margin-top:90px;
+}
+
+
+.login-background{
+    background: url('../img/loginBG.png') no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.sign-background{
+    background: url('../img/signBG.png') no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 .forecast-item>a, .detail-forecast-item>a {
   background: blue;
 }

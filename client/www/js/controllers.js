@@ -37,6 +37,59 @@ angular.module('farmers.controllers', [])
 
 })
 
+.controller('SignUpCtrl', function($scope, $state){
+   $scope.signUser = function(user){
+
+   }
+   $scope.toLogin = function(){  $state.transitionTo('login'); }
+
+})
+
+
+.controller('LoginCtrl', function($scope, $http, $location, $rootScope, $state){
+
+       $scope.user = {};
+       $scope.user.email = '';
+       $scope.user.password = '';
+       //$scope.resetError();
+
+       $scope.loginUser = function(user){
+             var url = "http://localhost:8080/login/"+"?email="+ $scope.user.email;
+                         $http.get( url).success(function(data,status){
+                                  if(data==""){
+                                  //   $scope.setError("No Users Founded");
+                                      alert("No Users Founded");
+                                  }
+                                  else if( data == $scope.user.password){
+                                      $scope.user.email = '';
+                                      $scope.user.password = '';
+                                      $state.transitionTo('app.forecasts');
+                                  }
+                                  else{
+                                  //   $scope.setError("Password Invalid");
+                                       alert("Password Invalid");
+                                  }
+                         }).error(function(){
+                               alert("Loading failed =_=");
+                         });
+                      }
+
+       $scope.resetError = function() {
+           $scope.error = false;
+           $scope.errorMessage = '';
+       }
+
+       $scope.setError = function(message) {
+           $scope.error = true;
+           $scope.errorMessage = message;
+           $rootScope.SessionId='';
+       }
+
+   $scope.toSignUp = function(){  $state.transitionTo('signUp'); }
+
+   $scope.skipLogin = function(){  $state.transitionTo('app.forecasts'); }
+})
+
 .controller('ForecastsCtrl', function($scope, $state, ForecastList) {
   $scope.forecastList = ForecastList.all();
 

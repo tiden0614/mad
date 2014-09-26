@@ -6,7 +6,8 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$rootScope, $location) {
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -17,12 +18,43 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-  });
+  })
+/*
+  $rootScope.$on("$routeChangeStart", function(event, next, current) {
+
+          console.log("Routechanged sessionId="+$rootScope.SessionId);
+
+          if ($rootScope.SessionId == '' || $rootScope.SessionId == null) {
+              // no logged user, we should be going to #login
+              if (next.templateUrl == "templates/login/log-in.html") {
+                  // already going to #login, no redirect needed
+              } else {
+                  // not going to #login, we should redirect now
+                  $location.path("/login");
+              }
+          }
+      });*/
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
 
+.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
+
+  $httpProvider.defaults.withCredentials = true;
+
+    $httpProvider.defaults.headers.put['Content-Type'] = 'X-Requested-With';
+    $httpProvider.defaults.headers.post['Content-Type'] = 'X-Requested-With';
+
+  $stateProvider
+    .state('login', {
+        url: "/login",
+        templateUrl: "templates/login/log-in.html",
+        controller: 'LoginCtrl'
+      })
+      .state('signUp', {
+        url: "/signUp",
+        templateUrl: "templates/login/sign-up.html",
+        controller: 'SignUpCtrl'
+      })
     .state('app', {
       url: "/app",
       abstract: true,
@@ -51,6 +83,6 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services'])
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/forecasts');
+  $urlRouterProvider.otherwise('/login');
 
 });
