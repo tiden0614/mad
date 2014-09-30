@@ -93,12 +93,7 @@
     color: white;
 }
 
-.temperature-detail-scroll {
-    height : 205px;
-    width : device-width;
-}
-
-.map-container, .scroll, #map-canvas {
+.scroll, #map-canvas {
     height: 100%;
     width: 100%;
     margin: 0px;
@@ -108,15 +103,23 @@
 #search-bar {
     position: absolute;
     top: 5px;
-    left: 50%;
-    margin-left: -180px;
-    z-index: 5;
+    left: 40%;
+    z-index: 1;
     background-color: #fff;
     padding: 5px;
     border: 1px solid #999;
     display: block;
 }
 
-.button-location, #location {
+#button-location {
     display: inline-block;
+    min-width: 0;
+    min-height: 0;
+    line-height: normal;
+    padding: 3px 6px;
+}
+
+#location {
+    display: inline-block;
+    width: auto;
 }
