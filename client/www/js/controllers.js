@@ -41,8 +41,10 @@ angular.module('farmers.controllers', [])
 
   })
 
-  .controller('ForecastsCtrl', function ($scope, $state, ForecastList) {
+
+  .controller('ForecastsCtrl', function ($scope, $state, ForecastList,TempHourlyList) {
     $scope.forecastList = ForecastList.all();
+
 
     $scope.alert = function () {
       $state.transitionTo('app.alert');
@@ -51,6 +53,42 @@ angular.module('farmers.controllers', [])
     $scope.search = function () {
       $state.transitionTo('app.search');
     };
+
+    $scope.drawTemp = function (id) {
+              $scope.temps_hourly=[];
+
+             // need to change if updated
+              var tempDetail_width = 998;
+              var tempDetail_height = 135;
+
+        //      var tempMax = TempHourlyList.getMaxTemp();
+        //      var tempMin = TempHourlyList.getMinTemp();
+                var tempMax = 28;
+                var tempMin = 7;
+                var temp_hourly_temp = [8,9,9,11,12,13,14,16,18,20,22,26,28,27,26,24,21,21,19,15,14,12,9,8,7];
+                var temp_hourly_hour = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+
+             for ( i = 0; i < TempHourlyList.getLength(); i++) {
+               if (temp_hourly_hour[i]<13){
+                 $scope.temps_hourly.push({
+                       x : i * tempDetail_width/(TempHourlyList.getLength()+1)+10,
+                       y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - temp_hourly_temp[i])+20 ,
+                       v:temp_hourly_temp[i]+'\u00b0C',
+                       t:  temp_hourly_hour[i]+'AM'
+                     });
+                 }else{
+                  $scope.temps_hourly.push({
+                                        x : i * tempDetail_width/(TempHourlyList.getLength()+1)+10,
+                                        y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - temp_hourly_temp[i])+20 ,
+                                        v:temp_hourly_temp[i]+'\u00b0C',
+                                        t:  temp_hourly_hour[i]+'PM'
+                                       })
+                 }
+                 }
+
+
+    };
+
 
     $scope.expand = function (id) {
       var expandItem = jQuery(".forecast-list [data-forecast-id=" + id + "]");
@@ -68,8 +106,9 @@ angular.module('farmers.controllers', [])
           expandItem.addClass("data-loaded");
         }
       }
-    };
-  })
+    }
+
+ })
 
   .controller('AlertCtrl', function ($scope, $state) {
   })

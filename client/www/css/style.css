@@ -1,4 +1,11 @@
 /* Empty. Add your own CSS if you like */
+.temperature-hour-icon{
+       width: 40px;
+       height: 40px;
+       position: absolute;
+    background-image: url(../img/testICON.jpg);
+}
+
 .forecast-list ion-item {
   border-bottom: 2px solid white;
 }
@@ -25,6 +32,7 @@
 	transition: height 1s;
 	height: 0;
 }
+
 
 .forecast-item>a, .detail-forecast-item>a {
   background: blue;
@@ -93,10 +101,6 @@
     color: white;
 }
 
-.temperature-detail-scroll {
-    height : 205px;
-    width : device-width;
-}
 
 .map-container, .scroll, #map-canvas {
     height: 100%;

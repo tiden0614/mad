@@ -11,7 +11,7 @@
   <ion-content class="has-header">
     <ion-list class="forecast-list">
       <ion-item ng-repeat="forecast in forecastList" href="#/app/forecastList/{{forecast.id}}"
-                class="forecast-item" data-forecast-id="{{forecast.id}}" ng-click="expand('{{forecast.id}}')">
+                class="forecast-item" data-forecast-id="{{forecast.id}}" ng-click="expand('{{forecast.id}}');drawTemp('{{forecast.id}}')">
         <div class="forecast-brief-container">
           <div class="forecast-item-icon-container">
             <div class="weather-icon weather-icon-{{forecast.sky}}"></div>
@@ -28,7 +28,23 @@
             <!-- <span>{{forecast.currentTemp}}</span> -->
           </div>
         </div>
+
         <div class="forecast-detail-container" id="forecast-detail-{{forecast.id}}">
+
+                <ion-scroll style="width: device-width;height:135px" zooming="false" direction="x" scroll-bar="false" has-bouncing="false">
+                    <div style="width:(device-width*2); height: 135px; background: url(../img/TempHourlyBG.png) repeat">
+                        <!-- add ng-src= later -->
+                            <div class="temperature-hour-icon" ng-repeat="temp_hourly in temps_hourly" ng-style="{'left':temp_hourly.x+'px', 'top':temp_hourly.y+'px' }">
+                                <img src="/img/testICON.jpg" height="40" weight="40" position="absolute">
+                                <h4 style="color:white" ng-style="{'top':-temp_hourly.y+'px'}">{{temp_hourly.v}}</h4>
+                            </div>
+                            <div class="temperature-hour-icon" ng-repeat="temp_hourly in temps_hourly" ng-style="{'left':temp_hourly.x+'px','top':5+'px'}">
+                                <h4 style="color:white">{{temp_hourly.t}}</h4>
+                            </div>
+
+                    </div>
+                </ion-scroll>
+
           <h4>Rainfall Chance: {{forecast.detail.rainfall_chance}}</h4>
           <h4>Rainfall Amount: {{forecast.detail.rainfall_amount}}</h4>
           <h4>Humidity: {{forecast.detail.humidity}}</h4>
