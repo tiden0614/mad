@@ -15,7 +15,7 @@
 
 .forecast-item.opened .forecast-detail-container {
 /*	display: block;*/
-	height: 200px;
+	height: 600px;
 }
 
 .forecast-item .forecast-detail-container {

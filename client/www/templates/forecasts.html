@@ -33,6 +33,21 @@
           <h4>Rainfall Amount: {{forecast.detail.rainfall_amount}}</h4>
           <h4>Humidity: {{forecast.detail.humidity}}</h4>
           <h4>Date: {{forecast.detail.day}}/{{forecast.detail.month}}/{{forecast.detail.year}}</h4>
+            <div>
+                <nvd3-line-chart
+                        data="windSpeed"
+                        id="Wind"
+                        height="200"
+                        showXAxis="true"
+                        showYAxis="false"
+                        margin="{left:50,top:50,bottom:50,right:50}"
+                        useInteractiveGuideLine="true"
+                        xAxisTickFormat="xAxisTickFormat()"
+                        tooltips = "true"
+                        >
+                    <svg></svg>
+                </nvd3-line-chart>
+            </div>
         </div>
       </ion-item>
     </ion-list>
