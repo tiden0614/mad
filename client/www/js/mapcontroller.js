@@ -3,14 +3,9 @@ angular.module('map.control', [])
 
     .controller('MapCtrl', function ($scope) {
 
-        $scope.sideMenu.shouldEnable = false;
+        var map;
 
-        $scope.$on('$destroy', function(){
-                $scope.sideMenu.shouldEnable = true;
-            }
-        )
-
-        var map, marker;
+        var marker;
 
         var geocoder = new google.maps.Geocoder();
 
