@@ -18,6 +18,10 @@ public class Humidity {
         return time;
     }
 
+    public Humidity(float humidity) {
+        this.humidity = humidity;
+    }
+
     public void setTime(int time) {
         this.time = time;
     }

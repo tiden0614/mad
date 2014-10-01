@@ -1,4 +1,42 @@
 /* Empty. Add your own CSS if you like */
+.temperature-hour-icon{
+       width: 40px;
+       height: 40px;
+       position: absolute;
+    background-image: url(../img/testICON.jpg);
+}
+.head-login{
+    margin-top: 80px;
+    text-align:center;
+    text-shadow: 1px 1px 20px #000000;
+}
+
+.head-sign{
+    margin-top: 80px;
+    text-align:center;
+}
+
+.bottom-line{
+   text-align:center;
+   margin-top:90px;
+}
+
+
+.login-background{
+    background: url('../img/loginBG.png') no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.sign-background{
+    background: url('../img/signBG.png') no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}s
+
 .forecast-list ion-item {
   border-bottom: 2px solid white;
 }
@@ -25,6 +63,7 @@
 	transition: height 1s;
 	height: 0;
 }
+
 
 .forecast-item>a, .detail-forecast-item>a {
   background: blue;
@@ -93,7 +132,8 @@
     color: white;
 }
 
-.scroll, #map-canvas {
+
+.map-container, .scroll, #map-canvas {
     height: 100%;
     width: 100%;
     margin: 0px;
@@ -103,23 +143,15 @@
 #search-bar {
     position: absolute;
     top: 5px;
-    left: 40%;
-    z-index: 1;
+    left: 50%;
+    margin-left: -180px;
+    z-index: 5;
     background-color: #fff;
     padding: 5px;
     border: 1px solid #999;
     display: block;
 }
 
-#button-location {
+.button-location, #location {
     display: inline-block;
-    min-width: 0;
-    min-height: 0;
-    line-height: normal;
-    padding: 3px 6px;
-}
-
-#location {
-    display: inline-block;
-    width: auto;
 }

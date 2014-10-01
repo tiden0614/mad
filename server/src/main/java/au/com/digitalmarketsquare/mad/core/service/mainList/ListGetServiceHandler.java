@@ -2,6 +2,8 @@ package au.com.digitalmarketsquare.mad.core.service.mainList;
 
 import au.com.digitalmarketsquare.mad.core.domain.ListItem;
 import au.com.digitalmarketsquare.mad.event.list.CreateListEvent;
+import au.com.digitalmarketsquare.mad.event.list.DataPackageEvent;
+import au.com.digitalmarketsquare.mad.event.list.MainListEvent;
 import au.com.digitalmarketsquare.mad.event.list.RawListEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,12 @@ public class ListGetServiceHandler implements ListGetService {
 
     @Autowired
     private ListItem[] listItems;
+
+    @Override
+    public MainListEvent getList(DataPackageEvent dataPackageEvent) {
+        return null;
+    }
+
     @Override
     public CreateListEvent CreateMainList ( RawListEvent rawListEvent){
         listItems = new ListItem[7];
@@ -22,7 +30,7 @@ public class ListGetServiceHandler implements ListGetService {
             listItems[i] = new ListItem(
                     rawListEvent.getCurrT().getTemp(), rawListEvent.getMaxT().getTemp(),
                     rawListEvent.getMinT().getTemp(), rawListEvent.getRainfallAmount().getAmount(),
-                    rawListEvent.getRainfallChance().getChance(), rawListEvent.getHumi().getHumi()
+                    rawListEvent.getRainfallChance().getChance(), rawListEvent.getHumi().getHumidity()
             );
         }
         CreateListEvent createListEvent = new CreateListEvent( listItems );
