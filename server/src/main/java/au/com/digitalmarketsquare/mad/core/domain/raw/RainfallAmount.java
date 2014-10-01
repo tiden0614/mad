@@ -17,10 +17,6 @@ public class RainfallAmount {
         return time;
     }
 
-    public RainfallAmount(float amount) {
-        this.amount = amount;
-    }
-
     public void setTime(int time) {
         this.time = time;
     }

@@ -6,8 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', 'map.control'])
 
-
-.run(function($ionicPlatform,$rootScope, $location) {
+.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,25 +20,8 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
   });
 })
 
-
-.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
-
-  $httpProvider.defaults.withCredentials = true;
-
-    $httpProvider.defaults.headers.put['Content-Type'] = 'X-Requested-With';
-    $httpProvider.defaults.headers.post['Content-Type'] = 'X-Requested-With';
-
+.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-    .state('login', {
-        url: "/login",
-        templateUrl: "templates/login/log-in.html",
-        controller: 'LoginCtrl'
-      })
-      .state('signUp', {
-        url: "/signUp",
-        templateUrl: "templates/login/sign-up.html",
-        controller: 'SignUpCtrl'
-      })
 
     .state('app', {
       url: "/app",

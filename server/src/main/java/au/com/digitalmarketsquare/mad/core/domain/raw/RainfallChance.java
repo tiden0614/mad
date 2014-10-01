@@ -17,10 +17,6 @@ public class RainfallChance {
 
     }
 
-    public RainfallChance(float chance) {
-        this.chance = chance;
-    }
-
     public int getTime() {
         return time;
     }

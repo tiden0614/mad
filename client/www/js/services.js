@@ -27,61 +27,7 @@ angular.module('farmers.services', [])
 		}
   }
 })
-/*
-.factory('TempDailyList',function(){
-     var temperatureList=[
-     {id:'0',temperature_dailyList:[8,9,9,11,12,13,14,16,18,20,22,26,28,27,26,24,21,19,15,14,12,9,8,7]},
-     {id:'1',temperature_dailyList:[7,9,10,11,12,13,14,16,17,19,22,26,25,24,22,21,21,19,15,14,12,9,8,7]},
-     {id:'2',temperature_dailyList:[8,9,9,11,12,13,14,16,18,20,24,28,26,26,25,24,21,19,15,14,12,11,10,10]},
-     {id:'3',temperature_dailyList:[7,7,8,9,10,13,14,16,18,20,22,24,25,21,21,20,20,19,15,14,12,9,8,7]},
-     {id:'4',temperature_dailyList:[9,9,10,11,12,13,14,16,18,20,22,26,28,27,26,24,21,19,15,14,12,9,8,7]},
-     {id:'5',temperature_dailyList:[8,9,10,11,12,13,14,16,18,20,22,23,22,22,20,18,17,15,15,13,12,9,9,6]},
-     {id:'6',temperature_dailyList:[10,10,9,11,13,14,16,17,19,22,26,28,27,26,24,21,19,13,13,12,11,9,8,7]},
-     ]
-     return{
-       all:function(){
-          return temperatureList;
-       }
-       getTempDaily: function(tempID){
-          return TempDailyList[temperatureList];
-       },
-     }
-})*/
 
-.factory('TempHourlyList',function(){
-
-   var TempDailyDetail=[{hour:'0',temp_hourly:8},{hour:'1',temp_hourly:9},{hour:'2',temp_hourly:9},{hour:'3',temp_hourly:11},{hour:'4',temp_hourly:12},{hour:'5',temp_hourly:13},
-      {hour:'6',temp_hourly:14},{hour:'7',temp_hourly:16},{hour:'8',temp_hourly:18},{hour:'9',temp_hourly:20},{hour:'10',temp_hourly:22},{hour:'11',temp_hourly:26},
-      {hour:'12',temp_hourly:28},{hour:'13',temp_hourly:27},{hour:'14',temp_hourly:26},{hour:'15',temp_hourly:24},{hour:'16',temp_hourly:21},{hour:'17',temp_hourly:21},
-      {hour:'18',temp_hourly:19},{hour:'19',temp_hourly:15},{hour:'20',temp_hourly:14},{hour:'21',temp_hourly:12},{hour:'22',temp_hourly:9},{hour:'23',temp_hourly:8},{hour:'24',temp_hourly:7}]
-
-   return{
-   all:function(){
-             return TempDailyDetail;
-          },
-
-   getMaxTemp: function(){
-             var temp = TempDailyDetail[0].temp_hourly;
-             for(i in TempDailyDetail){
-                   if( TempDailyDetail[i].temp_hourly>temp)
-                   {
-                           temp = TempDailyDetail[i].temp_hourly;
-                   }
-             }
-             return temp;
-          },
-   getMinTemp:function(){
-                var temp = TempDailyDetail[0].temp_hourly;
-                             for(i in TempDailyDetail){
-                                   if( TempDailyDetail[i].temp_hourly<temp)
-                                   {
-                                           temp = TempDailyDetail[i].temp_hourly;
-                                   }
-                             }
-                             return temp;
-          }
-    }
-})
 
 .factory('LocationList', function() {
   // Might use a resource here that returns a JSON array
