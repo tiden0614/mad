@@ -44,33 +44,41 @@ angular.module('farmers.services', [])
        }
        getTempDaily: function(tempID){
           return TempDailyList[temperatureList];
-       }
+       },
      }
 })*/
 
 .factory('TempHourlyList',function(){
 
-   var TempDailyDetail=[
-   {hour:'0',temp_hourly:8},{hour:'1',temp_hourly:9},{hour:'2',temp_hourly:9},{hour:'3',temp_hourly:11},{hour:'4',temp_hourly:12},{hour:'5',temp_hourly:13},
-   {hour:'6',temp_hourly:14},{hour:'7',temp_hourly:16},{hour:'8',temp_hourly:18},{hour:'9',temp_hourly:20},{hour:'10',temp_hourly:22},{hour:'11',temp_hourly:26},
-   {hour:'12',temp_hourly:28},{hour:'13',temp_hourly:27},{hour:'14',temp_hourly:26},{hour:'15',temp_hourly:24},{hour:'16',temp_hourly:21},{hour:'17',temp_hourly:21},
-   {hour:'18',temp_hourly:19},{hour:'19',temp_hourly:15},{hour:'20',temp_hourly:14},{hour:'21',temp_hourly:12},{hour:'22',temp_hourly:9},{hour:'23',temp_hourly:8},{hour:'24',temp_hourly:7},
-   ]
+   var TempDailyDetail=[{hour:'0',temp_hourly:8},{hour:'1',temp_hourly:9},{hour:'2',temp_hourly:9},{hour:'3',temp_hourly:11},{hour:'4',temp_hourly:12},{hour:'5',temp_hourly:13},
+      {hour:'6',temp_hourly:14},{hour:'7',temp_hourly:16},{hour:'8',temp_hourly:18},{hour:'9',temp_hourly:20},{hour:'10',temp_hourly:22},{hour:'11',temp_hourly:26},
+      {hour:'12',temp_hourly:28},{hour:'13',temp_hourly:27},{hour:'14',temp_hourly:26},{hour:'15',temp_hourly:24},{hour:'16',temp_hourly:21},{hour:'17',temp_hourly:21},
+      {hour:'18',temp_hourly:19},{hour:'19',temp_hourly:15},{hour:'20',temp_hourly:14},{hour:'21',temp_hourly:12},{hour:'22',temp_hourly:9},{hour:'23',temp_hourly:8},{hour:'24',temp_hourly:7}]
+
    return{
    all:function(){
-             return TempHourlyList;
+             return TempDailyDetail;
           },
-   getHourTemp: function(hour){
-             return TempHourlyList[hour].temp_hourly;
-          },
+
    getMaxTemp: function(){
-             return Math.max.apply( Math, TempHourlyList[temp_hourly]);
+             var temp = TempDailyDetail[0].temp_hourly;
+             for(i in TempDailyDetail){
+                   if( TempDailyDetail[i].temp_hourly>temp)
+                   {
+                           temp = TempDailyDetail[i].temp_hourly;
+                   }
+             }
+             return temp;
           },
    getMinTemp:function(){
-                return Math.min.apply( Math, TempHourlyList[temp_hourly]);
-          },
-   getLength:function(){
-              return 25;
+                var temp = TempDailyDetail[0].temp_hourly;
+                             for(i in TempDailyDetail){
+                                   if( TempDailyDetail[i].temp_hourly<temp)
+                                   {
+                                           temp = TempDailyDetail[i].temp_hourly;
+                                   }
+                             }
+                             return temp;
           }
     }
 })

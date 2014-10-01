@@ -56,35 +56,33 @@ angular.module('farmers.controllers', [])
 
     $scope.drawTemp = function (id) {
               $scope.temps_hourly=[];
+              var tempDaily = TempHourlyList.all();
 
              // need to change if updated
+             //      var tempDetail_width = $(window).width();
               var tempDetail_width = 998;
               var tempDetail_height = 135;
 
-        //      var tempMax = TempHourlyList.getMaxTemp();
-        //      var tempMin = TempHourlyList.getMinTemp();
-                var tempMax = 28;
-                var tempMin = 7;
-                var temp_hourly_temp = [8,9,9,11,12,13,14,16,18,20,22,26,28,27,26,24,21,21,19,15,14,12,9,8,7];
-                var temp_hourly_hour = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+              var tempMax = TempHourlyList.getMaxTemp();
+              var tempMin = TempHourlyList.getMinTemp();
 
-             for ( i = 0; i < TempHourlyList.getLength(); i++) {
-               if (temp_hourly_hour[i]<13){
-                 $scope.temps_hourly.push({
-                       x : i * tempDetail_width/(TempHourlyList.getLength()+1)+10,
-                       y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - temp_hourly_temp[i])+20 ,
-                       v:temp_hourly_temp[i]+'\u00b0C',
-                       t:  temp_hourly_hour[i]+'AM'
-                     });
-                 }else{
-                  $scope.temps_hourly.push({
-                                        x : i * tempDetail_width/(TempHourlyList.getLength()+1)+10,
-                                        y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - temp_hourly_temp[i])+20 ,
-                                        v:temp_hourly_temp[i]+'\u00b0C',
-                                        t:  temp_hourly_hour[i]+'PM'
-                                       })
-                 }
-                 }
+                for ( i in tempDaily) {
+                                                if (tempDaily[i].hour<13){
+                                                  $scope.temps_hourly.push({
+                                                        x : i * tempDetail_width/( tempDaily.length + 1)+10,
+                                                        y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - tempDaily[i].temp_hourly)+20 ,
+                                                        v:  tempDaily[i].temp_hourly+'\u00b0C',
+                                                        t:  tempDaily[i].hour+'AM'
+                                                      });
+                                                  }else{
+                                                   $scope.temps_hourly.push({
+                                                                         x : i * tempDetail_width/( tempDaily.length + 1)+10,
+                                                                         y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - tempDaily[i].temp_hourly)+20 ,
+                                                                         v:  tempDaily[i].temp_hourly+'\u00b0C',
+                                                                         t:  tempDaily[i].hour+'PM'
+                                                                        })
+                                                  }
+                                       }
 
 
     };
