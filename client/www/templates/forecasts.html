@@ -10,7 +10,7 @@
 
   <ion-content class="has-header">
     <ion-list class="forecast-list">
-      <ion-item ng-repeat="forecast in forecastList" href="#/app/forecastList/{{forecast.id}}"
+      <ion-item ng-repeat="forecast in forecastList" href="#/app/forecasts"
                 class="forecast-item" data-forecast-id="{{forecast.id}}" ng-click="expand('{{forecast.id}}')">
         <div class="forecast-brief-container">
           <div class="forecast-item-icon-container">
@@ -35,8 +35,8 @@
           <h4>Date: {{forecast.detail.day}}/{{forecast.detail.month}}/{{forecast.detail.year}}</h4>
             <div>
                 <nvd3-line-chart
-                        data="windSpeed"
-                        id="Wind"
+                        data="forecast.detail.windSpeed"
+                        id="Wind-{{forecast.id}}"
                         height="200"
                         showXAxis="true"
                         margin="{left:10,top:0,bottom:50,right:10}"

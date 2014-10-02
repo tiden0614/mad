@@ -154,6 +154,10 @@ nv.interactiveGuideline = function() {
 	var isMSIE = navigator.userAgent.indexOf("MSIE") !== -1  //Check user-agent for Microsoft Internet Explorer.
 	;
 
+    document.addEventListener('touchstart',function(e){ mapTouchEvents(e,'mousedown'); },true);
+    document.addEventListener('touchmove',function(e){ mapTouchEvents(e,'mousemove'); },true);
+    document.addEventListener('touchend',function(e){ mapTouchEvents(e,'mouseup'); },true);
+    document.addEventListener('touchcancel',function(e){ mapTouchEvents(e,'mouseup'); },true);
 
 	function layer(selection) {
 		selection.each(function(data) {
@@ -447,9 +451,7 @@ window.nv.tooltip.* also has various helper methods.
 
             if (d == null) return '';
 
-            var html = '<h3>' + d.series[0].key + '</h3>' +'<p>' +  d.series[0].value + 'km/h at ' + d.value + '</p>';
-            if (d.footer !== undefined)
-                html += "<div class='footer'>" + d.footer + "</div>";
+            var html = '<h3>' + d.series[0].key + '</h3>' +'<p>' +  d.series[0].value + 'km/h at ' + d.value + '' + '</p>';
             return html;
 
         };
