@@ -104,9 +104,22 @@ angular.module('farmers.controllers', [])
 
     $scope.xAxisTickFormat = function(){
         return function(d){
-            return d3.time.format('%H:%M')(new Date(d));
+            return d3.time.format('%H')(new Date(d));
         }
     }
+
+    $scope.xAxisTickValues = function(){
+        return function(d){
+            var tickVals = [];
+            var values = d[0].values;
+            for (var i in values){
+                tickVals.push(values[i][0]);
+            }
+            console.log('xAxisTickValuesFunction', d);
+            return tickVals;
+        }
+    }
+
 
   })
 
