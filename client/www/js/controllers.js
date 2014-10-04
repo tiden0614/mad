@@ -2,6 +2,10 @@ angular.module('farmers.controllers', [])
 
   .controller('AppCtrl', function ($scope, $ionicModal, $state, $timeout, LocationList) {
 
+        $scope.sideMenu = {
+            shouldEnable: true
+        };
+
     $scope.search = function () {
       $state.transitionTo('app.search');
     }

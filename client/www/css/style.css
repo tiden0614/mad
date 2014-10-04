@@ -142,9 +142,8 @@
 
 #search-bar {
     position: absolute;
-    top: 5px;
-    left: 50%;
-    margin-left: -180px;
+    top: 15px;
+    left: 100px;
     z-index: 5;
     background-color: #fff;
     padding: 5px;
@@ -152,6 +151,14 @@
     display: block;
 }
 
-.button-location, #location {
+.button-location {
     display: inline-block;
+    min-width: 0;
+    min-height: 0;
+    line-height: normal;
+    padding: 3px 6px;
+}
+
+#location {
+    width: auto;
 }
