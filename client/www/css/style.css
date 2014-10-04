@@ -53,7 +53,7 @@
 
 .forecast-item.opened .forecast-detail-container {
 /*	display: block;*/
-	height: 200px;
+	height: auto;
 }
 
 .forecast-item .forecast-detail-container {
@@ -161,4 +161,20 @@
 
 #location {
     width: auto;
+}
+
+.rainfall-slide-box {
+    min-height: 150px;
+    width: auto;
+    background: #2B59A2;
+}
+
+.rainfall-slide, .rainfall-item {
+    height: 100%;
+    text-align: center;
+}
+
+.rainfall-item {
+    width: 25%;
+    display: inline-block;
 }

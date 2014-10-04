@@ -46,9 +46,10 @@ angular.module('farmers.controllers', [])
   })
 
 
-  .controller('ForecastsCtrl', function ($scope, $state, ForecastList,TempHourlyList) {
+  .controller('ForecastsCtrl', function ($scope, $state, ForecastList, TempHourlyList, RainfallThreeHourlyList) {
     $scope.forecastList = ForecastList.all();
 
+    $scope.rainfallList = RainfallThreeHourlyList.all();
 
     $scope.alert = function () {
       $state.transitionTo('app.alert');
@@ -87,8 +88,6 @@ angular.module('farmers.controllers', [])
                                                                         })
                                                   }
                                        }
-
-
     };
 
 

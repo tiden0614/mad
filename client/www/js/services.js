@@ -2,7 +2,6 @@ angular.module('farmers.services', [])
 
 .factory('ForecastList', function() {
   // Might use a resource here that returns a JSON array
-
   // Some fake testing data    
   var forecastList = [
         {id: '0', day: '8', month: '9', weekday: 'Mon', humidity: '45', rainfall_chance: '70', rainfall_amount: '3', sky: 'sunny', currentTemp:'', minTemp:'4', maxTemp:'19\u00b0C'},
@@ -60,6 +59,7 @@ angular.module('farmers.services', [])
              return TempDailyDetail;
           },
 
+       //TODO: max and min temp are available from data set, not need to check again
    getMaxTemp: function(){
              var temp = TempDailyDetail[0].temp_hourly;
              for(i in TempDailyDetail){
@@ -102,4 +102,22 @@ angular.module('farmers.services', [])
       return locationList[locationId];
     }
   }
-});
+})
+
+.factory('RainfallThreeHourlyList', function() {
+        var rainfallList = [
+            {startHour: '06:00', endHour:'09:00', chanceOfAnyRain: '4', expectedRainfallAmount: '0', imgSourceId: '0'},
+            {startHour: '09:00', endHour:'12:00', chanceOfAnyRain: '4', expectedRainfallAmount: '0', imgSourceId: '0' },
+            {startHour: '12:00', endHour:'15:00', chanceOfAnyRain: '12', expectedRainfallAmount: '1', imgSourceId: '1'},
+            {startHour: '15:00', endHour:'18:00', chanceOfAnyRain: '20', expectedRainfallAmount: '1.2', imgSourceId: '2'},
+            {startHour: '18:00', endHour:'21:00', chanceOfAnyRain: '7', expectedRainfallAmount: '1', imgSourceId: '1'},
+            {startHour: '21:00', endHour:'24:00', chanceOfAnyRain: '3', expectedRainfallAmount: '0.5', imgSourceId: '0'},
+            {startHour: '24:00', endHour:'03:00', chanceOfAnyRain: '1', expectedRainfallAmount: '0', imgSourceId: '0'},
+            {startHour: '03:00', endHour:'06:00', chanceOfAnyRain: '2', expectedRainfallAmount: '0', imgSourceId: '0'}
+        ];
+        return {
+            all: function() {
+                return rainfallList;
+            }
+        }
+    });
