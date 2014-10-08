@@ -41,6 +41,22 @@
                 </div>
             </ion-scroll>
 
+         <div>
+          <nvd3-line-chart
+                  data="forecast.detail.windSpeed"
+                  id="Wind-{{forecast.id}}"
+                  height="200"
+                  showXAxis="true"
+                  margin="{left:10,top:0,bottom:50,right:10}"
+                  useInteractiveGuideLine="true"
+                  xAxisTickFormat="xAxisTickFormat()"
+                  xAxisTickValues="xAxisTickValues()"
+                  tooltips = "true"
+                  >
+              <svg></svg>
+          </nvd3-line-chart>
+        </div> 
+            
             <ion-slide-box class="rainfall-slide-box" show-pager="false">
                 <ion-slide class="rainfall-slide">
                     <div class="rainfall-item" ng-repeat="rainfallItem in rainfallList.slice(0, 4)">
@@ -59,8 +75,7 @@
                         <h4 style="color: white">{{rainfallItem.chanceOfAnyRain}}%</h4>
                     </div>
                 </ion-slide>
-            </ion-slide-box>
-
+            </ion-slide-box>   
 
 
           <h4>Rainfall Chance: {{forecast.detail.rainfall_chance}}</h4>
