@@ -1,21 +1,59 @@
-<ion-view title="Detailed Information">
+<ion-view title="Detail">
   <ion-content class="has-header">
     <ion-list>
         <ion-item class="detail-forecast-item item-complex">
-            <a class="item-content" href="#">
-                <div class="detail-forecast-item-icon-container">
-                    <div class="detail-weather-icon weather-icon-{{overallForecast.sky}}"></div>
-                    <div class="forecast-item-min-max-temp">{{overallForecast.minTemp}}~{{overallForecast.maxTemp}}</div>
-                </div>
-                <div class="detail-forecast-item-statics-container">
-                    <div style="display:inline-block;">
-                        <h1>{{overallForecast.weekday}} {{overallForecast.day}}/{{overallForecast.month}}</h1>
-                        <p>Rain: {{overallForecast.rainfall_chance}}% of {{overallForecast.rainfall_amount}}mm</p>
-                        <p>Humidity: {{overallForecast.humidity}}%</p>
+            <div class="forecast-detail-container" id="forecast-detail-{{forecast.id}}">
+
+                <ion-scroll style="height:135px; width:auto;background-color:#2B59A2" direction="x" >
+                    <div style="width:1000px; height: 135px">
+                        <!-- add ng-src= later -->
+                        <div class="temperature-hour-icon" ng-repeat="temp_hourly in temps_hourly" ng-style="{'left':temp_hourly.x+'px', 'top':temp_hourly.y+'px' }">
+                            <img ng-src="img/testICON.jpg" height="40" weight="40" position="absolute">
+                            <h4 style="color:white" ng-style="{'top':-temp_hourly.y+'px'}" v>{{temp_hourly.v}}</h4>
+                        </div>
+                        <div class="temperature-hour-icon" ng-repeat="temp_hourly in temps_hourly" ng-style="{'left':temp_hourly.x+'px','top':5+'px'}">
+                            <h4 style="color:white">{{temp_hourly.t}}</h4>
+                        </div>
                     </div>
-                    <span>{{overallForecast.currentTemp}}</span>
+                </ion-scroll>
+
+                <div>
+                    <nvd3-line-chart
+                            data="forecast.windSpeed"
+                            id="Wind-{{forecast.id}}"
+                            height="200"
+                            showXAxis="true"
+                            margin="{left:10,top:0,bottom:50,right:10}"
+                            useInteractiveGuideLine="true"
+                            xAxisTickFormat="xAxisTickFormat()"
+                            xAxisTickValues="xAxisTickValues()"
+                            tooltips = "true"
+                            >
+                        <svg></svg>
+                    </nvd3-line-chart>
                 </div>
-            </a>
+
+                <ion-slide-box class="rainfall-slide-box" show-pager="false">
+                    <ion-slide class="rainfall-slide">
+                        <div class="rainfall-item" ng-repeat="rainfallItem in rainfallList.slice(0, 4)">
+                            <h4 style="color: white">{{rainfallItem.startHour}}/{{rainfallItem.endHour}}</h4>
+                            <img style="width: 90%" ng-src="img/rainfall/{{rainfallItem.imgSourceId}}.svg">
+                            <h4 style="color: white">{{rainfallItem.expectedRainfallAmount}}mm</h4>
+                            <h4 style="color: white">{{rainfallItem.chanceOfAnyRain}}%</h4>
+                        </div>
+                    </ion-slide>
+
+                    <ion-slide class="rainfall-slide">
+                        <div class="rainfall-item" ng-repeat="rainfallItem in rainfallList.slice(4, 8)">
+                            <h4 style="color: white">{{rainfallItem.startHour}}/{{rainfallItem.endHour}}</h4>
+                            <img style="width: 90%" ng-src="img/rainfall/{{rainfallItem.imgSourceId}}.svg">
+                            <h4 style="color: white">{{rainfallItem.expectedRainfallAmount}}mm</h4>
+                            <h4 style="color: white">{{rainfallItem.chanceOfAnyRain}}%</h4>
+                        </div>
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
+
         </ion-item>
     </ion-list>
   </ion-content>

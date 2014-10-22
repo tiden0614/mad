@@ -76,6 +76,16 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
           controller: 'ForecastsCtrl'
         }
       }
+    })
+
+    .state('app.forecastDetail', {
+        url: "/forecasts/:forecastId",
+        views: {
+           'menuContent' :{
+            templateUrl: "templates/forecast.html",
+            controller: 'ForecastDetailCtrl'
+            }
+        }
     });
 
   // if none of the above states are matched, use this as the fallback

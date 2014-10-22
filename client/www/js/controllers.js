@@ -46,10 +46,8 @@ angular.module('farmers.controllers', [])
   })
 
 
-  .controller('ForecastsCtrl', function ($scope, $state, ForecastList, TempHourlyList, RainfallThreeHourlyList) {
+  .controller('ForecastsCtrl', function ($scope, ForecastList, $state) {
     $scope.forecastList = ForecastList.all();
-
-    $scope.rainfallList = RainfallThreeHourlyList.all();
 
     $scope.alert = function () {
       $state.transitionTo('app.alert');
@@ -59,36 +57,7 @@ angular.module('farmers.controllers', [])
       $state.transitionTo('app.search');
     };
 
-    $scope.drawTemp = function (id) {
-              $scope.temps_hourly=[];
-              var tempDaily = TempHourlyList.all();
 
-             // need to change if updated
-             //      var tempDetail_width = $(window).width();
-              var tempDetail_width = 998;
-              var tempDetail_height = 135;
-
-              var tempMax = TempHourlyList.getMaxTemp();
-              var tempMin = TempHourlyList.getMinTemp();
-
-                for ( i in tempDaily) {
-                                                if (tempDaily[i].hour<13){
-                                                  $scope.temps_hourly.push({
-                                                        x : i * tempDetail_width/( tempDaily.length + 1)+10,
-                                                        y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - tempDaily[i].temp_hourly)+20 ,
-                                                        v:  tempDaily[i].temp_hourly+'\u00b0C',
-                                                        t:  tempDaily[i].hour+'AM'
-                                                      });
-                                                  }else{
-                                                   $scope.temps_hourly.push({
-                                                                         x : i * tempDetail_width/( tempDaily.length + 1)+10,
-                                                                         y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - tempDaily[i].temp_hourly)+20 ,
-                                                                         v:  tempDaily[i].temp_hourly+'\u00b0C',
-                                                                         t:  tempDaily[i].hour+'PM'
-                                                                        })
-                                                  }
-                                       }
-    };
 
 
     $scope.expand = function (id) {
@@ -108,24 +77,8 @@ angular.module('farmers.controllers', [])
         }
       }
     }
-    
-    $scope.xAxisTickFormat = function(){
-        return function(d){
-            return d3.time.format('%H')(new Date(d));
-        }
-    }
 
-    $scope.xAxisTickValues = function(){
-        return function(d){
-            var tickVals = [];
-            var values = d[0].values;
-            for (var i in values){
-                tickVals.push(values[i][0]);
-            }
-            console.log('xAxisTickValuesFunction', d);
-            return tickVals;
-        }
-    }
+
 
  })
 
@@ -176,3 +129,55 @@ angular.module('farmers.controllers', [])
    $scope.skipLogin = function(){  $state.transitionTo('app.forecasts'); }
 })
 
+.controller('ForecastDetailCtrl', function ($scope, $stateParams, ForecastList, TempHourlyList, RainfallThreeHourlyList){
+    $scope.forecast = ForecastList.getForecastDetail();
+
+    $scope.rainfallList = RainfallThreeHourlyList.all();
+
+                  $scope.temps_hourly=[];
+                  var tempDaily = TempHourlyList.all();
+
+                 // need to change if updated
+                 //      var tempDetail_width = $(window).width();
+                  var tempDetail_width = 998;
+                  var tempDetail_height = 135;
+
+                  var tempMax = TempHourlyList.getMaxTemp();
+                  var tempMin = TempHourlyList.getMinTemp();
+
+                    for ( i in tempDaily) {
+                                                    if (tempDaily[i].hour<13){
+                                                      $scope.temps_hourly.push({
+                                                            x : i * tempDetail_width/( tempDaily.length + 1)+10,
+                                                            y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - tempDaily[i].temp_hourly)+20 ,
+                                                            v:  tempDaily[i].temp_hourly+'\u00b0C',
+                                                            t:  tempDaily[i].hour+'AM'
+                                                          });
+                                                      }else{
+                                                       $scope.temps_hourly.push({
+                                                                             x : i * tempDetail_width/( tempDaily.length + 1)+10,
+                                                                             y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - tempDaily[i].temp_hourly)+20 ,
+                                                                             v:  tempDaily[i].temp_hourly+'\u00b0C',
+                                                                             t:  tempDaily[i].hour+'PM'
+                                                                            })
+                                                      }
+                                           }
+
+            $scope.xAxisTickFormat = function(){
+                return function(d){
+                    return d3.time.format('%H')(new Date(d));
+                }
+            }
+
+            $scope.xAxisTickValues = function(){
+                return function(d){
+                    var tickVals = [];
+                    var values = d[0].values;
+                    for (var i in values){
+                        tickVals.push(values[i][0]);
+                    }
+                    console.log('xAxisTickValuesFunction', d);
+                    return tickVals;
+                }
+            }
+})
