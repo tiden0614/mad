@@ -1,0 +1,31 @@
+<ion-view title="Forecasts">
+  <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon icon ion-alert-circled" menu-close ng-click="alert()"></button>
+    <button menu-toggle="right" class="button button-icon icon ion-map" menu-close ng-click="search()"></button>
+  </ion-nav-buttons>
+
+  <ion-content  class="has-header" >
+    <ion-list class="forecast-list">
+      <ion-item ng-repeat="forecast in forecastList" menu-close href="#/app/forecasts/{{forecast.id}}"
+                class="forecast-item" data-forecast-id="{{forecast.id}}">
+        <div class="forecast-brief-container">
+          <div class="forecast-item-icon-container">
+            <div class="weather-icon weather-icon-{{forecast.sky}}"></div>
+            <div class="forecast-item-min-max-temp">{{forecast.minTemp}}~{{forecast.maxTemp}}</div>
+          </div>
+          <div class="forecast-item-statics-container">
+            <div style="display:inline-block;">
+              <h1>{{forecast.weekday}} {{forecast.day}}/{{forecast.month}}</h1>
+
+              <p>Rain: {{forecast.rainfall_chance}}% of {{forecast.rainfall_amount}}mm</p>
+
+              <p>Humidity: {{forecast.humidity}}%</p>
+            </div>
+            <!-- <span>{{forecast.currentTemp}}</span> -->
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
