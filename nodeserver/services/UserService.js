@@ -13,16 +13,17 @@ exports.authenticate = function(data, callback) {
   debug('Fetching user: ' + data.email);
   UsersModel.findOne({ email: data.email }, function(err, user) {
     if (err) {
-      callback(err);
-    } else if(!user) {
-      callback(null, null, 'Cannot find user');
+      return callback(err);
+    }
+    if(!user) {
+      return callback(null, null, 'Cannot find user');
+    }
+
+    var hash = crypto.createHash('md5').update(data.password).digest('base64');
+    if(hash !== user.hashedPassword) {
+      callback(null, null, 'Invalid password');
     } else {
-      var hash = crypto.createHash('md5').update(data.password).digest('base64');
-      if(hash !== user.hashedPassword) {
-        callback(null, null, 'Invalid password');
-      } else {
-        callback(null, user, 'Success');
-      }
+      callback(null, user, 'Success');
     }
   });
 };
