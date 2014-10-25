@@ -14,13 +14,10 @@
     "serve-favicon": "~2.1.3",
     "debug": "~2.0.0",
     "jade": "~1.6.0",
-    "passport-local": "~1.0.0",
-    "passport": "~0.2.1",
-    "passport-facebook": "~1.0.3",
-    "passport-google": "~0.3.0",
     "mongodb": "*",
-    "monk": "*",
-    "crypto-js": "~3.1.2-5",
-    "crypto": "0.0.3"
+    "mongoose": "*",
+    "crypto": "0.0.3",
+    "supertest": "^0.14.0",
+    "node-oauth2-server": "^2.2.2"
   }
 }
