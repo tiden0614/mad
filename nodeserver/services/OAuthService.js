@@ -84,5 +84,5 @@ exports.grantTypeAllowed = function(clientId, grantType, callback) {
 };
 
 exports.getUser = function(username, password, callback) {
-  userService.getUser({ email: username, password: password }, callback);
+  userService.authenticate({ email: username, password: password }, callback);
 };

@@ -27,17 +27,6 @@ exports.authenticate = function(data, callback) {
   });
 };
 
-exports.getUser = function(data, callback) {
-  exports.authenticate(data, function(err, user, message) {
-    debug(message);
-    if (err || !user) {
-      callback(err);
-    } else {
-      callback(null, user);
-    }
-  });
-};
-
 exports.getUserByEmail = function(data, callback) {
   if (!data.email) { callback(new Error('Email is required')); }
   UsersModel.findOne({ email: data.email }, callback);
