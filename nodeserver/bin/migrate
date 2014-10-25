@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+var db = require('../services/db');
+var seedData = require('../config/seed-data');
+var logger = require('debug')('dev');
+
+for(var col in seedData) {
+  var index = seedData[col].index;
+  var dataList = seedData[col].data;
+  var collection = db.get(col);
+  logger('Adding to ' + col);
+  dataList.forEach(function(doc) {
+    logger(doc);
+    collection.insert(doc);
+  });
+  collection.index(index);
+  logger('    ');
+}
+
+db.close();
