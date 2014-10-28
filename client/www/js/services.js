@@ -223,6 +223,7 @@ angular.module('farmers.services', ['base64'])
 
         // set up a counter to avoid infinite recursive calls
         var retries = 0;
+        var maxRetires = 3;
 
         function refreshTokens(next) {
           $http({
@@ -255,7 +256,7 @@ angular.module('farmers.services', ['base64'])
         (function userRequest() {
           requestConf.headers['Authorization'] = 'Bearer ' + accessToken;
           // if token expires
-          if (new Date().getTime() > expires.getTime()) {
+          if (new Date().getTime() > expires.getTime() && ++retries <= maxRetires) {
             return refreshTokens(userRequest);
           }
           $http(requestConf).success(function(data, status, headers, config) {
@@ -263,7 +264,7 @@ angular.module('farmers.services', ['base64'])
               callback(null, data, status, headers, config);
             }
           }).error(function(data, status, headers, config) {
-            if (status == '401' && ++retries <= 3) {
+            if (status == '401' && ++retries <= maxRetires) {
               // OAuth2Error
               refreshTokens(userRequest);
             } else {
