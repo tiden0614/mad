@@ -159,16 +159,19 @@ angular.module('farmers.services', ['base64'])
  */
 .factory('Request', function($http, $base64) {
     var host = 'localhost:8080';
+
+    var clientId = 'forecast';
+    var clientSecret = '9a5667gfn5h434df7dh8f99';
+    var clientCredentials = $base64.encode(clientId + ':' + clientSecret);
+
     var userEmail = null;
     var accessToken = null;
     var refreshToken = null;
-    var clientId = 'forecast';
-    var clientSecret = '9a5667gfn5h434df7dh8f99';
-    //var clientCredentials = new Buffer(cliendId + ':' + clientSecret).toString('base64');
-    var clientCredentials = $base64.encode(clientId + ':' + clientSecret);
+    var expires = null;
 
     return {
       login: function(user, callback) {
+        var sendDate = new Date();
         $http({
           method: 'POST',
           url: 'http://' + host + '/oauth/token',
@@ -187,11 +190,14 @@ angular.module('farmers.services', ['base64'])
           }
         })
           .success(function(data, status, headers, config) {
-            console.log('success');
-            console.dir(data);
-            console.dir(status);
-            console.dir(headers);
-            console.dir(config);
+            console.log('oaut2 login succeeded');
+            userEmail = user.email;
+            accessToken = data.access_token;
+            refreshToken = data.refresh_token;
+            expires = new Date(sendDate.getTime() + ( data.expires_in * 1000 ));
+            if (callback && typeof callback == 'function') {
+              callback(userEmail);
+            }
           })
           .error(function(data, status, headers, config) {
             console.log('error');
