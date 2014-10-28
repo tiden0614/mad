@@ -182,13 +182,7 @@ angular.module('farmers.services', ['base64'])
             'Content-Type' : 'application/x-www-form-urlencoded',
             'Connection': 'close'
           },
-          transformRequest: function(obj) {
-            var str = [];
-            for (var p in obj) {
-              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-            }
-            return str.join('&');
-          }
+          transformRequest: Utils.serializeIntoFormEncoded
         }).success(function(data, status, headers, config) {
           console.log('Request#login: oauth2 login succeeded');
           userEmail = user.email;
@@ -227,17 +221,56 @@ angular.module('farmers.services', ['base64'])
           headers: {}
         });
 
-        requestConf.headers['Authorization'] = 'Bearer ' + accessToken;
+        // set up a counter to avoid infinite recursive calls
+        var retries = 0;
 
-        $http(requestConf).success(function(data, status, headers, config) {
-          if (callback && typeof callback == 'function') {
-            callback(null, data, status, headers, config);
+        function refreshTokens(next) {
+          $http({
+            url: 'http://' + host + '/oauth/token',
+            method: 'POST',
+            headers: {
+              'Authorization': 'Basic ' + clientCredentials,
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            transformRequest: Utils.serializeIntoFormEncoded,
+            data: {
+              'grant_type': 'refresh_token',
+              'refresh_token': refreshToken
+            }
+          }).success(function(data, status, headers, config) {
+            userEmail = user.email;
+            accessToken = data.access_token;
+            refreshToken = data.refresh_token;
+            expires = new Date(sendDate.getTime() + ( data.expires_in * 1000 ));
+            if (next && typeof next == 'function') {
+              next();
+            }
+          }).error(function(data, status, headers, config) {
+            if (callback && typeof callback == 'function') {
+              callback(new Error('Request#withAuth: error refreshing tokens'), data, status, headers, config);
+            }
+          });
+        }
+
+        (function userRequest() {
+          requestConf.headers['Authorization'] = 'Bearer ' + accessToken;
+          // if token expires
+          if (new Date().getTime() > expires.getTime()) {
+            return refreshTokens(userRequest);
           }
-        }).error(function(data, status, headers, config) {
-          if (callback && typeof callback == 'function') {
-            callback(null, data, status, headers, config);
-          }
-        });
+          $http(requestConf).success(function(data, status, headers, config) {
+            if (callback && typeof callback == 'function') {
+              callback(null, data, status, headers, config);
+            }
+          }).error(function(data, status, headers, config) {
+            if (status == '401' && ++retries <= 3) {
+              // OAuth2Error
+              refreshTokens(userRequest);
+            } else {
+              callback(new Error('Request#withAuth: error requesting ' + requestConf.url), data, status, headers, config);
+            }
+          });
+        })();
       }
 
     }
@@ -245,11 +278,20 @@ angular.module('farmers.services', ['base64'])
 
 .factory('Utils', function() {
     return {
+
       populateObject: function(obj, defaultObj) {
         for (var p in defaultObj) {
           obj[p] = obj[p] || defaultObj;
         }
         return obj;
+      },
+
+      serializeIntoFormEncoded: function(obj) {
+        var str = [];
+        for (var p in obj) {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+        return str.join('&');
       }
     };
   });
