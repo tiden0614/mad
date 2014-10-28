@@ -113,7 +113,15 @@ angular.module('farmers.controllers', [])
        //                  });
        //               }
 
-    $scope.loginUser = Request.login;
+    $scope.loginUser = function(user) {
+      Request.login(user, function(err, userEmail) {
+        if (err) {
+          //TODO Do something when login failed
+        } else {
+          $state.transitionTo('app.forecasts');
+        }
+      });
+    };
 
        $scope.resetError = function() {
            $scope.error = false;

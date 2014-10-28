@@ -1,11 +1,11 @@
 var router = require('express').Router();
 
-router.route(/.*/, function(req, res, next) {
+router.route('/*').all(function(req, res, next) {
   console.log(req.method);
   res.set({
     'Access-Control-Allow-Credentials': 'true'
   });
-  if (req.headers['access-control-request-origin']) {
+  if (req.headers['origin']) {
     res.set('Access-Control-Allow-Origin', req.headers.origin);
   }
   if (req.headers['access-control-request-headers']) {

@@ -157,7 +157,7 @@ angular.module('farmers.services', ['base64'])
  * Request proxy service
  * Handles oauth2 authenticate automatically
  */
-.factory('Request', function($http, $base64) {
+.factory('Request', function($http, $base64, Utils) {
     var host = 'localhost:8080';
 
     var clientId = 'forecast';
@@ -170,6 +170,7 @@ angular.module('farmers.services', ['base64'])
     var expires = null;
 
     return {
+
       login: function(user, callback) {
         var sendDate = new Date();
         $http({
@@ -188,25 +189,67 @@ angular.module('farmers.services', ['base64'])
             }
             return str.join('&');
           }
-        })
-          .success(function(data, status, headers, config) {
-            console.log('oaut2 login succeeded');
-            userEmail = user.email;
-            accessToken = data.access_token;
-            refreshToken = data.refresh_token;
-            expires = new Date(sendDate.getTime() + ( data.expires_in * 1000 ));
-            if (callback && typeof callback == 'function') {
-              callback(userEmail);
-            }
-          })
-          .error(function(data, status, headers, config) {
-            console.log('error');
-            console.dir(data);
-            console.dir(status);
-            console.dir(headers);
-            console.dir(config);
-          })
-        ;
+        }).success(function(data, status, headers, config) {
+          console.log('Request#login: oauth2 login succeeded');
+          userEmail = user.email;
+          accessToken = data.access_token;
+          refreshToken = data.refresh_token;
+          expires = new Date(sendDate.getTime() + ( data.expires_in * 1000 ));
+          if (callback && typeof callback == 'function') {
+            callback(null, userEmail);
+          }
+        }).error(function(data, status, headers, config) {
+          console.log('Request#login: ' + data.name);
+          if (callback && typeof callback == 'function') {
+            callback(data);
+          }
+        });
+      },
+
+      isLoggedIn: function() { return accessToken && refreshToken },
+
+      withAuth: function(requestConf, callback) {
+        if (!this.isLoggedIn()) {
+          return callback(new Error('Not logged in'));
+        }
+
+        if (!requestConf.url) {
+          return callback(new Error('url is required'));
+        }
+
+        if (!/^https?:\/\/.*$/.test(requestConf.url)) {
+          requestConf.url = 'http://' + host + requestConf.url;
+        }
+
+        requestConf = Utils.populateObject(requestConf, {
+          url: 'http://' + host + requestConf.url,
+          method: 'GET',
+          headers: {}
+        });
+
+        requestConf.headers['Authorization'] = 'Bearer ' + accessToken;
+
+        $http(requestConf).success(function(data, status, headers, config) {
+          if (callback && typeof callback == 'function') {
+            callback(null, data, status, headers, config);
+          }
+        }).error(function(data, status, headers, config) {
+          if (callback && typeof callback == 'function') {
+            callback(null, data, status, headers, config);
+          }
+        });
+      }
+
+    }
+})
+
+.factory('Utils', function() {
+    return {
+      populateObject: function(obj, defaultObj) {
+        for (var p in defaultObj) {
+          obj[p] = obj[p] || defaultObj;
+        }
+        return obj;
       }
     };
-});
+  });
