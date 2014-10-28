@@ -85,33 +85,35 @@ angular.module('farmers.controllers', [])
   .controller('AlertCtrl', function ($scope, $state) {
   })
 
-.controller('LoginCtrl', function($scope, $http, $location, $rootScope, $state){
+.controller('LoginCtrl', function($scope, $http, $location, $rootScope, $state, Request){
 
        $scope.user = {};
        $scope.user.email = '';
        $scope.user.password = '';
        //$scope.resetError();
 
-       $scope.loginUser = function(user){
-             var url = "http://localhost:8080/login/"+"?email="+ $scope.user.email;
-                         $http.get( url).success(function(data,status){
-                                  if(data==""){
-                                  //   $scope.setError("No Users Founded");
-                                      alert("No Users Founded");
-                                  }
-                                  else if( data == $scope.user.password){
-                                      $scope.user.email = '';
-                                      $scope.user.password = '';
-                                      $state.transitionTo('app.forecasts');
-                                  }
-                                  else{
-                                  //   $scope.setError("Password Invalid");
-                                       alert("Password Invalid");
-                                  }
-                         }).error(function(){
-                               alert("Loading failed =_=");
-                         });
-                      }
+       //$scope.loginUser = function(user){
+       //      var url = "http://localhost:8080/login/"+"?email="+ $scope.user.email;
+       //                  $http.get( url).success(function(data,status){
+       //                           if(data==""){
+       //                           //   $scope.setError("No Users Founded");
+       //                               alert("No Users Founded");
+       //                           }
+       //                           else if( data == $scope.user.password){
+       //                               $scope.user.email = '';
+       //                               $scope.user.password = '';
+       //                               $state.transitionTo('app.forecasts');
+       //                           }
+       //                           else{
+       //                           //   $scope.setError("Password Invalid");
+       //                                alert("Password Invalid");
+       //                           }
+       //                  }).error(function(){
+       //                        alert("Loading failed =_=");
+       //                  });
+       //               }
+
+    $scope.loginUser = Request.login;
 
        $scope.resetError = function() {
            $scope.error = false;

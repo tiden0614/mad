@@ -22,6 +22,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Allow cross-domain requests
+app.all(function(req, res, next) {
+  if (res.method.toLowerCase() == 'options'){
+    res.send(
+      '',
+      {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*'
+      },
+      200);
+  }
+  next();
+  //res.header("Access-Control-Allow-Origin", "*");
+  //res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  //next();
+});
+
+// Routes
 app.use(routes.OAuthRouter);
 // app.use('/', routes.UsersRouter);
 

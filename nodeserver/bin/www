@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 var debug = require('debug')('dev');
 var app = require('../app');
-var appConfig = require('../config/app-config');
+var appConfig = require('../config');
 
-app.set('port', process.env.PORT || appConfig.appPort);
+app.set('port', process.env.PORT || appConfig.port);
+app.set('env', process.env.ENV || appConfig.env || 'development');
 
-var server = app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), function(err) {
+  if(err) console.log(err);
   debug('Express server listening on port ' + server.address().port);
 });
