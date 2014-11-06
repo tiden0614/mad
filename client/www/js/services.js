@@ -268,7 +268,8 @@ angular.module('farmers.services', ['base64'])
               // OAuth2Error
               refreshTokens(userRequest);
             } else {
-              callback(new Error('Request#withAuth: error requesting ' + requestConf.url), data, status, headers, config);
+              callback(new Error('Request#withAuth: error requesting ' + requestConf.url),
+                data, status, headers, config);
             }
           });
         })();
