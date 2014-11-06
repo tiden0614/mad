@@ -158,7 +158,8 @@ angular.module('farmers.services', ['base64'])
  * Handles oauth2 authenticate automatically
  */
 .factory('Request', function($http, $base64, Utils) {
-    var host = 'localhost:8080';
+    //var host = 'localhost:8080';
+    var host = 'weather-forecast-user.mybluemix.net';
 
     var clientId = 'forecast';
     var clientSecret = '9a5667gfn5h434df7dh8f99';
