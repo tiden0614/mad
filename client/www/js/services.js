@@ -114,24 +114,33 @@ angular.module('farmers.services', ['base64'])
   }
 })
 
-.factory('LocationList', function() {
+.factory('LocationService', function(Request) {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
-  var locationList = [
-  {locationId: '1', location_name: 'CurrentLocation'},
-  {locationId: '2', location_name: 'Farm1'},
-  {locationId: '3', location_name: 'Farm2'}
-   ];
+  var locationList = [];
 
   return {
-  all: function() {
-    return locationList;
-  },
-  get: function(locationId) {
-    // Simple index lookup
-    return locationList[locationId];
-  }
+    all: function(callback) {
+      if (!Request.isLoggedIn()) {
+        throw new Error('Login is required before getting the location list');
+      }
+      if (locationList.length > 0) {
+        return callback(locationList);
+      }
+      Request.withAuth({ url: '/oauth/farm' }, function(data, status, headers, config) {
+        if (status == 200) {
+          locationList = data;
+          callback(data);
+        } else {
+          throw new Error('Error getting location list with status ' + status);
+        }
+      });
+    },
+    get: function(locationId) {
+      // Simple index lookup
+      return locationList[locationId];
+    }
   }
 })
 
@@ -216,11 +225,13 @@ angular.module('farmers.services', ['base64'])
           requestConf.url = 'http://' + host + requestConf.url;
         }
 
-        requestConf = Utils.populateObject(requestConf, {
+        var combinedReq = {
           url: 'http://' + host + requestConf.url,
           method: 'GET',
           headers: {}
-        });
+        };
+
+        $.extend(combinedReq, requestConf);
 
         // set up a counter to avoid infinite recursive calls
         var retries = 0;
@@ -254,26 +265,26 @@ angular.module('farmers.services', ['base64'])
           });
         }
 
-        (function userRequest() {
-          requestConf.headers['Authorization'] = 'Bearer ' + accessToken;
+        (function userRequest(rc) {
+          rc.headers['Authorization'] = 'Bearer ' + accessToken;
           // if token expires
           if (new Date().getTime() > expires.getTime() && ++retries <= maxRetires) {
             return refreshTokens(userRequest);
           }
-          $http(requestConf).success(function(data, status, headers, config) {
+          $http(rc).success(function(data, status, headers, config) {
             if (callback && typeof callback == 'function') {
-              callback(null, data, status, headers, config);
+              callback(data, status, headers, config);
             }
           }).error(function(data, status, headers, config) {
             if (status == '401' && ++retries <= maxRetires) {
               // OAuth2Error
               refreshTokens(userRequest);
             } else {
-              callback(new Error('Request#withAuth: error requesting ' + requestConf.url),
-                data, status, headers, config);
+              throw new Error('Error happens requesting withAuth ' + status);
             }
           });
-        })();
+        })(combinedReq);
+
       }
 
     }
@@ -282,13 +293,6 @@ angular.module('farmers.services', ['base64'])
 .factory('Utils', function() {
     return {
 
-      populateObject: function(obj, defaultObj) {
-        for (var p in defaultObj) {
-          obj[p] = obj[p] || defaultObj;
-        }
-        return obj;
-      },
-
       serializeIntoFormEncoded: function(obj) {
         var str = [];
         for (var p in obj) {
@@ -296,5 +300,6 @@ angular.module('farmers.services', ['base64'])
         }
         return str.join('&');
       }
+
     };
   });

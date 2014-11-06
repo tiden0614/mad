@@ -16,8 +16,8 @@
     </header>
     <ion-content class="has-header">
       <ion-list>
-          <ion-item ng-repeat="location in locationList" nav-clear menu-close href="#/app/forecasts/{{location.locationId}}">
-              {{location.location_name}}
+          <ion-item ng-repeat="location in locationList" nav-clear menu-close href="#/app/forecasts?longitude={{location.position.x}}&&latitude={{location.position.y}}">
+              {{location.name}}
           </ion-item>
       </ion-list>
 

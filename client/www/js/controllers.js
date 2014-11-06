@@ -1,6 +1,8 @@
 angular.module('farmers.controllers', [])
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $state, Request, $ionicSideMenuDelegate) {
+  .controller('AppCtrl', function ($scope, $ionicModal, $state, Request, $ionicSideMenuDelegate, LocationService) {
+
+    $scope.locationList = [];
 
     $scope.sideMenu = {
         shouldEnable: true
@@ -36,6 +38,9 @@ angular.module('farmers.controllers', [])
         if (err) {
           //TODO Do something when login failed
         } else {
+          LocationService.all(function(list) {
+            $scope.locationList = list;
+          });
           $scope.loginModal.hide();
           if ($ionicSideMenuDelegate.isOpen()) {
             $ionicSideMenuDelegate.toggleLeft();
