@@ -1,30 +1,21 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../services/UserService');
+var UserService = require('../services/UserService');
 
-/* GET users listing. */
-// router.get('/', function(req, res) {
-//   res.send('respond with a resource');
-// });
+router.route('/oauth/farm')
+  .get(function(req, res, next) {
+    UserService.getFarmsByUser({ user: req.user }, function(err, farms) {
+      if (err) return next(err);
+      res.json(farms);
+    });
+  })
+  .post(function(req, res, next) {
+    var farm = req.body.farm;
+    if (!farm) return next(new Error('farm is required'));
+    UserService.saveFarm({ user: req.user, farm: farm }, function(err, farm) {
+      if (err) return next(err);
+      res.sendStatus(200);
+    });
+  });
 
-// router.post('/login', function(req, res) {
-//   var data = {
-//     username: req.body.username,
-//     password: req.body.password
-//   };
-//   auth.authencateLocal(data, function(suc) {
-//     if(suc) {
-//       res.send('Successful Logged in!');
-//     } else {
-//       res.send('Invalid username/password!');
-//     }
-//   }, function(err) {
-
-//   });
-// });
-
-// router.get('/login', function(req, res) {
-//   res.render('login');
-// });
-
-// module.exports = router;
+module.exports = router;
