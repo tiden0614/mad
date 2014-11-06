@@ -1,7 +1,8 @@
 /* index for data model */
 var data_sets = {
   development: ['OAuthClients', 'Users'],
-  test: ['OAuthClients', 'Users']
+  test: ['OAuthClients', 'Users'],
+  bluemix: ['OAuthClients', 'Users']
 };
 
 module.exports = function(env) {
