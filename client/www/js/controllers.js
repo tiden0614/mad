@@ -2,6 +2,7 @@ angular.module('farmers.controllers', [])
 
   .controller('AppCtrl', function ($scope, $ionicModal, $state, Request, $ionicSideMenuDelegate, LocationService) {
 
+    $scope.loginLogoutStr = 'Login';
     $scope.locationList = [];
 
     $scope.sideMenu = {
@@ -28,8 +29,12 @@ angular.module('farmers.controllers', [])
     };
 
     // Open the login modal
-    $scope.login = function () {
-      $scope.loginModal.show();
+    $scope.loginLogout = function () {
+      if (Request.isLoggedIn()) {
+        Request.logout();
+      } else {
+        $scope.loginModal.show();
+      }
     };
 
     // Perform the login action when the user submits the login form
@@ -38,6 +43,7 @@ angular.module('farmers.controllers', [])
         if (err) {
           //TODO Do something when login failed
         } else {
+          $scope.loginLogoutStr = 'Logout';
           LocationService.all(function(list) {
             $scope.locationList = list;
           });

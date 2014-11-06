@@ -181,6 +181,8 @@ angular.module('farmers.services', ['base64'])
 
     return {
 
+      logout: function () { userEmail = accessToken = refreshToken = expires = null; },
+
       login: function(user, callback) {
         var sendDate = new Date();
         $http({
