@@ -214,6 +214,14 @@ angular.module('farmers.services', ['base64'])
 
       isLoggedIn: function() { return accessToken && refreshToken },
 
+      /**
+       * This function sends a request with OAuth2 Authorization header with previous login info
+       * If the accessToken is expired, it refreshes the accessToken and then re-send the original request
+       * Should raise an error if used when not logged in
+       * @param requestConf Request object containing url, method, headers and data
+       * @param callback The callback function when server returns success or error
+       * @returns {*} the return values shouldn't be used under any condition
+       */
       withAuth: function(requestConf, callback) {
         if (!this.isLoggedIn()) {
           return callback(new Error('Not logged in'));
