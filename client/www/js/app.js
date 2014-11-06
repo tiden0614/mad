@@ -78,15 +78,24 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
       }
     })
 
-    .state('app.forecastDetail', {
-        url: "/forecasts/:forecastId",
-        views: {
-           'menuContent' :{
-            templateUrl: "templates/forecast.html",
-            controller: 'ForecastDetailCtrl'
-            }
-        }
+    .state('forecastDetail', {
+      url: "/forecasts/:forecastId",
+      //views: {
+        //'menuContent' :{
+          templateUrl: "templates/forecast.html",
+          controller: 'ForecastDetailCtrl'
+        //}
+      //}
     });
+    //.state('app.forecastDetail', {
+    //    url: "/forecasts/:forecastId",
+    //    views: {
+    //       'menuContent' :{
+    //        templateUrl: "templates/forecast.html",
+    //        controller: 'ForecastDetailCtrl'
+    //        }
+    //    }
+    //});
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/forecasts');
