@@ -41,6 +41,22 @@ exports.getUserById = function(data, callback) {
 };
 
 exports.saveUser = function(data, callback) {
+  if (!data || !data.email) return callback(new Error('saveUser: email is required'));
+  if (data.password) {
+    var password = data.password;
+    delete data.password;
+    data.hashedPassword = crypto.createHash('md5').update(password).digest('base64');
+  }
+  UsersModel.findOneAndUpdate({ email: data.email }, data, {upsert: true}, callback);
+};
+
+exports.saveNewUser = function(data, callback) {
+  if (!data || !data.email) return callback(new Error('saveUser: email is required'));
+  if (!data || !data.password) return callback(new Error('saveUser: password is required'));
+  if (!data || !data.name) return callback(new Error('saveUser: name is required'));
+  var password = data.password;
+  delete data.password;
+  data.hashedPassword = crypto.createHash('md5').update(password).digest('base64');
   new UsersModel(data).save(callback);
 };
 

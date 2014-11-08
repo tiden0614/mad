@@ -14,7 +14,7 @@ router.route('/oauth/token').post(oauth.grant()).get(function(req, res) {
   res.status(405).end();
 });
 
-router.route('/oauth()|(/*)').all(oauth.authorise(), function(req, res, next) {
+router.route('/oauth|/oauth/*').all(oauth.authorise(), function(req, res, next) {
   if (req.path === '/oauth') {
     res.sendStatus(200);
   } else {

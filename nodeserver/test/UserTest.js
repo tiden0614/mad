@@ -9,6 +9,7 @@ var UserService = require('../services/UserService');
 var OAuthService = require('../services/OAuthService');
 
 var FarmsModel = models('Farms');
+var UsersModel = models('Users');
 
 
 var fixtures = {
@@ -50,6 +51,19 @@ describe("USER TEST", function() {
   });
 
   describe('User Service Tests', function() {
+
+    it('should save new user by email and password', function(done) {
+      var _new_user_ = {
+        email: 'tiden111@gmail.com',
+        password: '000000',
+        name: {first: 'Daryl', last: 'Zhang'}
+      };
+      UserService.saveNewUser(_new_user_, function(err, doc) {
+        if (err) return done(err);
+        assert(doc, "didn't successfully save user");
+        done();
+      });
+    });
 
     it('should get user by Id', function(done) {
       UserService.getUserById({ id: user._id }, done);
@@ -185,6 +199,45 @@ describe("USER TEST", function() {
       });
     });
 
+    it('should signup new user', function(done) {
+      request(app)
+        .post('/signup')
+        .type('form')
+        .send({
+          email: 'testemail@test.email.com',
+          password: '000000',
+          name: { first: 'firstname', last:'lastname' }
+        })
+        .expect(200)
+        .end(function(err, res) {
+          if (err) return done(err);
+          UsersModel.findOne({ email: 'testemail@test.email.com' }, function(err, doc) {
+            if (err) return done(err);
+            assert.equal('firstname', doc.name.first, "didn't successfully save a user");
+            done();
+          });
+        });
+    });
+
+    it('should block invalid email when signup', function(done) {
+      request(app)
+        .post('/signup')
+        .type('form')
+        .send({
+          email: 'invalid&&email@test.email.com',
+          password: '000000',
+          name: { first: 'namefirst', last:'namelast' }
+        })
+        .expect(400)
+        .end(function(err, res) {
+          if (err) return done(err);
+          UsersModel.findOne({ email: 'invalid&&email@test.email.com' }, function(err, doc) {
+            if (err) return done(err);
+            assert(!doc, "server didn't block invalid email");
+            done();
+          });
+        });
+    });
   });
 
 });
