@@ -181,7 +181,37 @@ angular.module('farmers.services', ['base64'])
 
     return {
 
+      isLoggedIn: function() { return accessToken && refreshToken },
+
       logout: function () { userEmail = accessToken = refreshToken = expires = null; },
+
+      signup: function(user, callback) {
+        if (!user || !user.email) throw new Error('email is required');
+        if (!user.password) throw new Error('password is required');
+        if (!user.name || (!user.name.first && !user.name.last)) throw new Error('name is required');
+
+        $http({
+          method: 'POST',
+          url: 'http://' + host + '/signup',
+          data: JSON.stringify(user),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).success(function(data, status, headers, config) {
+          if (callback && typeof callback == 'function') {
+            callback(status);
+          }
+        }).error(function(data, status, headers, config) {
+          if (status == 400) {
+            console.warn('signup failed');
+            if (callback && typeof callback == 'function') {
+              callback(status, data);
+            }
+          } else {
+            throw new Error('signup failed with ' + status);
+          }
+        });
+      },
 
       login: function(user, callback) {
         var sendDate = new Date();
@@ -202,17 +232,19 @@ angular.module('farmers.services', ['base64'])
           refreshToken = data.refresh_token;
           expires = new Date(sendDate.getTime() + ( data.expires_in * 1000 ));
           if (callback && typeof callback == 'function') {
-            callback(null, userEmail);
+            callback(status, userEmail);
           }
         }).error(function(data, status, headers, config) {
           console.log('Request#login: ' + data.name);
-          if (callback && typeof callback == 'function') {
-            callback(data);
+          if (status == 401) {
+            if (callback && typeof callback == 'function') {
+              callback(status, data.name);
+            }
+          } else {
+            throw new Error('login failed with ' + status);
           }
         });
       },
-
-      isLoggedIn: function() { return accessToken && refreshToken },
 
       /**
        * This function sends a request with OAuth2 Authorization header with previous login info

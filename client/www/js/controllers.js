@@ -1,9 +1,17 @@
 angular.module('farmers.controllers', [])
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $state, Request, $ionicSideMenuDelegate, LocationService) {
+  .controller('AppCtrl', function ($scope, $ionicModal, $state, Request, LocationService) {
 
     $scope.loginLogoutStr = 'Login';
     $scope.locationList = [];
+
+    if (Request.isLoggedIn()) {
+      $scope.loginLogoutStr = 'Logout';
+      LocationService.all(function(list) {
+       $scope.locationList = list;
+      });
+    }
+
 
     $scope.sideMenu = {
         shouldEnable: true
@@ -13,48 +21,14 @@ angular.module('farmers.controllers', [])
       $state.transitionTo('app.search');
     };
 
-    // Form data for the login modal
-    $scope.loginData = {};
-
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $scope
-    }).then(function (modal) {
-      $scope.loginModal = modal;
-    });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function () {
-      $scope.loginModal.hide();
-    };
-
     // Open the login modal
     $scope.loginLogout = function () {
       if (Request.isLoggedIn()) {
         Request.logout();
       } else {
-        $scope.loginModal.show();
+        $state.go('login');
       }
     };
-
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function () {
-      Request.login($scope.loginData, function(err, userEmail) {
-        if (err) {
-          //TODO Do something when login failed
-        } else {
-          $scope.loginLogoutStr = 'Logout';
-          LocationService.all(function(list) {
-            $scope.locationList = list;
-          });
-          $scope.loginModal.hide();
-          if ($ionicSideMenuDelegate.isOpen()) {
-            $ionicSideMenuDelegate.toggleLeft();
-          }
-        }
-      });
-    };
-
   })
 
 
@@ -92,42 +66,68 @@ angular.module('farmers.controllers', [])
 
 
 
- })
+  })
 
   .controller('AlertCtrl', function ($scope, $state) {
   })
 
-.controller('LoginCtrl', function($scope, $http, $location, $rootScope, $state, Request){
+  .controller('LoginCtrl', function($scope, $http, $location, $rootScope, $state, Request){
+    $scope.loginData = {};
 
-       $scope.user = {};
-       $scope.user.email = '';
-       $scope.user.password = '';
-
-    $scope.loginUser = function(user) {
-      Request.login(user, function(err, userEmail) {
-        if (err) {
+    // Perform the login action when the user submits the login form
+    $scope.doLogin = function () {
+      Request.login($scope.loginData, function(status, userEmail) {
+        if (status != 200) {
           //TODO Do something when login failed
         } else {
-          $state.transitionTo('app.forecasts');
+          $state.go('app.forecasts');
         }
       });
     };
 
-       $scope.resetError = function() {
-           $scope.error = false;
-           $scope.errorMessage = '';
-       };
+  })
 
-       $scope.setError = function(message) {
-           $scope.error = true;
-           $scope.errorMessage = message;
-           $rootScope.SessionId='';
-       };
+  .controller('SignupCtrl',function($state, $scope, Request){
+    $scope.photoAdded = false;
+    $scope.user = {};
+    $scope.pwdNotSame = true;
+    $scope.$watch('user.pwd1',function() {$scope.test()});
+    $scope.$watch('user.pwd2',function() {$scope.test()});
+    $scope.test = function(){
+      $scope.pwdNotSame = $scope.user.pwd1 !== $scope.user.pwd2;
+    };
 
-   $scope.toSignUp = function(){  $state.transitionTo('signUp'); }
+    $scope.submit = function(){
+      var user = $scope.user;
+      console.log(user);
+      Request.signup({
+        email: user.email,
+        name: user.name,
+        password: user.pwd1,
+        gender: user.gender,
+        phone: user.phone || "",
+        address: user.address || ""
+      },function(status, data){
+        if (status == 200) {
+          console.log("signup successful");
+          // Auto login after signup
+          Request.login({
+            email: user.email,
+            password: user.pwd1
+          }, function(status) {
+            if (status == 200) {
+              console.log('login successfully');
+              $state.go("app.forecasts");
+            } else {
+              // TODO do something when login failed
+            }
+          });
+        } else {
 
-   $scope.skipLogin = function(){  $state.transitionTo('app.forecasts'); }
-})
+        }
+      });
+    }
+  })
 
 .controller('ForecastDetailCtrl', function ($scope, $stateParams, ForecastList, TempHourlyList, RainfallThreeHourlyList){
     $scope.forecast = ForecastList.getForecastDetail();
@@ -167,7 +167,7 @@ angular.module('farmers.controllers', [])
                 return function(d){
                     return d3.time.format('%H')(new Date(d));
                 }
-            }
+            };
 
             $scope.xAxisTickValues = function(){
                 return function(d){
@@ -180,4 +180,4 @@ angular.module('farmers.controllers', [])
                     return tickVals;
                 }
             }
-})
+});

@@ -57,6 +57,10 @@ exports.saveNewUser = function(data, callback) {
   var password = data.password;
   delete data.password;
   data.hashedPassword = crypto.createHash('md5').update(password).digest('base64');
+  if (!data.passwordResetToken) {
+    var pRTSeed = data.hashedPassword + (new Date()).getTime();
+    data.passwordResetToken = crypto.createHash('md5').update(pRTSeed).digest('base64');
+  }
   new UsersModel(data).save(callback);
 };
 

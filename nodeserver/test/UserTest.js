@@ -47,7 +47,7 @@ describe("USER TEST", function() {
           OAuthService.saveClient(fixtures.clients[0], cb);
         });
       });
-    };
+    }
   });
 
   describe('User Service Tests', function() {
