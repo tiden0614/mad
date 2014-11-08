@@ -10,8 +10,9 @@ router.route('/oauth/farm')
     });
   })
   .post(function(req, res, next) {
-    var farm = req.body.farm;
-    if (!farm) return next(new Error('farm is required'));
+    if (!req.body.name) return res.status(400).send('farm is required');
+    if (!req.body.position || !req.body.position.lo || !req.body.position.la) return res.status(400).send('longitude/latitude is required');
+    var farm = { name: req.body.name, position: req.body.position };
     UserService.saveFarm({ user: req.user, farm: farm }, function(err, farm) {
       if (err) return next(err);
       res.sendStatus(200);

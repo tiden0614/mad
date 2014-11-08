@@ -16,7 +16,7 @@ var schemas = {
   'Farms': {
     userId: { type: Schema.Types.ObjectId, rel: 'User', required: true },
     name: { type: String, required: true },
-    position: { type: { x: { type: Number }, y: { type: Number } } }
+    position: { type: { lo: { type: Number }, la: { type: Number } } }
   }
 };
 

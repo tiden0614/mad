@@ -153,7 +153,7 @@ describe("USER TEST", function() {
         .type('form')
         .set('Authorization', 'Bearer ' + accessToken)
         .send({
-          farm: { name: 'ANEWFARM', position: { x: 100, y: 100 } }
+           name: 'ANEWFARM', position: { lo: 100, la: 100 }
         })
         .expect(200)
         .end(function(err, res) {
