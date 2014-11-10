@@ -32,13 +32,13 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
   $stateProvider
     .state('login', {
         url: "/login",
-        templateUrl: "templates/login/log-in.html",
+        templateUrl: "templates/login.html",
         controller: 'LoginCtrl'
       })
-      .state('signUp', {
-        url: "/signUp",
-        templateUrl: "templates/login/sign-up.html",
-        controller: 'SignUpCtrl'
+      .state('signup', {
+        url: "/signup",
+        templateUrl: "templates/sign-up.html",
+        controller: 'SignupCtrl'
       })
 
     .state('app', {
@@ -58,14 +58,14 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
         }
     })
 
-    .state('app.search', {
-        url:"/forecasts/search",
-        views: {
-          'menuContent' :{
+    .state('search', {
+        url:"/search",
+        //views: {
+          //'menuContent' :{
             templateUrl: "templates/search.html",
             controller: 'MapCtrl'
-          }
-        }
+          //}
+        //}
     })
 
     .state('app.forecasts', {
@@ -78,15 +78,25 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
       }
     })
 
-    .state('app.forecastDetail', {
-        url: "/forecasts/?forecastId&latitude&longtitude",
-        views: {
-           'menuContent' :{
-            templateUrl: "templates/forecast.html",
-            controller: 'ForecastDetailCtrl'
-            }
-        }
+
+    .state('forecastDetail', {
+      url: "/forecast/?forecastId&latitude&longtitude",
+      //views: {
+        //'menuContent' :{
+          templateUrl: "templates/forecast.html",
+          controller: 'ForecastDetailCtrl'
+        //}
+      //}
     });
+    //.state('app.forecastDetail', {
+    //    url: "/forecasts/:forecastId",
+    //    views: {
+    //       'menuContent' :{
+    //        templateUrl: "templates/forecast.html",
+    //        controller: 'ForecastDetailCtrl'
+    //        }
+    //    }
+    //});
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/forecasts');

@@ -1,19 +1,46 @@
 #!/usr/bin/env node
-var db = require('../services/db');
-var seedData = require('../config/seed-data');
-var logger = require('debug')('dev');
 
-for(var col in seedData) {
-  var index = seedData[col].index;
-  var dataList = seedData[col].data;
-  var collection = db.get(col);
-  logger('Adding to ' + col);
-  dataList.forEach(function(doc) {
-    logger(doc);
-    collection.insert(doc);
-  });
-  collection.index(index);
-  logger('    ');
+var env = process.env.NODE_ENV || 'development';
+
+console.log('Migrating ' + env + ' data...');
+
+var models = require('../models');
+var data = require('../data')(env);
+
+var stat = {};
+var totalRecords = 0;
+var returnedRecords = 0;
+var checkingFinished = false;
+
+function checkFinished() {
+  if (checkingFinished) {
+    return;
+  }
+  checkingFinished = true;
+  setTimeout(function() {
+    if (returnedRecords >= totalRecords) {
+      console.log('All operations completed.');
+      console.log('Total records: ' + returnedRecords);
+      process.exit(0);
+    }
+    checkingFinished = false;
+  }, 1000);
 }
 
-db.close();
+for (var m in data) {
+  mModel = models(m);
+  mData = data[m];
+  console.log('Saving ' + mData.length + ' records into ' + m + '...');
+  stat[m] = [];
+  mData.forEach(function(d) {
+    new mModel(d).save(function logErr(err, doc) {
+      returnedRecords++;
+      if (err) {
+        stat[m].push(err);
+        return console.error(err);
+      }
+      stat[m].push(doc);
+      checkFinished();
+    });
+  });
+}

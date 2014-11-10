@@ -10,7 +10,7 @@ var schemas = {
     expires: { type: Date }
   },
   'OAuthClients': {
-    clientId: { type: String },
+    clientId: { type: String, required: true, unique: true },
     clientSecret: { type: String },
     redirectUri: { type: String },
     grantTypes: { type: [String], required: true }

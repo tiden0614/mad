@@ -10,25 +10,23 @@ var oauth = oauthserver({
   debug: true
 });
 
-router.route('/oauth/token')
-  .post(oauth.grant())
-  .get(function(req, res) {
-    res.status(405).end();
-  });
+router.route('/oauth/token').post(oauth.grant()).get(function(req, res) {
+  res.status(405).end();
+});
 
-router.route('/oauth()|(/*)')
-  .all(oauth.authorise(), function(req, res, next) {
-    if (req.path === '/oauth') {
-      res.sendStatus(200);
-    } else {
-      UserService.getUserById({ id: req.user.id }, function(err, user) {
-        if (err) {
-          next(err);
-        } else {
-          req.user = user;
-        }
-      });
-    }
-  });
+router.route('/oauth|/oauth/*').all(oauth.authorise(), function(req, res, next) {
+  if (req.path === '/oauth') {
+    res.sendStatus(200);
+  } else {
+    UserService.getUserById({ id: req.user.id }, function(err, user) {
+      //if (err) {
+      //  next(err);
+      //} else {
+        req.user = user;
+        next(err);
+      //}
+    });
+  }
+});
 
 module.exports = router;

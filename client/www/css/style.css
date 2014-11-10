@@ -141,8 +141,8 @@
 
 #search-bar {
     position: absolute;
-    top: 15px;
-    left: 100px;
+    top: 82%;
+    left: 15%;
     z-index: 5;
     background-color: #fff;
     padding: 5px;

@@ -10,14 +10,14 @@ var oauthService = require('../services/OAuthService');
 
 var fixtures = {
   clients: [{
-    clientId: 'unitableself',
+    clientId: 'forecast',
     clientSecret: '9a5667gfn5h434df7dh8f99',
     redirectUri: '/oauth/redirect',
     grantTypes: ['password', 'refresh_token']
   }],
 
   users: [{
-    email: 'test@unitable.com',
+    email: 'test@andrew.cmu.edu',
     // MD5 hashed password 'testpassword'
     hashedPassword: '4WsquNEjFL9O+9YgOQbqbA==',
     name: { first: "Lee", last: "Yu" }
@@ -28,7 +28,7 @@ var fixtures = {
 describe("OAUTH TEST", function() {
   var accessToken;
   var refreshToken;
-  var clientId = "unitableself";
+  var clientId = "forecast";
   var clientSecret = "9a5667gfn5h434df7dh8f99";
   var clientCredentials = new Buffer(clientId + ":" + clientSecret).toString('base64');
 
@@ -55,7 +55,7 @@ describe("OAUTH TEST", function() {
       .set('Authorization', 'Basic ' + clientCredentials)
       .send({
         grant_type: 'password',
-        username: 'test@unitable.com',
+        username: 'test@andrew.cmu.edu',
         password: 'testpassword'
       })
       .expect(200)

@@ -11,13 +11,12 @@ var schemas = {
     resetTokenExpires: { type: Date },
     phone: { type: String },
     address: { type: String },
-    gender: { type: String },
-    farms: { type: [ { type: Schema.Types.ObjectId, rel: 'Farm' } ] }
+    gender: { type: String }
   },
   'Farms': {
-    userId: { type: Schema.Types.ObjectId, rel: 'User' },
-    name: { type: String },
-    position: { type: { x: { type: Number }, y: { type: Number } } }
+    userId: { type: Schema.Types.ObjectId, rel: 'User', required: true },
+    name: { type: String, required: true },
+    position: { type: { lo: { type: Number }, la: { type: Number } } }
   }
 };
 
