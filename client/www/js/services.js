@@ -256,11 +256,11 @@ angular.module('farmers.services', ['base64'])
        */
       withAuth: function(requestConf, callback) {
         if (!this.isLoggedIn()) {
-          return callback(new Error('Not logged in'));
+          throw new Error('Not logged in');
         }
 
         if (!requestConf.url) {
-          return callback(new Error('url is required'));
+          throw new Error('url is required');
         }
 
         if (!/^https?:\/\/.*$/.test(requestConf.url)) {
@@ -301,9 +301,7 @@ angular.module('farmers.services', ['base64'])
               next();
             }
           }).error(function(data, status, headers, config) {
-            if (callback && typeof callback == 'function') {
-              callback(new Error('Request#withAuth: error refreshing tokens'), data, status, headers, config);
-            }
+            throw new Error('Request#withAuth: error refreshing tokens');
           });
         }
 
@@ -327,6 +325,25 @@ angular.module('farmers.services', ['base64'])
           });
         })(combinedReq);
 
+      },
+
+      withoutAuth: function(requestConf, callback) {
+        if (!requestConf || !requestConf.url) {
+          throw new Error('url is required');
+        }
+
+        if (!/$https?:\/\/.*^/.test(requestConf.url)) {
+          requestConf.url = 'http://' + host + requestConf.url;
+        }
+
+        var defauts = {
+          method: 'GET',
+          headers: {}
+        };
+
+        $.extend(defauts, requestConf);
+
+        $http(requestConf).success(callback).error(callback);
       }
 
     }
