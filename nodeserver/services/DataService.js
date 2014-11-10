@@ -1,5 +1,6 @@
 var detailJSON = require('./mock/detail-forecast.js');
 var briefJSON = require('./mock/brief-forecast.js');
+var notificationJSON = require('./mock/notification-forecast');
 
 exports.getDetailData = function(data, callback) {
   // TODO implement this
@@ -18,6 +19,6 @@ exports.getBriefData = function(data, callback) {
 exports.getNotificationData = function(data, callback) {
   // TODO implement this
   if (callback && typeof callback == 'function') {
-    callback(null, detailJSON);
+    callback(null, notificationJSON);
   }
 };
