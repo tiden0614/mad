@@ -12,13 +12,15 @@
 
   <ion-side-menu side="left">
     <header class="bar bar-header bar-stable">
+      <button class="button button-icon icon ion-ios7-minus-outline" ng-click="showDelete = !showDelete;"></button>
       <h1 class="title">Locations</h1>
     </header>
     <ion-content class="has-header">
-      <ion-list>
+      <ion-list show-delete="showDelete">
         <ion-item ng-repeat="location in locationList" nav-clear menu-close
                   href="#/app/forecasts?longitude={{location.position.la}}&&latitude={{location.position.lo}}">
           {{location.name}}
+          <ion-delete-button class="ion-minus-circled" ng-click="deleteLocation($index)"></ion-delete-button>
         </ion-item>
       </ion-list>
 

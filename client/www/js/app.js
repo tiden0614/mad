@@ -78,7 +78,7 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
 
 
       .state('forecastDetail', {
-        url: "/forecast/?forecastId&latitude&longtitude",
+        url: "/forecast?forecastId&latitude&longtitude",
         templateUrl: "templates/forecast.html",
         controller: 'ForecastDetailCtrl'
       });

@@ -281,6 +281,12 @@ angular.module('farmers.services', ['base64'])
         }
       });
     },
+    deleteLocation: function(farm, callback) {
+      // TODO implement this
+      if (callback && typeof callback == 'function') {
+        callback(200);
+      }
+    },
     get: function(locationId) {
       // Simple index lookup
       return locationList[locationId];

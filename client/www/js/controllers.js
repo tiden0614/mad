@@ -27,6 +27,21 @@ angular.module('farmers.controllers', [])
         $state.go('login');
       }
     };
+
+    $scope.deleteLocation = function(index) {
+      if ($rootScope.locationList.length > index) {
+        var tobeDeleted = $rootScope.locationList[index];
+        $rootScope.locationList.splice(index, 1);
+        //$scope.locationList = $rootScope.locationList;
+        LocationService.deleteLocation({}, function(status) {
+          if (status == 200) {
+            console.log('successfully deleted farm');
+          } else {
+            console.warn('error happend deleting farm ' + status);
+          }
+        });
+      }
+    }
   })
 
 
