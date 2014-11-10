@@ -46,7 +46,31 @@ angular.module('farmers.controllers', [])
   })
 
 
-  .controller('ForecastsCtrl', function ($scope, ForecastList, $state) {
+  .controller('ForecastsCtrl', function ($scope, ForecastList, $state, $stateParams) {
+    if($stateParams.latitude==null||$stateParams.longitude==null){
+        if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                        $stateParams.latitude = position.coords.latitude;
+                        $stateParams.longitude = position.coords.longitude;
+                        });
+        }else {
+                         // Browser doesn't support Geolocation
+                        handleNoGeolocation(false);
+              }
+
+
+        function handleNoGeolocation(errorFlag) {
+                     if (errorFlag) {
+                         var content = 'Error: The Geolocation service failed.';
+                         alert(content);
+                     } else {
+                         var content = 'Error: Your browser doesn\'t support geolocation.';
+                         alert(content);
+                     }
+
+        }
+    }
+
     $scope.forecastList = ForecastList.all();
 
     $scope.alert = function () {
@@ -58,29 +82,49 @@ angular.module('farmers.controllers', [])
     };
 
 
-
-
-    $scope.expand = function (id) {
-      var expandItem = jQuery(".forecast-list [data-forecast-id=" + id + "]");
-      if (expandItem.hasClass("opened")) {
-        expandItem.removeClass("opened");
-      } else {
-        jQuery(".forecast-list .forecast-item").removeClass("opened");
-        // expandItem.parents(".scroll").animate({
-        // 	scrollTop: expandItem.offset().top
-        // }, 1000);
-        //expandItem.parents("div.scroll").scrollDiv.css("-webkit-transform", "translated3d(0px, -" + expandItem.position().top + "px, 0px) scale(1)");
-        expandItem.addClass("opened");
-        if (!expandItem.hasClass("data-loaded")) {
-          $scope.forecastList[id].detail = ForecastList.getForecastDetail(id);
-          expandItem.addClass("data-loaded");
+    $scope.getData=function(){
+        var urlStr= "http://bom.mybluemix.net/getForecast.jsp?latitude=" + $stateParams.latitude+ "&longitude=" + $stateParams.longitude;
+        $.get(urlStr,
+        function(data, status){
+            var forecastItem={
+                id: "",
+                day:"",
+                month:"",
+                weekday:"",
+                humidity:"",
+                chanceOfRain:"",
+                likelyRainfall:"",
+                currentTemp:"",
+                maxTemp:"",
+                minTemp:"",
+                sky:""
+             }
+            var skyList=new Array("cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"  )
+            var forecastList=new Array(7);
+            for(var i=0;i<data.length,i++){
+                forecastItem.id=i;
+                forecastItem.day=data[i].getDate();
+                forecastItem.month=data[i].getMonth();
+                forecastItem.weekday=data[i].getDay();
+                forecastItem.humidity=data[i].humidity;
+                forecastItem.chanceOfRain=data[i].chanceOfRain;
+                forecastItem.likelyRainfall=data[i].likelyRainfall;
+                forecastItem.currentTemp=data[i].currentTemp;
+                forecastItem.maxTemp=data[i].maxTemp;
+                forecastItem.minTemp=data[i].minTemp;
+                forecastItem.sky=skyList[i];
+                forecastList[i]=forecastItem;
+            }
         }
-      }
-    }
+    };
+
+
+  });
 
 
 
- })
+
+
 
   .controller('AlertCtrl', function ($scope, $state) {
   })
