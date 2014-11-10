@@ -459,7 +459,7 @@ window.nv.tooltip.* also has various helper methods.
 
             if (d == null) return '';
 
-            var html = '<h3>' + d.series[0].key + '</h3>' +'<p>' +  d.series[0].value + 'km/h at ' + d.value + '' + '</p>';
+            var html = '<h3> Wind Speed </h3>' +'<p>' +  d.series[0].value + 'km/h at ' + d.value + ':00' + '</p>';
             return html;
 
         };
