@@ -1,14 +1,17 @@
 angular.module('farmers.controllers', [])
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $state, Request, LocationService) {
+  .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $state, Request, LocationService) {
 
     $scope.loginLogoutStr = 'Login';
-    $scope.locationList = [];
+
+    if (!$rootScope) {
+      $rootScope.locationList = [];
+    }
 
     if (Request.isLoggedIn()) {
       $scope.loginLogoutStr = 'Logout';
       LocationService.all(function(list) {
-       $scope.locationList = list;
+       $rootScope.locationList = list;
       });
     }
 
