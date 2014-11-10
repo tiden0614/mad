@@ -1,7 +1,7 @@
 //TODO: use angularJS
 angular.module('map.control', [])
 
-    .controller('MapCtrl', function ($scope, Request) {
+    .controller('MapCtrl', function ($scope, Request, $rootScope, LocationService) {
 
         $scope.state = {
             isLoggedin: Request.isLoggedIn()
@@ -118,6 +118,9 @@ angular.module('map.control', [])
                 Request.withAuth(requestContent, function(data, status, headers, config){
                     if (status == '200'){
                         console.log('post succeeded');
+                        LocationService.all(function(list) {
+                            $rootScope.locationList = list;
+                        });
                     }
                     else {
                         console.log('post failed');
