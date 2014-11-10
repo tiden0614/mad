@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+var env = process.env.NODE_ENV || 'development';
+
+console.log('Migrating ' + env + ' data...');
+
+var models = require('../models');
+var data = require('../data')(env);
+
+var stat = {};
+var totalRecords = 0;
+var returnedRecords = 0;
+var checkingFinished = false;
+
+function checkFinished() {
+  if (checkingFinished) {
+    return;
+  }
+  checkingFinished = true;
+  setTimeout(function() {
+    if (returnedRecords >= totalRecords) {
+      console.log('All operations completed.');
+      console.log('Total records: ' + returnedRecords);
+      process.exit(0);
+    }
+    checkingFinished = false;
+  }, 1000);
+}
+
+for (var m in data) {
+  mModel = models(m);
+  mData = data[m];
+  console.log('Saving ' + mData.length + ' records into ' + m + '...');
+  stat[m] = [];
+  mData.forEach(function(d) {
+    new mModel(d).save(function logErr(err, doc) {
+      returnedRecords++;
+      if (err) {
+        stat[m].push(err);
+        return console.error(err);
+      }
+      stat[m].push(doc);
+      checkFinished();
+    });
+  });
+}

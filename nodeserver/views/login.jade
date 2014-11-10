@@ -1,0 +1,8 @@
+extends layout
+block content
+  form#login-form(action='/users/login', method='POST')
+    label(for='username-input') Username
+    input#username-input(placeholder='username', type='text', name='username')
+    label(for='password-input') Password
+    input#password-input(placeholder='password', type='password', name='password')
+    input(type='submit')

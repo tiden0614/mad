@@ -5,7 +5,7 @@
         <ion-nav-buttons side="left">
             <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
-      <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
+      <ion-nav-back-button class="button-clear" style="display: none;"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
     </ion-nav-bar>
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-side-menu-content>
@@ -16,8 +16,8 @@
     </header>
     <ion-content class="has-header">
       <ion-list>
-          <ion-item ng-repeat="location in locationList" nav-clear menu-close href="#/app/forecasts/{{location.locationId}}">
-              {{location.location_name}}
+          <ion-item ng-repeat="location in locationList" nav-clear menu-close href="#/app/forecasts?longitude={{location.position.x}}&&latitude={{location.position.y}}">
+              {{location.name}}
           </ion-item>
       </ion-list>
 
@@ -25,6 +25,6 @@
     </ion-content>
 
     <ion-footer-bar>
-            <button class="button button-full button-positive" ng-click="login()">Setting</button>
+            <button class="button button-block button-positive" ng-click="loginLogout()" style="margin: 0">{{loginLogoutStr}}</button>
     </ion-footer-bar>
   </ion-side-menu>

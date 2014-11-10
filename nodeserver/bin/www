@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+var debug = require('debug')('dev');
+var app = require('../app');
+var appConfig = require('../config');
+
+app.set('port', process.env.VCAP_APP_PORT || appConfig.port);
+app.set('host', process.env.VCAP_APP_HOST || 'localhost');
+app.set('env', process.env.ENV || appConfig.env || 'development');
+
+var server = app.listen(app.get('port'), function(err) {
+  if(err) console.log(err);
+  debug('Express server running at http://' + app.get('host') + ':' + server.address().port);
+});
