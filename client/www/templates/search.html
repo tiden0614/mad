@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<!--
-TODO: incorporate js to mapcontroller.js
--->
-
     <ion-view title="Search location">
         <ion-content class="has-header map-container" scroll="false">
-            <div id="search-bar">
-                <input id="location" type="textbox" placeholder="Input location here">
-                <button ng-click="searchLocation()" class="button button-location" ng-show="true">Go</button>
-            </div>
             <div id="map-canvas"></div>
+
+            <div id="search-bar">
+                <input id="location" type="textbox" placeholder="search location here">
+                <button ng-click="searchLocation()" class="button button-location">go</button>
+                <button ng-click="addLocation()" class="button button-location" ng-show="state.isLogin">add</button>
+            </div>
         </ion-content>
     </ion-view>

@@ -3,10 +3,14 @@ angular.module('map.control', [])
 
     .controller('MapCtrl', function ($scope) {
 
+        $scope.state = {
+            isLogin: true
+        };
+
         $scope.sideMenu.shouldEnable = false;
         $scope.$on('$destroy', function() {
             $scope.sideMenu.shouldEnable = true;
-        })
+        });
 
         var map, marker;
         var geocoder = new google.maps.Geocoder();
@@ -14,7 +18,7 @@ angular.module('map.control', [])
         function initialize() {
             var mapOptions = {
                 zoom: 15
-            }
+            };
             map = new google.maps.Map(document.getElementById('map-canvas'),
                 mapOptions);
 
@@ -79,7 +83,7 @@ angular.module('map.control', [])
 
         $scope.searchLocation = function () {
             var location = document.getElementById('location').value;
-            geocoder.geocode({'address': location}, function (results, status) {
+            geocoder.geocode({'address': location, 'region': 'au'}, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     map.setCenter(results[0].geometry.location);
                     marker.setPosition(results[0].geometry.location);
@@ -88,11 +92,19 @@ angular.module('map.control', [])
                     alert("Unable to find location: " + status);
                 }
             });
-        }
+        };
+
+
+        $scope.addLocation = function(){
+            var lat = marker.getPosition().lat();
+            var lng = marker.getPosition().lng();
+            var locationName = window.prompt('Please enter a name for the farm');
+            if (locationName != null){
+                alert(lat + ',' + lng + ',' + locationName);
+            }
+        };
 
         google.maps.event.addDomListener(window, 'load', initialize());
-
-
     });
 
 
