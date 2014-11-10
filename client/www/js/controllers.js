@@ -129,10 +129,12 @@ angular.module('farmers.controllers', [])
     }
   })
 
-.controller('ForecastDetailCtrl', function ($scope, $stateParams, ForecastList, TempHourlyList, RainfallThreeHourlyList){
+.controller('ForecastDetailCtrl', function ($scope, $stateParams, RainfallThreeHourlyList){
     var detailURL="templates/weather.json";
     var windSpeed = [{"key": "Wind", "values": []}];
     var tempDaily = [];
+    var rainfallList = [];
+
     jQuery.getJSON(detailURL, function(data){
 
     for (var i=0; i<24; i++){
@@ -141,10 +143,21 @@ angular.module('farmers.controllers', [])
 
         var tempObj = {hour: i, temp_hourly: data.temp[i]};
         tempDaily.push(tempObj);
+    }
+
+    for (var i=0; i<8; i++){
+        if (i < 6){
+            var rainObj ={startHour: 3*i+6+':00', endHour:3*(i+1)+6+':00', chanceOfAnyRain: data.chanceOfRain[i], expectedRainfallAmount: data.likelyRainfall[i], imgSourceId: '0'};
+            rainfallList.push(rainObj);
+        } else {
+            var rainObj ={startHour: 3*(i-6)+':00', endHour:3*(i-5)+':00', chanceOfAnyRain: data.chanceOfRain[i], expectedRainfallAmount: data.likelyRainfall[i], imgSourceId: '0'};
+            rainfallList.push(rainObj);
+        }
 
     }
     //alert([0].values.length);
     $scope.windSpeed=windSpeed;
+    $scope.rainfallList = rainfallList;
 
     $scope.temps_hourly=[];
 
@@ -215,7 +228,5 @@ angular.module('farmers.controllers', [])
             return tickVals;
         }
     }
-
-    $scope.rainfallList = RainfallThreeHourlyList.all();
 
 })
