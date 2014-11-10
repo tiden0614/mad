@@ -4,16 +4,16 @@ angular.module('farmers.controllers', [])
 
     $scope.loginLogoutStr = 'Login';
 
-    if (!$rootScope) {
+    if (!$rootScope.locationList) {
       $rootScope.locationList = [];
     }
 
-    if (Request.isLoggedIn()) {
-      $scope.loginLogoutStr = 'Logout';
-      LocationService.all(function(list) {
-       $rootScope.locationList = list;
-      });
-    }
+    //if (Request.isLoggedIn()) {
+    //  $scope.loginLogoutStr = 'Logout';
+    //  LocationService.all(function(list) {
+    //   $rootScope.locationList = list;
+    //  });
+    //}
 
 
     $scope.sideMenu = {
@@ -35,7 +35,15 @@ angular.module('farmers.controllers', [])
   })
 
 
-  .controller('ForecastsCtrl', function ($scope, ForecastList, $state, $stateParams) {
+  .controller('ForecastsCtrl', function ($scope, ForecastList, $state, $stateParams, $rootScope, Request, LocationService) {
+    if (Request.isLoggedIn()) {
+      LocationService.all(function(list) {
+        $rootScope.locationList = list;
+      });
+    } else if (!$rootScope.locationList) {
+      $rootScope.locationList = [];
+    }
+
     if($stateParams.latitude==null||$stateParams.longitude==null){
         if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function (position) {
@@ -71,7 +79,7 @@ angular.module('farmers.controllers', [])
     };
 
 
-    $scope.getData=function(){
+    (function(){
         var urlStr= "/data/brief?latitude=" + $stateParams.latitude+ "&longitude=" + $stateParams.longitude;
         Request.withoutAuth({
             url: urlStr},
@@ -91,7 +99,7 @@ angular.module('farmers.controllers', [])
                          }
                         var skyList=new Array("cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"  )
                         var forecastList=new Array(7);
-                        for(var i=0;i<data.length,i++){
+                        for(var i=0;i<data.length;i++){
                             forecastItem.id=i;
                             forecastItem.day=data[i].date.getDate();
                             forecastItem.month=data[i].date.getMonth();
@@ -108,7 +116,7 @@ angular.module('farmers.controllers', [])
                     }
             )
 
-    };
+    })();
 
 
   })

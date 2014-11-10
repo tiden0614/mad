@@ -69,7 +69,7 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
     })
 
     .state('app.forecasts', {
-      url: "/forecasts",
+      url: "/forecasts?longitude&latitude",
       views: {
         'menuContent' :{
           templateUrl: "templates/forecasts.html",
