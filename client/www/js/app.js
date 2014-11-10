@@ -7,98 +7,83 @@
 angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', 'map.control', 'nvd3ChartDirectives'])
 
 
-.run(function($ionicPlatform,$rootScope, $location) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if(window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
-})
+  .run(function ($ionicPlatform, $rootScope, $location) {
+    $ionicPlatform.ready(function () {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
+    });
+  })
 
 
-.config(function($stateProvider, $urlRouterProvider,$httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
-  $httpProvider.defaults.withCredentials = true;
+    $httpProvider.defaults.withCredentials = true;
 
     $httpProvider.defaults.headers.put['Content-Type'] = 'X-Requested-With';
     $httpProvider.defaults.headers.post['Content-Type'] = 'X-Requested-With';
 
-  $stateProvider
-    .state('login', {
+    $stateProvider
+
+      /* With side-menu */
+
+      .state('app', {
+        url: "/app",
+        abstract: true,
+        templateUrl: "templates/menu.html",
+        controller: 'AppCtrl'
+      })
+
+      .state('app.forecasts', {
+        url: "/forecasts?longitude&latitude",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/forecasts.html",
+            controller: 'ForecastsCtrl'
+          }
+        }
+      })
+
+      /* Without side-menu */
+
+      .state('login', {
         url: "/login",
         templateUrl: "templates/login.html",
         controller: 'LoginCtrl'
       })
+
       .state('signup', {
         url: "/signup",
         templateUrl: "templates/sign-up.html",
         controller: 'SignupCtrl'
       })
 
-    .state('app', {
-      url: "/app",
-      abstract: true,
-      templateUrl: "templates/menu.html",
-      controller: 'AppCtrl'
-    })
+      .state('alert', {
+        url: "/alert",
+        templateUrl: "templates/alert.html",
+        controller: 'AlertCtrl'
+      })
 
-    .state('app.alert', {
-        url:"/forecasts/alert",
-        views: {
-          'menuContent' :{
-            templateUrl: "templates/alert.html",
-            controller: 'AlertCtrl'
-          }
-        }
-    })
-
-    .state('search', {
-        url:"/search",
-        //views: {
-          //'menuContent' :{
-            templateUrl: "templates/search.html",
-            controller: 'MapCtrl'
-          //}
-        //}
-    })
-
-    .state('app.forecasts', {
-      url: "/forecasts?longitude&latitude",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/forecasts.html",
-          controller: 'ForecastsCtrl'
-        }
-      }
-    })
+      .state('search', {
+        url: "/search",
+        templateUrl: "templates/search.html",
+        controller: 'MapCtrl'
+      })
 
 
-    .state('forecastDetail', {
-      url: "/forecast/?forecastId&latitude&longtitude",
-      //views: {
-        //'menuContent' :{
-          templateUrl: "templates/forecast.html",
-          controller: 'ForecastDetailCtrl'
-        //}
-      //}
-    });
-    //.state('app.forecastDetail', {
-    //    url: "/forecasts/:forecastId",
-    //    views: {
-    //       'menuContent' :{
-    //        templateUrl: "templates/forecast.html",
-    //        controller: 'ForecastDetailCtrl'
-    //        }
-    //    }
-    //});
+      .state('forecastDetail', {
+        url: "/forecast/?forecastId&latitude&longtitude",
+        templateUrl: "templates/forecast.html",
+        controller: 'ForecastDetailCtrl'
+      });
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/forecasts');
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('/app/forecasts');
 
-});
+  });

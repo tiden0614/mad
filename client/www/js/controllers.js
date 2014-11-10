@@ -1,29 +1,27 @@
 angular.module('farmers.controllers', [])
 
-  .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $state, Request) {
+  .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $state, Request, LocationService) {
 
     $scope.loginLogoutStr = 'Login';
-
-    if (!$rootScope.locationList) {
-      $rootScope.locationList = [];
-    }
 
     if (Request.isLoggedIn()) {
       $scope.loginLogoutStr = 'Logout';
     }
 
+    if (!$rootScope.locationList) {
+      $rootScope.locationList = [];
+    }
+
+    $scope.locationList = $rootScope.locationList;
 
     $scope.sideMenu = {
       shouldEnable: true
     };
 
-    $scope.search = function () {
-      $state.go('search');
-    };
-
     // Open the login modal
     $scope.loginLogout = function () {
       if (Request.isLoggedIn()) {
+        $rootScope.locationList = null;
         Request.logout();
       } else {
         $state.go('login');
@@ -58,14 +56,18 @@ angular.module('farmers.controllers', [])
     }
 
     $scope.alert = function () {
-      $state.transitionTo('app.alert');
+      $state.transitionTo('alert');
     };
 
     $scope.search = function () {
       $state.go('search');
     };
 
-    $scope.forecastList = [];
+    if (!$scope.forecastList) {
+      $scope.forecastList = [];
+    }
+
+    /* FIXME You'd better put such logic into a service */
 
     (function () {
       var urlStr = "/data/brief?latitude=" + $stateParams.latitude + "&longitude=" + $stateParams.longitude;
@@ -73,8 +75,8 @@ angular.module('farmers.controllers', [])
           url: urlStr
         },
         function (data, status, headers, config) {
+          $scope.forecastList = [];
           var skyList = ["cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"];
-          //var forecastList = [];
           for (var i = 0; i < data.length; i++) {
             var date = new Date(data[i].date);
             $scope.forecastList.push({
@@ -90,18 +92,6 @@ angular.module('farmers.controllers', [])
               minTemp: data[i].minTemp,
               sky: skyList[i]
             });
-            //forecastItem.id = i;
-            //forecastItem.day = date.getDate();
-            //forecastItem.month = date.getMonth();
-            //forecastItem.weekday = date.getDay();
-            //forecastItem.humidity = data[i].humidity;
-            //forecastItem.chanceOfRain = data[i].chanceOfRain;
-            //forecastItem.likelyRainfall = data[i].likelyRainfall;
-            //forecastItem.currentTemp = data[i].currentTemp;
-            //forecastItem.maxTemp = data[i].maxTemp;
-            //forecastItem.minTemp = data[i].minTemp;
-            //forecastItem.sky = skyList[i];
-            //forecastList.push(forecastItem);
           }
         }
       )
@@ -121,6 +111,8 @@ angular.module('farmers.controllers', [])
     var precip = WarningsList.allPrecip();
 
     //    $scope.loginUser = function(user){
+
+    /* FIXME You'd better put such logic into a service */
 
     Request.withoutAuth({url: '/data/notification'}, function (data, status, headers, config) {
       if (data == "") {
@@ -230,8 +222,8 @@ angular.module('farmers.controllers', [])
         } else {
           LocationService.all(function (list) {
             $rootScope.locationList = list;
+            $state.go('app.forecasts');
           });
-          $state.go('app.forecasts');
         }
       });
     };
@@ -289,6 +281,8 @@ angular.module('farmers.controllers', [])
     var windSpeed = [{"key": "Wind", "values": []}];
     var tempDaily = [];
     var rainfallList = [];
+
+    /* FIXME You'd better put such logic into a service */
 
     Request.withoutAuth({url: '/data/detail'}, function (data, status, headers, config) {
       if (data == "") {

@@ -267,18 +267,10 @@ angular.module('farmers.services', ['base64'])
 })
 
 .factory('LocationService', function(Request) {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var locationList = [];
-
   return {
     all: function(callback) {
       if (!Request.isLoggedIn()) {
         throw new Error('Login is required before getting the location list');
-      }
-      if (locationList.length > 0) {
-        return callback(locationList);
       }
       Request.withAuth({ url: '/oauth/farm' }, function(data, status, headers, config) {
         if (status == 200) {
