@@ -255,6 +255,29 @@ describe("USER TEST", function() {
           });
         });
     });
+
+    it('should delete a farm with a certain name', function(done) {
+      var afarm = { name: 'afarmtobedeleted', position: { la: 10, lo: 15 } };
+      UserService.saveFarm({ user: user, farm: afarm }, function(err, doc) {
+        if (err) return done(err);
+        request(app)
+          .post('/oauth/farm/delete')
+          .type('form')
+          .set('Authorization', 'Bearer ' + accessToken)
+          .send({
+            name: afarm.name
+          })
+          .expect(200)
+          .end(function(err, res) {
+            if (err) return done(err);
+            FarmsModel.findOne({ name: afarm.name }, function(err, doc) {
+              if (err) return done(err);
+              assert(!doc, "didn't successfully delete a farm");
+              done();
+            });
+          });
+      });
+    });
   });
 
 });

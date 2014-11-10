@@ -10,12 +10,26 @@ router.route('/oauth/farm')
     });
   })
   .post(function(req, res, next) {
-    if (!req.body.name) return res.status(400).send('farm is required');
+    if (!req.body.name) return res.status(400).send('name is required');
     if (!req.body.position || !req.body.position.lo || !req.body.position.la) return res.status(400).send('longitude/latitude is required');
     var farm = { name: req.body.name, position: req.body.position };
     UserService.saveFarm({ user: req.user, farm: farm }, function(err, farm) {
       if (err) return next(err);
       res.sendStatus(200);
+    });
+  });
+
+router.route('/oauth/farm/delete')
+  .post(function(req, res, next) {
+    if (!req.body.name) return res.status(400).send('name is required');
+    UserService.deleteFarmByUserAndName({ user: req.user, name: req.body.name }, function(err, doc) {
+      if (err) {
+        if (err.code == 99) {
+          return res.status(400).send(err.message);
+        }
+        return next(err);
+      }
+      return res.sendStatus(200);
     });
   });
 
