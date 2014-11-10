@@ -18,7 +18,7 @@ angular.module('farmers.controllers', [])
     };
 
     $scope.search = function () {
-      $state.transitionTo('app.search');
+      $state.go('search');
     };
 
     // Open the login modal
@@ -40,7 +40,7 @@ angular.module('farmers.controllers', [])
     };
 
     $scope.search = function () {
-      $state.transitionTo('app.search');
+      $state.go('search');
     };
 
 

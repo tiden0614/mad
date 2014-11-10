@@ -58,14 +58,14 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
         }
     })
 
-    .state('app.search', {
-        url:"/forecasts/search",
-        views: {
-          'menuContent' :{
+    .state('search', {
+        url:"/search",
+        //views: {
+          //'menuContent' :{
             templateUrl: "templates/search.html",
             controller: 'MapCtrl'
-          }
-        }
+          //}
+        //}
     })
 
     .state('app.forecasts', {

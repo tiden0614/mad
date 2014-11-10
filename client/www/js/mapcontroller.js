@@ -1,16 +1,16 @@
 //TODO: use angularJS
 angular.module('map.control', [])
 
-    .controller('MapCtrl', function ($scope) {
+    .controller('MapCtrl', function ($scope, Request) {
 
         $scope.state = {
-            isLogin: true
+            isLoggedin: Request.isLoggedIn()
         };
 
-        $scope.sideMenu.shouldEnable = false;
-        $scope.$on('$destroy', function() {
-            $scope.sideMenu.shouldEnable = true;
-        });
+//        $scope.sideMenu.shouldEnable = false;
+//        $scope.$on('$destroy', function() {
+//            $scope.sideMenu.shouldEnable = true;
+//        });
 
         var map, marker;
         var geocoder = new google.maps.Geocoder();
@@ -100,7 +100,29 @@ angular.module('map.control', [])
             var lng = marker.getPosition().lng();
             var locationName = window.prompt('Please enter a name for the farm');
             if (locationName != null){
-                alert(lat + ',' + lng + ',' + locationName);
+                //alert(lat + ',' + lng + ',' + locationName);
+                var requestContent = {
+                    url: '/oauth/farm',
+                    method: 'POST',
+                    data: JSON.stringify({
+                        name: locationName,
+                        position: {
+                            la: lat,
+                            lo: lng
+                        }
+                    }),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                };
+                Request.withAuth(requestContent, function(data, status, headers, config){
+                    if (status == '200'){
+                        console.log('post succeeded');
+                    }
+                    else {
+                        console.log('post failed');
+                    }
+                })
             }
         };
 

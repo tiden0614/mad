@@ -5,23 +5,23 @@
         <ion-nav-buttons side="left">
             <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
-      <ion-nav-back-button class="button-clear" style="display: none;"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
+      <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
     </ion-nav-bar>
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left" is-enabled="sideMenu.shouldEnable">
+  <ion-side-menu side="left">
     <header class="bar bar-header bar-stable">
       <h1 class="title">Locations</h1>
     </header>
     <ion-content class="has-header">
       <ion-list>
-          <ion-item ng-repeat="location in locationList" nav-clear menu-close href="#/app/forecasts?longitude={{location.position.x}}&&latitude={{location.position.y}}">
+          <ion-item ng-repeat="location in locationList" nav-clear menu-close href="#/app/forecasts?longitude={{location.position.la}}&&latitude={{location.position.lo}}">
               {{location.name}}
           </ion-item>
       </ion-list>
 
-      <button menu-toggle="right"class="button button-icon icon ion-map" menu-close ng-click="search()"></button>
+      <button menu-toggle="right"class="button button-icon icon-left ion-map" menu-close ng-click="search()">Search/Add Location</button>
     </ion-content>
 
     <ion-footer-bar>
