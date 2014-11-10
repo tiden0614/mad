@@ -83,39 +83,42 @@ angular.module('farmers.controllers', [])
 
 
     $scope.getData=function(){
-        var urlStr= "http://bom.mybluemix.net/getForecast.jsp?latitude=" + $stateParams.latitude+ "&longitude=" + $stateParams.longitude;
-        $.get(urlStr,
-        function(data, status){
-            var forecastItem={
-                id: "",
-                day:"",
-                month:"",
-                weekday:"",
-                humidity:"",
-                chanceOfRain:"",
-                likelyRainfall:"",
-                currentTemp:"",
-                maxTemp:"",
-                minTemp:"",
-                sky:""
-             }
-            var skyList=new Array("cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"  )
-            var forecastList=new Array(7);
-            for(var i=0;i<data.length,i++){
-                forecastItem.id=i;
-                forecastItem.day=data[i].getDate();
-                forecastItem.month=data[i].getMonth();
-                forecastItem.weekday=data[i].getDay();
-                forecastItem.humidity=data[i].humidity;
-                forecastItem.chanceOfRain=data[i].chanceOfRain;
-                forecastItem.likelyRainfall=data[i].likelyRainfall;
-                forecastItem.currentTemp=data[i].currentTemp;
-                forecastItem.maxTemp=data[i].maxTemp;
-                forecastItem.minTemp=data[i].minTemp;
-                forecastItem.sky=skyList[i];
-                forecastList[i]=forecastItem;
-            }
-        }
+        var urlStr= "/data/brief?latitude=" + $stateParams.latitude+ "&longitude=" + $stateParams.longitude;
+        Request.withoutAuth({
+            url: urlStr},
+            function(data, status, headers, config){
+                        var forecastItem={
+                            id: "",
+                            day:"",
+                            month:"",
+                            weekday:"",
+                            humidity:"",
+                            chanceOfRain:"",
+                            likelyRainfall:"",
+                            currentTemp:"",
+                            maxTemp:"",
+                            minTemp:"",
+                            sky:""
+                         }
+                        var skyList=new Array("cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"  )
+                        var forecastList=new Array(7);
+                        for(var i=0;i<data.length,i++){
+                            forecastItem.id=i;
+                            forecastItem.day=data[i].date.getDate();
+                            forecastItem.month=data[i].date.getMonth();
+                            forecastItem.weekday=data[i].date.getDay();
+                            forecastItem.humidity=data[i].humidity;
+                            forecastItem.chanceOfRain=data[i].chanceOfRain;
+                            forecastItem.likelyRainfall=data[i].likelyRainfall;
+                            forecastItem.currentTemp=data[i].currentTemp;
+                            forecastItem.maxTemp=data[i].maxTemp;
+                            forecastItem.minTemp=data[i].minTemp;
+                            forecastItem.sky=skyList[i];
+                            forecastList[i]=forecastItem;
+                        }
+                    }
+            )
+
     };
 
 
