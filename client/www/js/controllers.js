@@ -1,6 +1,6 @@
 angular.module('farmers.controllers', [])
 
-  .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $state, Request, LocationService) {
+  .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $state, Request, LocationService, $ionicSideMenuDelegate) {
 
     $scope.loginLogoutStr = 'Login';
 
@@ -18,11 +18,20 @@ angular.module('farmers.controllers', [])
       shouldEnable: true
     };
 
+    $scope.search = function() {
+      $state.go('search');
+    };
+
     // Open the login modal
     $scope.loginLogout = function () {
       if (Request.isLoggedIn()) {
         $rootScope.locationList = null;
+        $scope.loginLogoutStr = 'Login';
+        $scope.locationList = $rootScope.locationList = [];
         Request.logout();
+        if ($ionicSideMenuDelegate.isOpen()) {
+          $ionicSideMenuDelegate.toggleLeft();
+        }
       } else {
         $state.go('login');
       }
