@@ -116,6 +116,23 @@ describe("USER TEST", function() {
       });
     });
 
+    it('should delete a farm', function(done) {
+      var afarm = { name: 'tobedeleted', position: { la: 10, lo: 15 } };
+      UserService.saveFarm({ user: user, farm: afarm }, function(err, doc) {
+        if (err) return done(err);
+        assert(doc, "didn't successfully save a farm");
+        UserService.deleteFarmByUserAndName({ user: user, name: doc.name }, function(err, farm) {
+          if (err) return done(err);
+          assert(farm, "didn't successfully delete a farm");
+          FarmsModel.findOne({ name: afarm.name }, function(err, doc) {
+            if (err) return done(err);
+            assert(!doc, "didn't successfully delete a farm");
+            done();
+          });
+        });
+      });
+    });
+
   });
 
   describe('User Route Tests', function() {

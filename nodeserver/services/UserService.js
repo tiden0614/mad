@@ -98,3 +98,21 @@ exports.saveFarms = function(data, callback) {
     });
   });
 };
+
+exports.deleteFarmByUserAndName = function(data, callback) {
+  if (!data || !data.user) { return callback(new Error('deleteFarm: User is required')); }
+  if (!data || !data.name) { return callback(new Error('deleteFarm: Name is required')); }
+
+  FarmsModel.findOne({ userId: data.user._id, name: data.name }, function(err, doc) {
+    if (err) return callback(err);
+    if (!doc) {
+      var findError = new Error("deleteFarm: didn't find such a farm with the name of " + data.name);
+      findError.code = 99;
+      return callback(findError);
+    }
+    doc.remove(function(err, farm) {
+      if (err) return callback(err);
+      return callback(err, farm);
+    });
+  });
+};
