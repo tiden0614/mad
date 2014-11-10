@@ -282,10 +282,21 @@ angular.module('farmers.services', ['base64'])
       });
     },
     deleteLocation: function(farm, callback) {
-      // TODO implement this
-      if (callback && typeof callback == 'function') {
-        callback(200);
-      }
+      if (!farm || !farm.name) throw new Error('farm/farm.name is required');
+      Request.withAuth({
+        url: '/oauth/farm/delete',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        data: JSON.stringify({
+          name: farm.name
+        })
+      }, function(data, status, headers, config) {
+        if (callback && typeof callback == 'function') {
+          callback(data, status);
+        }
+      });
     },
     get: function(locationId) {
       // Simple index lookup

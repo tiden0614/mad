@@ -33,11 +33,11 @@ angular.module('farmers.controllers', [])
         var tobeDeleted = $rootScope.locationList[index];
         $rootScope.locationList.splice(index, 1);
         //$scope.locationList = $rootScope.locationList;
-        LocationService.deleteLocation({}, function(status) {
+        LocationService.deleteLocation(tobeDeleted, function(data, status) {
           if (status == 200) {
             console.log('successfully deleted farm');
           } else {
-            console.warn('error happend deleting farm ' + status);
+            console.warn(status + ': error happened deleting farm ' + data);
           }
         });
       }
