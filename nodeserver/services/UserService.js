@@ -75,7 +75,7 @@ exports.saveFarm = function(data, callback) {
   if (!data.farm.userId) {
     data.farm.userId = data.user._id;
   }
-  FarmsModel.findOneAndUpdate({ userId: data.user._id }, data.farm, { upsert: true }, callback);
+  FarmsModel.findOneAndUpdate({ userId: data.user._id, name: data.farm.name }, data.farm, { upsert: true }, callback);
 };
 
 exports.saveFarms = function(data, callback) {

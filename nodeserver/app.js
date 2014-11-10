@@ -27,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(routes.CrossOriginRouter);
 app.use(routes.OAuthRouter);
 app.use(routes.UsersRouter);
+app.use(routes.Data);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
