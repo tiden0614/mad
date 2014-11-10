@@ -1,5 +1,14 @@
 <ion-view title="Alert">
-  <ion-content class="padding">
-    Alert
-  </ion-content>    
+    <ion-content >
+        <div  class="list" ng-repeat="warn in warning">
+            <a class="item item-icon-left" href="#">
+                <i class="icon ion-mic-a"></i>
+                <h2>{{warn.presence}}</h2>
+                <p>{{warn.intensity}} intensity {{warn.coverage}} with {{warn.attribute}}</p>
+               <span class="item-note">
+                 {{warn.time}}
+               </span>
+            </a>
+        </div>
+    </ion-content>
 </ion-view>

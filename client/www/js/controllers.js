@@ -35,7 +35,31 @@ angular.module('farmers.controllers', [])
   })
 
 
-  .controller('ForecastsCtrl', function ($scope, ForecastList, $state) {
+  .controller('ForecastsCtrl', function ($scope, ForecastList, $state, $stateParams) {
+    if($stateParams.latitude==null||$stateParams.longitude==null){
+        if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                        $stateParams.latitude = position.coords.latitude;
+                        $stateParams.longitude = position.coords.longitude;
+                        });
+        }else {
+                         // Browser doesn't support Geolocation
+                        handleNoGeolocation(false);
+              }
+
+
+        function handleNoGeolocation(errorFlag) {
+                     if (errorFlag) {
+                         var content = 'Error: The Geolocation service failed.';
+                         alert(content);
+                     } else {
+                         var content = 'Error: Your browser doesn\'t support geolocation.';
+                         alert(content);
+                     }
+
+        }
+    }
+
     $scope.forecastList = ForecastList.all();
 
     $scope.alert = function () {
@@ -47,32 +71,155 @@ angular.module('farmers.controllers', [])
     };
 
 
+    $scope.getData=function(){
+        var urlStr= "/data/brief?latitude=" + $stateParams.latitude+ "&longitude=" + $stateParams.longitude;
+        Request.withoutAuth({
+            url: urlStr},
+            function(data, status, headers, config){
+                        var forecastItem={
+                            id: "",
+                            day:"",
+                            month:"",
+                            weekday:"",
+                            humidity:"",
+                            chanceOfRain:"",
+                            likelyRainfall:"",
+                            currentTemp:"",
+                            maxTemp:"",
+                            minTemp:"",
+                            sky:""
+                         }
+                        var skyList=new Array("cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"  )
+                        var forecastList=new Array(7);
+                        for(var i=0;i<data.length,i++){
+                            forecastItem.id=i;
+                            forecastItem.day=data[i].date.getDate();
+                            forecastItem.month=data[i].date.getMonth();
+                            forecastItem.weekday=data[i].date.getDay();
+                            forecastItem.humidity=data[i].humidity;
+                            forecastItem.chanceOfRain=data[i].chanceOfRain;
+                            forecastItem.likelyRainfall=data[i].likelyRainfall;
+                            forecastItem.currentTemp=data[i].currentTemp;
+                            forecastItem.maxTemp=data[i].maxTemp;
+                            forecastItem.minTemp=data[i].minTemp;
+                            forecastItem.sky=skyList[i];
+                            forecastList[i]=forecastItem;
+                        }
+                    }
+            )
 
-
-    $scope.expand = function (id) {
-      var expandItem = jQuery(".forecast-list [data-forecast-id=" + id + "]");
-      if (expandItem.hasClass("opened")) {
-        expandItem.removeClass("opened");
-      } else {
-        jQuery(".forecast-list .forecast-item").removeClass("opened");
-        // expandItem.parents(".scroll").animate({
-        // 	scrollTop: expandItem.offset().top
-        // }, 1000);
-        //expandItem.parents("div.scroll").scrollDiv.css("-webkit-transform", "translated3d(0px, -" + expandItem.position().top + "px, 0px) scale(1)");
-        expandItem.addClass("opened");
-        if (!expandItem.hasClass("data-loaded")) {
-          $scope.forecastList[id].detail = ForecastList.getForecastDetail(id);
-          expandItem.addClass("data-loaded");
-        }
-      }
-    }
-
+    };
 
 
   })
 
-  .controller('AlertCtrl', function ($scope, $state) {
-  })
+
+  .controller('AlertCtrl', function ($scope, $state, $http, WarningsList, Request) {
+      $scope.warning = [];
+        var thunderstorm = WarningsList.allThunder();
+         var fog = WarningsList.allFog();
+          var frozen = WarningsList.allFrozen();
+           var frost = WarningsList.allFrost();
+            var precip = WarningsList.allPrecip();
+
+    //    $scope.loginUser = function(user){
+
+                               Request.withoutAuth({ url: '/data/notification' }, function(data, status, headers, config) {
+                                      if(data==""){
+                                          alert("No location Founded");
+                                      }
+                                      else  {
+                                        //todo: create a general function for thunderstorm,fog,frost,froze,precipitation
+                                        for( i in data.thunderstorm){
+                                            if(data.thunderstorm[i].code!='0'){
+                                              for ( j in thunderstorm){
+                                                if(data.thunderstorm[i].code == thunderstorm[j].code){
+                                                    $scope.warning.push({  //intensity:"Low",coverage:"Low probability",attribute:
+                                                           presence:'Thunderstorm',
+                                                           intensity :thunderstorm[j].intensity,
+                                                           coverage : thunderstorm[j].coverage,
+                                                           attribute: thunderstorm[j].attribute,
+                                                        //   time:  data.baseTime.setHours(data.baseTime.getHours()+i)
+                                                         time:  data.baseTime
+                                                    });
+                                                //      alert(thunderstorm[j].intensity+";"+thunderstorm[j].coverage+""+thunderstorm[j].attribute);
+                                                    break;
+                                                 }
+                                               }
+                                             }
+                                         }
+                                        for( i in data.fog){
+                                            if(data.fog[i].code!='0'){
+                                              for ( j in fog){
+                                                if(data.fog[i].code == fog[j].code){
+                                                    $scope.warning.push({  //intensity:"Low",coverage:"Low probability",attribute:
+                                                           presence:'Fog',
+                                                           intensity :fog[j].intensity,
+                                                           coverage : fog[j].coverage,
+                                                           attribute: fog[j].attribute,
+                                                         //   time:  data.baseTime.setHours(data.baseTime.getHours()+i)
+                                                          time:  data.baseTime
+                                                    });
+                                                    break;
+                                                 }
+                                               }
+                                             }
+                                         }
+                                        for( i in data.frost){
+                                            if(data.frost[i].code!='0'){
+                                              for ( j in frost){
+                                                if(data.frost[i].code == frost[j].code){
+                                                    $scope.warning.push({  //intensity:"Low",coverage:"Low probability",attribute:
+                                                           presence:'Frost',
+                                                           intensity :frost[j].intensity,
+                                                           coverage : frost[j].coverage,
+                                                           attribute: frost[j].attribute,
+                                                        //   time:  data.baseTime.setHours(data.baseTime.getHours()+i)
+                                                         time:  data.baseTime
+                                                    });
+                                                    break;
+                                                 }
+                                               }
+                                             }
+                                         }
+                                         for( i in data.fronzenPrec){
+                                             if(data.fronzenPrec[i].code!='0'){
+                                               for ( j in frozen){
+                                                 if(data.fronzenPrec[i].code == frozen[j].code){
+                                                     $scope.warning.push({  //intensity:"Low",coverage:"Low probability",attribute:
+                                                            presence:'Frozen',
+                                                            intensity :frozen[j].intensity,
+                                                            coverage : frozen[j].coverage,
+                                                            attribute: frozen[j].attribute,
+                                                        //   time:  data.baseTime.setHours(data.baseTime.getHours()+i)
+                                                         time:  data.baseTime
+                                                     });
+                                                     break;
+                                                  }
+                                                }
+                                              }
+                                          }
+                                         for( i in data.precipitation){
+                                             if(data.precipitation[i].code!='0'){
+                                               for ( j in precip){
+                                                 if(data.precipitation[i].code == precip[j].code){
+                                                     $scope.warning.push({  //intensity:"Low",coverage:"Low probability",attribute:
+                                                            presence:'Precipitation',
+                                                            intensity :precip[j].intensity,
+                                                            coverage : precip[j].coverage,
+                                                            attribute: precip[j].attribute,
+                                                         //   time:  data.baseTime.setHours(data.baseTime.getHours()+i)
+                                                          time:  data.baseTime
+                                                     });
+                                                     break;
+                                                  }
+                                                }
+                                              }
+                                          }
+                                      }
+
+                              });
+    })
 
   .controller('LoginCtrl', function($scope, $http, $location, $rootScope, $state, Request){
     $scope.loginData = {};
@@ -132,13 +279,16 @@ angular.module('farmers.controllers', [])
     }
   })
 
-.controller('ForecastDetailCtrl', function ($scope, $stateParams, RainfallThreeHourlyList){
+.controller('ForecastDetailCtrl', function ($scope, $stateParams, RainfallThreeHourlyList, Request){
     var detailURL="templates/weather.json";
     var windSpeed = [{"key": "Wind", "values": []}];
     var tempDaily = [];
     var rainfallList = [];
 
-    jQuery.getJSON(detailURL, function(data){
+  Request.withoutAuth({ url: '/data/detail' }, function(data, status, headers, config) {
+       if(data==""){
+               alert("No location Founded");
+       } else {
 
     for (var i=0; i<24; i++){
         var windArray = [new Date (0,0,0,i,0,0), data.windSpeed[i]];
@@ -161,58 +311,38 @@ angular.module('farmers.controllers', [])
     //alert([0].values.length);
     $scope.windSpeed=windSpeed;
     $scope.rainfallList = rainfallList;
-
     $scope.temps_hourly=[];
 
-                     // need to change if updated
+    //todo: modify
                      //      var tempDetail_width = $(window).width();
     var tempDetail_width = 998;
     var tempDetail_height = 135;
+    var tempMax = 27;
+    var tempMin = 7;
 
-    function getMaxTemp(tempArray){
-        var temp = tempArray[0].temp_hourly;
-        for(i in tempArray){
-            if( tempArray[i].temp_hourly>temp)
-            {
-            temp = tempArray[i].temp_hourly;
-            }
-        }
-        return temp;
-    };
 
-    function getMinTemp(tempArray){
-        var temp = tempArray[0].temp_hourly;
-        for(i in tempArray){
-            if( tempArray[i].temp_hourly<temp)
-            {
-            temp = tempArray[i].temp_hourly;
-            }
-        }
-        return temp;
-    };
+                 for ( i in data.temp) {
+         //             if (tempDaily[i].hour<13){
+                     if (i<13){
+                         $scope.temps_hourly.push({
+                         x : i * tempDetail_width/( tempDaily.length + 1)+10,
+                         y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - data.temp[i])+20 ,
+                         v:  data.temp[i]+'\u00b0C',
+                //       t:  tempDaily[i].hour+'AM'
+                         t: i+':00AM'
+                         });
+                     }else{
+                         $scope.temps_hourly.push({
+                         x : i * tempDetail_width/( tempDaily.length + 1)+10,
+                         y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax -data.temp[i])+20 ,
+                          v:  data.temp[i]+'\u00b0C',
+                          t:  i+':00PM'
+                         })
+                     }
+                 }
+               }
+  });
 
-    var tempMax = getMaxTemp(tempDaily);
-    var tempMin = getMinTemp(tempDaily);
-
-    for ( i in tempDaily) {
-        if (tempDaily[i].hour<13){
-            $scope.temps_hourly.push({
-            x : i * tempDetail_width/( tempDaily.length + 1)+10,
-            y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - tempDaily[i].temp_hourly)+20 ,
-            v:  tempDaily[i].temp_hourly+'\u00b0C',
-            t:  tempDaily[i].hour+'AM'
-            });
-        }else{
-            $scope.temps_hourly.push({
-            x : i * tempDetail_width/( tempDaily.length + 1)+10,
-            y : (tempDetail_height*0.4/( tempMax - tempMin + 1)) * ( tempMax - tempDaily[i].temp_hourly)+20 ,
-            v:  tempDaily[i].temp_hourly+'\u00b0C',
-            t:  tempDaily[i].hour+'PM'
-            })
-        }
-    }
-
-    });
 
 
     $scope.xAxisTickFormat = function(){

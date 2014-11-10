@@ -1,8 +1,160 @@
 angular.module('farmers.services', ['base64'])
+.factory('WarningsList', function() {
+
+  var warning_precipitationMap = [{code:"0",presence:"No precipitation",intensity:"-",coverage:"-",attribute:"-"},
+                                 {code:"1",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"Tornadoes"},
+                                 {code:"2",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"Destructive winds"},
+                                 {code:"3",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"Flash flooding"},
+                                 {code:"4",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"Damaging winds"},
+                                 {code:"5",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"Large hail"},
+                                 {code:"6",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"Heavy rain"},
+                                 {code:"7",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"Hail"},
+                                 {code:"8",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"Dry"},
+                                 {code:"9",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"Gusty winds"},
+                                 {code:"10",presence:"Precipitation",intensity:"Low",coverage:"Low probability",attribute:"-"},
+                                 {code:"11",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"Tornadoes"},
+                                 {code:"12",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"Destructive winds"},
+                                 {code:"13",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"Flash flooding"},
+                                 {code:"14",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"Damaging winds"},
+                                 {code:"15",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"Large hail"},
+                                 {code:"16",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"Heavy rain"},
+                                 {code:"17",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"Hail"},
+                                 {code:"18",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"Dry"},
+                                 {code:"19",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"Gusty winds"},
+                                 {code:"20",presence:"Precipitation",intensity:"Low",coverage:"High probability",attribute:"-"},
+                                 {code:"21",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"Tornadoes"},
+                                 {code:"22",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"Destructive winds"},
+                                 {code:"23",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"Flash flooding"},
+                                 {code:"24",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"Damaging winds"},
+                                 {code:"25",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"Large hail"},
+                                 {code:"26",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"Heavy rain"},
+                                 {code:"27",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"Hail"},
+                                 {code:"28",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"Dry"},
+                                 {code:"29",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"Gusty winds"},
+                                 {code:"30",presence:"Precipitation",intensity:"High",coverage:"Low probability",attribute:"-"},
+                                 {code:"31",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"Tornadoes"},
+                                 {code:"32",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"Destructive winds"},
+                                 {code:"33",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"Flash flooding"},
+                                 {code:"34",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"Damaging winds"},
+                                 {code:"35",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"Large hail"},
+                                 {code:"36",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"Heavy rain"},
+                                 {code:"37",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"Hail"},
+                                 {code:"38",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"Dry"},
+                                 {code:"39",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"Gusty"},
+                                 {code:"40",presence:"Precipitation",intensity:"High",coverage:"High probability",attribute:"-"}
+                                 ];
+  var warning_frozenMap = [{code:"0",presence:"No frozen",intensity:"-",coverage:"-",attribute:"-"},
+                           {code:"1",presence:"Frozen",intensity:"Low",coverage:"Low probability",attribute:"Tornadoes"},
+                           {code:"2",presence:"Frozen",intensity:"Low",coverage:"Low probability",attribute:"Destructive winds"},
+                           {code:"3",presence:"Frozen",intensity:"Low",coverage:"Low probability",attribute:"Flash flooding"},
+                           {code:"4",presence:"Frozen",intensity:"Low",coverage:"Low probability",attribute:"Damaging winds"},
+                           {code:"5",presence:"Frozen",intensity:"Low",coverage:"Low probability",attribute:"Hail"},
+                           {code:"6",presence:"Frozen",intensity:"Low",coverage:"Low probability",attribute:"Gusty winds"},
+                           {code:"7",presence:"Frozen",intensity:"Low",coverage:"Low probability",attribute:"-"},
+                           {code:"8",presence:"Frozen",intensity:"Low",coverage:"High probability",attribute:"Tornadoes"},
+                           {code:"9",presence:"Frozen",intensity:"Low",coverage:"High probability",attribute:"Destructive winds"},
+                           {code:"10",presence:"Frozen",intensity:"Low",coverage:"High probability",attribute:"Flash flooding"},
+                           {code:"11",presence:"Frozen",intensity:"Low",coverage:"High probability",attribute:"Damaging winds"},
+                           {code:"12",presence:"Frozen",intensity:"Low",coverage:"High probability",attribute:"Hail"},
+                           {code:"13",presence:"Frozen",intensity:"Low",coverage:"High probability",attribute:"Gusty winds"},
+                           {code:"14",presence:"Frozen",intensity:"Low",coverage:"High probability",attribute:"-"},
+                           {code:"15",presence:"Frozen",intensity:"High",coverage:"Low probability",attribute:"Tornadoes"},
+                           {code:"16",presence:"Frozen",intensity:"High",coverage:"Low probability",attribute:"Destructive winds"},
+                           {code:"17",presence:"Frozen",intensity:"High",coverage:"Low probability",attribute:"Flash flooding"},
+                           {code:"18",presence:"Frozen",intensity:"High",coverage:"Low probability",attribute:"Damaging winds"},
+                           {code:"19",presence:"Frozen",intensity:"High",coverage:"Low probability",attribute:"Hail"},
+                           {code:"20",presence:"Frozen",intensity:"High",coverage:"Low probability",attribute:"Gusty winds"},
+                           {code:"21",presence:"Frozen",intensity:"High",coverage:"Low probability",attribute:"-"},
+                           {code:"22",presence:"Frozen",intensity:"High",coverage:"High probability",attribute:"Tornadoes"},
+                           {code:"23",presence:"Frozen",intensity:"High",coverage:"High probability",attribute:"Destructive winds"},
+                           {code:"24",presence:"Frozen",intensity:"High",coverage:"High probability",attribute:"Flash flooding"},
+                           {code:"25",presence:"Frozen",intensity:"High",coverage:"High probability",attribute:"Damaging winds"},
+                           {code:"26",presence:"Frozen",intensity:"High",coverage:"High probability",attribute:"Hail"},
+                           {code:"27",presence:"Frozen",intensity:"High",coverage:"High probability",attribute:"Gusty winds"},
+                           {code:"28",presence:"Frozen",intensity:"High",coverage:"High probability",attribute:"-"}
+                           ];
+  var warning_thunderstormMap = [{code:"0",presence:"No thunderstorms",intensity:"-",coverage:"-",attribute:"-"},
+                                 {code:"1",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Tornadoes"},
+                                 {code:"2",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Destructive winds"},
+                                 {code:"3",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Flash flooding"},
+                                 {code:"4",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Damaging winds"},
+                                 {code:"5",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Large hail"},
+                                 {code:"6",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Heavy rain"},
+                                 {code:"7",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Hail"},
+                                 {code:"8",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Dry"},
+                                 {code:"9",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Gusty winds"},
+                                 {code:"10",presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"-"},
+                                 {code:"11",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Tornadoes"},
+                                 {code:"12",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Destructive winds"},
+                                 {code:"13",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Flash flooding"},
+                                 {code:"14",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Damaging winds"},
+                                 {code:"15",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Large hail"},
+                                 {code:"16",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Heavy rain"},
+                                 {code:"17",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Hail"},
+                                 {code:"18",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Dry"},
+                                 {code:"19",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Gusty winds"},
+                                 {code:"20",presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"-"},
+                                 {code:"21",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Tornadoes"},
+                                 {code:"22",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Destructive winds"},
+                                 {code:"23",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Flash flooding"},
+                                 {code:"24",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Damaging winds"},
+                                 {code:"25",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Large hail"},
+                                 {code:"26",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Heavy rain"},
+                                 {code:"27",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Hail"},
+                                 {code:"28",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Dry"},
+                                 {code:"29",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Gusty winds"},
+                                 {code:"30",presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"-"},
+                                 {code:"31",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Tornadoes"},
+                                 {code:"32",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Destructive winds"},
+                                 {code:"33",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Flash flooding"},
+                                 {code:"34",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Damaging winds"},
+                                 {code:"35",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Large hail"},
+                                 {code:"36",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Heavy rain"},
+                                 {code:"37",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Hail"},
+                                 {code:"38",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Dry"},
+                                 {code:"39",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Gusty"},
+                                 {code:"40",presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"-"}
+                                 ];
+  var warning_frostMap = [{code:"0",presence:"No frost",intensity:"-",coverage:"-",attribute:"-"},
+                          {code:"1",presence:"Frost",intensity:"Low",coverage:"Low probability",attribute:"-"},
+                          {code:"2",presence:"Frost",intensity:"Low",coverage:"High probability",attribute:"-"},
+                          {code:"3",presence:"Frost",intensity:"High",coverage:"Low probability",attribute:"-"},
+                          {code:"4",presence:"Frost",intensity:"High",coverage:"High probability",attribute:"-"}
+                          ];
+  var warning_fogMap = [{code:"0",presence:"No fog",intensity:"-",coverage:"-",attribute:"-"},
+                        {code:"1",presence:"Fog",intensity:"Low",coverage:"Low probability",attribute:"-"},
+                        {code:"2",presence:"Fog",intensity:"Low",coverage:"High probability",attribute:"-"},
+                        {code:"3",presence:"Fog",intensity:"High",coverage:"Low probability",attribute:"-"},
+                        {code:"4",presence:"Fog",intensity:"High",coverage:"High probability",attribute:"-"}
+                        ];
+
+  return {
+    allPrecip: function() {
+      return warning_precipitationMap;
+    },
+    allThunder: function() {
+          return warning_thunderstormMap;
+        },
+    allFog: function() {
+          return warning_fogMap;
+      },
+    allFrost: function() {
+         return warning_frostMap;
+       },
+    allFrozen: function() {
+         return warning_frozenMap;
+      },
+    get: function(locationId) {
+      // Simple index lookup
+      return locationList[locationId];
+    }
+  }
+})
 
 .factory('ForecastList', function() {
   // Might use a resource here that returns a JSON array
   // Some fake testing data
+
   var forecastList = [
     {id: '0', day: '8', month: '9', weekday: 'Mon', humidity: '45', rainfall_chance: '70', rainfall_amount: '3', sky: 'sunny', currentTemp:'', minTemp:'4', maxTemp:'19\u00b0C'},
     {id: '1', day: '9', month: '9', weekday: 'Tue', humidity: '65', rainfall_chance: '50', rainfall_amount: '1', sky: 'cloudy', currentTemp:'14\u00b0C', minTemp:'5', maxTemp:'16\u00b0C'},
