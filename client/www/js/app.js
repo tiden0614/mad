@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', 'map.control', 'nvd3ChartDirectives'])
+angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', 'nvd3ChartDirectives'])
 
 
   .run(function ($ionicPlatform, $rootScope, $location) {
