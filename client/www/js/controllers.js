@@ -301,7 +301,6 @@ angular.module('farmers.controllers', [])
   })
 
   .controller('ForecastDetailCtrl', function ($scope, $stateParams, RainfallThreeHourlyList, Request) {
-    var detailURL = "templates/weather.json";
     var windSpeed = [{"key": "Wind", "values": []}];
     var tempDaily = [];
     var rainfallList = [];
@@ -324,8 +323,8 @@ angular.module('farmers.controllers', [])
         for (var i = 0; i < 8; i++) {
           if (i < 6) {
             var rainObj = {
-              startHour: 3 * i + 6,
-              endHour: 3 * (i + 1) + 6,
+              startHour: 3 * i + 6+ ':00',
+              endHour: 3 * (i + 1) + 6+ ':00',
               chanceOfAnyRain: data.chanceOfRain[i],
               expectedRainfallAmount: data.likelyRainfall[i],
               imgSourceId: '0'
@@ -333,8 +332,8 @@ angular.module('farmers.controllers', [])
             rainfallList.push(rainObj);
           } else {
             var rainObj = {
-              startHour: 3 * (i - 6),
-              endHour: 3 * (i - 5),
+              startHour: 3 * (i - 6)+ ':00',
+              endHour: 3 * (i - 5)+ ':00',
               chanceOfAnyRain: data.chanceOfRain[i],
               expectedRainfallAmount: data.likelyRainfall[i],
               imgSourceId: '0'
