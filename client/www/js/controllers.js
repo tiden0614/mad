@@ -55,75 +55,79 @@ angular.module('farmers.controllers', [])
 
 
   .controller('ForecastsCtrl', function ($scope, ForecastList, $state, $stateParams, $rootScope, Request, LocationService) {
-    if ($stateParams.latitude == null || $stateParams.longitude == null) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          $stateParams.latitude = position.coords.latitude;
-          $stateParams.longitude = position.coords.longitude;
-        });
-      } else {
-        // Browser doesn't support Geolocation
-        handleNoGeolocation(false);
-      }
-
-
-      function handleNoGeolocation(errorFlag) {
-        if (errorFlag) {
-          var content = 'Error: The Geolocation service failed.';
-          alert(content);
+      if ($stateParams.latitude == null || $stateParams.longitude == null) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            $stateParams.latitude = position.coords.latitude;
+            $stateParams.longitude = position.coords.longitude;
+          });
         } else {
-          var content = 'Error: Your browser doesn\'t support geolocation.';
-          alert(content);
+          // Browser doesn't support Geolocation
+          handleNoGeolocation(false);
         }
 
-      }
-    }
 
-    $scope.alert = function () {
-      $state.transitionTo('alert');
-    };
-
-    $scope.search = function () {
-      $state.go('search');
-    };
-
-    if (!$scope.forecastList) {
-      $scope.forecastList = [];
-    }
-
-    /* FIXME You'd better put such logic into a service */
-
-    (function () {
-      var urlStr = "/data/brief?latitude=" + $stateParams.latitude + "&longitude=" + $stateParams.longitude;
-      Request.withoutAuth({
-          url: urlStr
-        },
-        function (data, status, headers, config) {
-          $scope.forecastList = [];
-          var skyList = ["cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"];
-          for (var i = 0; i < data.length; i++) {
-            var date = new Date(data[i].date);
-            $scope.forecastList.push({
-              id: i,
-              day: date.getDate(),
-              month: date.getMonth(),
-              weekday: date.getDay(),
-              humidity: data[i].humidity,
-              chanceOfRain: data[i].chanceOfRain,
-              likelyRainfall: data[i].likelyRainfall,
-              currentTemp: data[i].currentTemp,
-              maxTemp: data[i].maxTemp,
-              minTemp: data[i].minTemp,
-              sky: skyList[i]
-            });
+        function handleNoGeolocation(errorFlag) {
+          if (errorFlag) {
+            var content = 'Error: The Geolocation service failed.';
+            alert(content);
+          } else {
+            var content = 'Error: Your browser doesn\'t support geolocation.';
+            alert(content);
           }
+
         }
-      )
+      }
 
-    })();
+      $scope.alert = function () {
+        $state.transitionTo('alert');
+      };
+
+      $scope.search = function () {
+        $state.go('search');
+      };
+
+      if (!$scope.forecastList) {
+        $scope.forecastList = [];
+      }
 
 
-  })
+      /* FIXME You'd better put such logic into a service */
+
+      /*(function () {*/
+      /* var urlStr = "/data/brief?latitude=" + $stateParams.latitude + "&longitude=" + $stateParams.longitude;*/
+      /*Request.withoutAuth({
+       url: urlStr
+       },
+       function (data, status, headers, config) {
+       $scope.forecastList = [];
+       var skyList = ["cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"];
+       var weekdayList =["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
+       for (var i = 0; i < data.length; i++) {
+       var date = new Date(data[i].date);
+       $scope.forecastList.push({
+       id: i,
+       day: date.getDate(),
+       month: date.getMonth(),
+       weekday: weekdayList[date.getDay()],
+       humidity: data[i].humidity,
+       chanceOfRain: data[i].chanceOfRain,
+       likelyRainfall: data[i].likelyRainfall,
+       currentTemp: data[i].currentTemp,
+       maxTemp: data[i].maxTemp,
+       minTemp: data[i].minTemp,
+       sky: skyList[i]
+       });
+       }
+       }
+       )*/
+      $scope.forecastList = ForecastList.refresh();
+      ForecastList.getData(function (list) {
+        $scope.forecastList = list;
+      }, $stateParams.latitude, $stateParams.longitude);
+
+    })
+
 
 
   .controller('AlertCtrl', function ($scope, $state, $http, WarningsList, Request) {
