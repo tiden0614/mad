@@ -344,13 +344,20 @@ angular.module('farmers.controllers', [])
         }
 
         for (var i = 0; i < 8; i++) {
+          if (data.chanceOfRain[i] < 10){
+            img = '0';
+          } else if (data.chanceOfRain[i] >= 10 && data.chanceOfRain[i] <= 15){
+            img = '1';
+          }else {
+            img ='2';
+          }
           if (i < 6) {
             var rainObj = {
               startHour: 3 * i + 6+ ':00',
               endHour: 3 * (i + 1) + 6+ ':00',
               chanceOfAnyRain: data.chanceOfRain[i],
               expectedRainfallAmount: data.likelyRainfall[i],
-              imgSourceId: '0'
+              imgSourceId: img
             };
             rainfallList.push(rainObj);
           } else {
@@ -359,7 +366,7 @@ angular.module('farmers.controllers', [])
               endHour: 3 * (i - 5)+ ':00',
               chanceOfAnyRain: data.chanceOfRain[i],
               expectedRainfallAmount: data.likelyRainfall[i],
-              imgSourceId: '0'
+              imgSourceId: img
             };
             rainfallList.push(rainObj);
           }
