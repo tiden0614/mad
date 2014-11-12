@@ -305,9 +305,33 @@ angular.module('farmers.controllers', [])
     var tempDaily = [];
     var rainfallList = [];
 
+    var msecPerDay = 24 * 60 * 60 * 1000;
+    Date.prototype.goto = function(n) {
+    	this.setTime(this.getTime() + n*msecPerDay);
+    	return this;
+    };
+
+    var date = new Date();
+    date.goto($stateParams.forecastId);
+
+    var dd = date.getDate();
+    var mm = date.getMonth()+1; //January is 0!
+    var yyyy = date.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
+    }
+
+    if(mm<10) {
+        mm='0'+mm
+    }
+
+    date = yyyy+'-'+mm+'-'+dd;
+
+    console.log(date);
     /* FIXME You'd better put such logic into a service */
 
-    Request.withoutAuth({url: '/data/detail'}, function (data, status, headers, config) {
+    Request.withoutAuth({url: '/data/detail?date='+date+'&latitude='+$stateParams.latitude+'&longtitude='+$stateParams.longtitude}, function (data, status, headers, config) {
       if (data == "") {
         alert("No location Founded");
       } else {
