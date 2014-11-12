@@ -386,23 +386,12 @@ angular.module('farmers.controllers', [])
 
 
         for (i in data.temp) {
-          //             if (tempDaily[i].hour<13){
-          if (i < 13) {
             $scope.temps_hourly.push({
               x: i * tempDetail_width / ( tempDaily.length + 1) + 10,
               y: (tempDetail_height * 0.4 / ( tempMax - tempMin + 1)) * ( tempMax - data.temp[i]) + 20,
               v: data.temp[i] + '\u00b0C',
-              //       t:  tempDaily[i].hour+'AM'
               t: i + ':00'
             });
-          } else {
-            $scope.temps_hourly.push({
-              x: i * tempDetail_width / ( tempDaily.length + 1) + 10,
-              y: (tempDetail_height * 0.4 / ( tempMax - tempMin + 1)) * ( tempMax - data.temp[i]) + 20,
-              v: data.temp[i] + '\u00b0C',
-              t: i + ':00'
-            })
-          }
         }
       }
     });
