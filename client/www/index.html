@@ -40,7 +40,13 @@
 
 </head>
 
-<body ng-app="farmers">
+<!--<body ng-app="farmers">-->
+<body>
 <ion-nav-view></ion-nav-view>
+<script>
+    ionic.Platform.ready(function() {
+        angular.bootstrap(document, ['farmers']);
+    });
+</script>
 </body>
 </html>
