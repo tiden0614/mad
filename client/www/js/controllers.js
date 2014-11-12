@@ -324,8 +324,8 @@ angular.module('farmers.controllers', [])
         for (var i = 0; i < 8; i++) {
           if (i < 6) {
             var rainObj = {
-              startHour: 3 * i + 6 + ':00',
-              endHour: 3 * (i + 1) + 6 + ':00',
+              startHour: 3 * i + 6,
+              endHour: 3 * (i + 1) + 6,
               chanceOfAnyRain: data.chanceOfRain[i],
               expectedRainfallAmount: data.likelyRainfall[i],
               imgSourceId: '0'
@@ -333,8 +333,8 @@ angular.module('farmers.controllers', [])
             rainfallList.push(rainObj);
           } else {
             var rainObj = {
-              startHour: 3 * (i - 6) + ':00',
-              endHour: 3 * (i - 5) + ':00',
+              startHour: 3 * (i - 6),
+              endHour: 3 * (i - 5),
               chanceOfAnyRain: data.chanceOfRain[i],
               expectedRainfallAmount: data.likelyRainfall[i],
               imgSourceId: '0'
@@ -364,14 +364,14 @@ angular.module('farmers.controllers', [])
               y: (tempDetail_height * 0.4 / ( tempMax - tempMin + 1)) * ( tempMax - data.temp[i]) + 20,
               v: data.temp[i] + '\u00b0C',
               //       t:  tempDaily[i].hour+'AM'
-              t: i + ':00AM'
+              t: i + ':00'
             });
           } else {
             $scope.temps_hourly.push({
               x: i * tempDetail_width / ( tempDaily.length + 1) + 10,
               y: (tempDetail_height * 0.4 / ( tempMax - tempMin + 1)) * ( tempMax - data.temp[i]) + 20,
               v: data.temp[i] + '\u00b0C',
-              t: i + ':00PM'
+              t: i + ':00'
             })
           }
         }
