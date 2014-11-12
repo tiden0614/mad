@@ -328,7 +328,6 @@ angular.module('farmers.controllers', [])
 
     date = yyyy+'-'+mm+'-'+dd;
 
-    console.log(date);
     /* FIXME You'd better put such logic into a service */
 
     Request.withoutAuth({url: '/data/detail?date='+date+'&latitude='+$stateParams.latitude+'&longtitude='+$stateParams.longtitude}, function (data, status, headers, config) {
