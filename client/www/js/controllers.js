@@ -18,6 +18,10 @@ angular.module('farmers.controllers', [])
       shouldEnable: true
     };
 
+    $scope.alert = function () {
+      $state.go('alert');
+    };
+
     $scope.search = function() {
       $state.go('search');
     };
@@ -55,75 +59,78 @@ angular.module('farmers.controllers', [])
 
 
   .controller('ForecastsCtrl', function ($scope, ForecastList, $state, $stateParams, $rootScope, Request, LocationService) {
-    if ($stateParams.latitude == null || $stateParams.longitude == null) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          $stateParams.latitude = position.coords.latitude;
-          $stateParams.longitude = position.coords.longitude;
-        });
-      } else {
-        // Browser doesn't support Geolocation
-        handleNoGeolocation(false);
-      }
-
-
-      function handleNoGeolocation(errorFlag) {
-        if (errorFlag) {
-          var content = 'Error: The Geolocation service failed.';
-          alert(content);
+      if ($stateParams.latitude == null || $stateParams.longitude == null) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            $stateParams.latitude = position.coords.latitude;
+            $stateParams.longitude = position.coords.longitude;
+          });
         } else {
-          var content = 'Error: Your browser doesn\'t support geolocation.';
-          alert(content);
+          // Browser doesn't support Geolocation
+          handleNoGeolocation(false);
         }
 
-      }
-    }
 
-    $scope.alert = function () {
-      $state.go('alert');
-    };
-
-    $scope.search = function () {
-      $state.go('search');
-    };
-
-    if (!$scope.forecastList) {
-      $scope.forecastList = [];
-    }
-
-    /* FIXME You'd better put such logic into a service */
-
-    (function () {
-      var urlStr = "/data/brief?latitude=" + $stateParams.latitude + "&longitude=" + $stateParams.longitude;
-      Request.withoutAuth({
-          url: urlStr
-        },
-        function (data, status, headers, config) {
-          $scope.forecastList = [];
-          var skyList = ["cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"];
-          for (var i = 0; i < data.length; i++) {
-            var date = new Date(data[i].date);
-            $scope.forecastList.push({
-              id: i,
-              day: date.getDate(),
-              month: date.getMonth(),
-              weekday: date.getDay(),
-              humidity: data[i].humidity,
-              chanceOfRain: data[i].chanceOfRain,
-              likelyRainfall: data[i].likelyRainfall,
-              currentTemp: data[i].currentTemp,
-              maxTemp: data[i].maxTemp,
-              minTemp: data[i].minTemp,
-              sky: skyList[i]
-            });
+        function handleNoGeolocation(errorFlag) {
+          if (errorFlag) {
+            var content = 'Error: The Geolocation service failed.';
+            alert(content);
+          } else {
+            var content = 'Error: Your browser doesn\'t support geolocation.';
+            alert(content);
           }
         }
-      )
+      }
 
-    })();
+      $scope.alert = function () {
+        $state.transitionTo('alert');
+      };
+
+      $scope.search = function () {
+        $state.go('search');
+      };
+
+      if (!$scope.forecastList) {
+        $scope.forecastList = [];
+      }
 
 
-  })
+      /* FIXME You'd better put such logic into a service */
+
+      /*(function () {*/
+      /* var urlStr = "/data/brief?latitude=" + $stateParams.latitude + "&longitude=" + $stateParams.longitude;*/
+      /*Request.withoutAuth({
+       url: urlStr
+       },
+       function (data, status, headers, config) {
+       $scope.forecastList = [];
+       var skyList = ["cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"];
+       var weekdayList =["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
+       for (var i = 0; i < data.length; i++) {
+       var date = new Date(data[i].date);
+       $scope.forecastList.push({
+       id: i,
+       day: date.getDate(),
+       month: date.getMonth(),
+       weekday: weekdayList[date.getDay()],
+       humidity: data[i].humidity,
+       chanceOfRain: data[i].chanceOfRain,
+       likelyRainfall: data[i].likelyRainfall,
+       currentTemp: data[i].currentTemp,
+       maxTemp: data[i].maxTemp,
+       minTemp: data[i].minTemp,
+       sky: skyList[i]
+       });
+       }
+       }
+       )*/
+      $scope.forecastList = ForecastList.refresh();
+      ForecastList.getData(function (list) {
+        $scope.forecastList = list;
+      }, $stateParams.latitude, $stateParams.longitude);
+
+    })
+
 
 
   .controller('AlertCtrl', function ($scope, WarningsList) {
@@ -196,14 +203,36 @@ angular.module('farmers.controllers', [])
   })
 
   .controller('ForecastDetailCtrl', function ($scope, $stateParams, RainfallThreeHourlyList, Request) {
-    var detailURL = "templates/weather.json";
     var windSpeed = [{"key": "Wind", "values": []}];
     var tempDaily = [];
     var rainfallList = [];
 
+    var msecPerDay = 24 * 60 * 60 * 1000;
+    Date.prototype.goto = function(n) {
+    	this.setTime(this.getTime() + n*msecPerDay);
+    	return this;
+    };
+
+    var date = new Date();
+    date.goto($stateParams.forecastId);
+
+    var dd = date.getDate();
+    var mm = date.getMonth()+1; //January is 0!
+    var yyyy = date.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
+    }
+
+    if(mm<10) {
+        mm='0'+mm
+    }
+
+    date = yyyy+'-'+mm+'-'+dd;
+
     /* FIXME You'd better put such logic into a service */
 
-    Request.withoutAuth({url: '/data/detail'}, function (data, status, headers, config) {
+    Request.withoutAuth({url: '/data/detail?date='+date+'&latitude='+$stateParams.latitude+'&longtitude='+$stateParams.longtitude}, function (data, status, headers, config) {
       if (data == "") {
         alert("No location Founded");
       } else {
@@ -217,22 +246,29 @@ angular.module('farmers.controllers', [])
         }
 
         for (var i = 0; i < 8; i++) {
+          if (data.chanceOfRain[i] < 10){
+            img = '0';
+          } else if (data.chanceOfRain[i] >= 10 && data.chanceOfRain[i] <= 15){
+            img = '1';
+          }else {
+            img ='2';
+          }
           if (i < 6) {
             var rainObj = {
-              startHour: 3 * i + 6 + ':00',
-              endHour: 3 * (i + 1) + 6 + ':00',
+              startHour: 3 * i + 6+ ':00',
+              endHour: 3 * (i + 1) + 6+ ':00',
               chanceOfAnyRain: data.chanceOfRain[i],
               expectedRainfallAmount: data.likelyRainfall[i],
-              imgSourceId: '0'
+              imgSourceId: img
             };
             rainfallList.push(rainObj);
           } else {
             var rainObj = {
-              startHour: 3 * (i - 6) + ':00',
-              endHour: 3 * (i - 5) + ':00',
+              startHour: 3 * (i - 6)+ ':00',
+              endHour: 3 * (i - 5)+ ':00',
               chanceOfAnyRain: data.chanceOfRain[i],
               expectedRainfallAmount: data.likelyRainfall[i],
-              imgSourceId: '0'
+              imgSourceId: img
             };
             rainfallList.push(rainObj);
           }
@@ -252,23 +288,12 @@ angular.module('farmers.controllers', [])
 
 
         for (i in data.temp) {
-          //             if (tempDaily[i].hour<13){
-          if (i < 13) {
             $scope.temps_hourly.push({
               x: i * tempDetail_width / ( tempDaily.length + 1) + 10,
               y: (tempDetail_height * 0.4 / ( tempMax - tempMin + 1)) * ( tempMax - data.temp[i]) + 20,
               v: data.temp[i] + '\u00b0C',
-              //       t:  tempDaily[i].hour+'AM'
-              t: i + ':00AM'
+              t: i + ':00'
             });
-          } else {
-            $scope.temps_hourly.push({
-              x: i * tempDetail_width / ( tempDaily.length + 1) + 10,
-              y: (tempDetail_height * 0.4 / ( tempMax - tempMin + 1)) * ( tempMax - data.temp[i]) + 20,
-              v: data.temp[i] + '\u00b0C',
-              t: i + ':00PM'
-            })
-          }
         }
       }
     });
