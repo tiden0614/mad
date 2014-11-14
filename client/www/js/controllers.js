@@ -4,6 +4,7 @@ angular.module('farmers.controllers', [])
 
     $scope.loginLogoutStr = 'Login';
 
+
     if (Request.isLoggedIn()) {
       $scope.loginLogoutStr = 'Logout';
     }
@@ -58,7 +59,7 @@ angular.module('farmers.controllers', [])
   })
 
 
-  .controller('ForecastsCtrl', function ($scope, ForecastList, $state, $stateParams, $rootScope, Request, LocationService) {
+  .controller('ForecastsCtrl', function ($scope, ForecastList, $state, $stateParams, $rootScope, Request, LocationService, WarningsList) {
       if ($stateParams.latitude == null || $stateParams.longitude == null) {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function (position) {
@@ -129,11 +130,25 @@ angular.module('farmers.controllers', [])
         $scope.forecastList = list;
       }, $stateParams.latitude, $stateParams.longitude);
 
+      $scope.getWarnNumber = function(){
+              return WarningsList.getNumber();
+      }
+
     })
 
 
 
   .controller('AlertCtrl', function ($scope, WarningsList) {
+        $scope.setColor = function(warn){
+           if(warn.intensity =="Low")
+              return {'background-color':'#ffc800',
+              'color':'#636262'
+              }
+           else
+              return {'background-color':'#ff1121',
+               'color':'#f4f4f4'
+               }
+        }
         $scope.warning = WarningsList.getWarningList();
   })
 

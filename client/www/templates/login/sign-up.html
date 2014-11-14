@@ -1,31 +1,117 @@
-<ion-view title="SignUp">
-    <ion-content title="Sign" hide-back-button="true" class="sign-background">
+<ion-view title="SignUp" hide-back-button="true" class="sign-background">
+    <ion-content title="Sign" >
         <div class="head-sign">
             <h2 style="color:#0066CC;">Join Met</h2>
         </div>
+        <form  name = "regForm">
         <div class="row responsive-md">
             <div class="col">
                 <div class="col col-center">
+                 <!--email-->
                     <div class="item item-input-inset">
                         <label class="item-input-wrapper">
-                            <input type="email" placeholder="Enter your email address" ng-model="user.email">
+                            <input ng-pattern="/^[a-zA-Z0-9.-_]+?@([a-zA-Z0-9-_]+?\.?)+$/i" type="email" placeholder="Enter your email address" name='email' ng-model = "user.email" required>
+                            <span ng-show = "regForm.email.$dirty&&regForm.email.$invalid">
+			                      <span class='input-label' style="color: red" ng-show = "regForm.email.$error.required">
+			                         	Email is required
+		                          </span>
+			                      <span class='input-label' style="color: red" ng-show = "regForm.email.$error.pattern">
+				                        Email is invalid
+			                      </span>
+		                    </span>
+                        </label>
+                    </div>
+                    <!--first name-->
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <input ng-pattern="/^[0-9a-zA-Z_]{2,}$/" type="text" placeholder='Your first name' name='last_name' ng-model = "user.name.last" required>
+                            <span ng-show = "regForm.last_name.$dirty&&regForm.last_name.$invalid">
+			                      <span class='input-label' style="color: red" ng-show = "regForm.last_name.$error.required">
+				                       First Name Required
+			                      </span>
+			                      <span class='input-label' style="color: red" ng-show = "regForm.last_name.$error.pattern">
+				                       2~35 Letters
+			                      </span>
+		                    </span>
+                        </label>
+                    </div>
+                    <!--last name-->
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <input ng-pattern="/^[0-9a-zA-Z_]{2,}$/" type="text" placeholder='Your last name' name='first_name' ng-model = "user.name.first" required>
+                    		<span ng-show = "regForm.first_name.$dirty&&regForm.first_name.$invalid">
+			                    <span class='input-label' style="color: red" ng-show = "regForm.first_name.$error.required">
+			                    	Last Name Required
+		                    	</span>
+			                    <span class='input-label' style="color: red" ng-show = "regForm.first_name.$error.pattern">
+			                     	2~35 Letters
+		                    	</span>
+		                    </span>
+                        </label>
+                    </div>
+                    <!--password-->
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <input ng-minlength=6 type="password" placeholder="Create a password" name='pwd1' ng-model = "user.pwd1" required>
+                            	<span ng-show="regForm.pwd1.$dirty">
+			                         <span style= "color: red" ng-show="regForm.pwd1.$error.required">
+				                          Password Required
+			                         </span>
+			                         <span style= "color: red" ng-show="regForm.pwd1.$error.minlength">
+			                              At Least 6 Characters
+			                         </span>
+		                        </span>
                         </label>
                     </div>
                     <div class="item item-input-inset">
                         <label class="item-input-wrapper">
-                            <input type="password" placeholder="Create a password"  ng-model="user.password">
+                            <input type="password" placeholder='Retype new password' name='pwd2' ng-model = "user.pwd2" required ng-focus>
+		                        <span ng-show = "regForm.pwd2.$dirty">
+		                        <span class="input-label" style= "color: red" ng-show='pwdNotSame&&!regForm.pwd2.$focused'>
+		                         	Not Match
+		                        </span>
+		                        </span>
+                        </label>
+                    </div>
+
+                    <!--phone-->
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <input placeholder = "Phone Number" type="tel" ng-pattern=" /^\+?\d{10,11}$/" name = "phone" ng-model = "user.phone" value="">
+		                        <span class="input-label" style = "color:red" ng-show = "regForm.phone.$dirty&&regForm.phone.$invalid">
+			                        Phone# Invalid
+		                        </span>
+                        </label>
+                    </div>
+                    <!--address-->
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <input placeholder='Your Address' type="text" ng-model = "user.address" value="">
+                        </label>
+                    </div>
+                    <!--gender-->
+                    <div class='item'>
+                        <!-- <ion-radio type='radio' name='gender' ng-model="user.gender" value="Male">Male</ion-radio>
+                        <ion-radio type='radio' name='gender' ng-model="user.gender" value="Female">Female</ion-radio> -->
+                        <label style='width:40%; display:inline-block'>
+                            <input style='width:30%' type='radio' name='gender' ng-model="user.gender" value="M" required>Male
+                        </label>
+                        <label style='width:80%;display:inline-block'>
+                            <input style='width:30%' type='radio' name='gender' ng-model="user.gender" value="FM" >Female
                         </label>
                     </div>
                 </div>
                 <div class="col col-center">
                     <label>
-                        <button class="button button-block button-positive" ng-click="signUser(user)">Get Started</button>
+                        <button  ng-disabled="regForm.$invalid||pwdNotSame" class="button button-block button-positive" ng-click="submit()">Get Started</button>
                     </label>
                 </div>
+
             </div>
         </div>
+            </form>
         <div class="bottom-line">
-            <button style="color:#CCCCCC;" class="button button-clear button-small" ng-click="toLogin()">Already have an account?</button>
+            <a style="color:#CCCCCC;" class="button button-clear button-small" href="#/login">Already have an account?</a>
         </div>
     </ion-content>
 </ion-view>

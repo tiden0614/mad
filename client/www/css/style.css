@@ -27,6 +27,8 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-attachment:fixed;
+    overflow:auto;
 }
 .sign-background{
     background: url('../img/signBG.png') no-repeat center;
@@ -34,6 +36,7 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-attachment:fixed;
 }s
 
 .forecast-list ion-item {
@@ -86,6 +89,29 @@
   width: 80px;
   height: 80px;
   background-size: contain;
+}
+
+.alert-list{
+  border-bottom: 1px solid white;
+}
+.alert-list .container{
+  padding: 10px 10px;
+}
+.alert-list .icon-container{
+    display: inline-block;
+    margin-right: 13px;
+    width: 10%;
+}
+.alert-list .alert-icon{
+  display: inline-block;
+  width: 100%;
+  height:100%;
+  background-size: contain;
+}
+
+.alert-list .warn-container{
+    display: inline-block;
+    width:83%;
 }
 
 .weather-icon-cloudy {

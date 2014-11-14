@@ -54,13 +54,13 @@ angular.module('farmers', ['ionic', 'farmers.controllers', 'farmers.services', '
 
       .state('login', {
         url: "/login",
-        templateUrl: "templates/login.html",
+        templateUrl: "templates/login/log-in.html",
         controller: 'LoginCtrl'
       })
 
       .state('signup', {
         url: "/signup",
-        templateUrl: "templates/sign-up.html",
+        templateUrl: "templates/login/sign-up.html",
         controller: 'SignupCtrl'
       })
 

@@ -1,7 +1,9 @@
+
 <ion-view title="Forecasts">
   <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   <ion-nav-buttons side="right" ng-controller="AlertCtrl">
-    <button class="button button-icon icon ion-alert-circled" menu-close ng-click="alert()"></button>
+
+    <button class="button button-icon icon ion-alert-circled" menu-close ng-click="alert()"><span class="badge badge-assertive">{{getWarnNumber()}}</span></button>
     <button menu-toggle="right" class="button button-icon icon ion-map" menu-close ng-click="search()"></button>
   </ion-nav-buttons>
 

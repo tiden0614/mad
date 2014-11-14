@@ -74,46 +74,46 @@ angular.module('farmers.services', ['base64'])
                            {presence:"Frozen",intensity:"High",coverage:"High probability",attribute:"-"}
                            ];
   var warning_thunderstormMap = [{presence:"No thunderstorms",intensity:"-",coverage:"-",attribute:"-"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Tornadoes"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Destructive winds"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Flash flooding"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Damaging winds"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Large hail"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Heavy rain"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Hail"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Dry"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"Gusty winds"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"Low probability",attribute:"-"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Tornadoes"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Destructive winds"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Flash flooding"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Damaging winds"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Large hail"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Heavy rain"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Hail"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Dry"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"Gusty winds"},
-                                 {presence:"Thunderstorms",intensity:"Low",coverage:"High probability",attribute:"-"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Tornadoes"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Destructive winds"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Flash flooding"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Damaging winds"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Large hail"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Heavy rain"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Hail"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Dry"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"Gusty winds"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"Low probability",attribute:"-"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Tornadoes"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Destructive winds"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Flash flooding"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Damaging winds"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Large hail"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Heavy rain"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Hail"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Dry"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"Gusty"},
-                                 {presence:"Thunderstorms",intensity:"High",coverage:"High probability",attribute:"-"}
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"Tornadoes"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"Destructive winds"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"Flash flooding"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"Damaging winds"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"Large hail"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"Heavy rain"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"Hail"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"Dry"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"Gusty winds"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"Low probability",attribute:"-"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"Tornadoes"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"Destructive winds"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"Flash flooding"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"Damaging winds"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"Large hail"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"Heavy rain"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"Hail"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"Dry"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"Gusty winds"},
+                                 {presence:"Thunderstorm",intensity:"Low",coverage:"High probability",attribute:"-"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"Tornadoes"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"Destructive winds"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"Flash flooding"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"Damaging winds"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"Large hail"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"Heavy rain"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"Hail"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"Dry"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"Gusty winds"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"Low probability",attribute:"-"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"Tornadoes"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"Destructive winds"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"Flash flooding"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"Damaging winds"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"Large hail"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"Heavy rain"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"Hail"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"Dry"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"Gusty"},
+                                 {presence:"Thunderstorm",intensity:"High",coverage:"High probability",attribute:"-"}
                                  ];
   var warning_frostMap = [{presence:"No frost",intensity:"-",coverage:"-",attribute:"-"},
                           {presence:"Frost",intensity:"Low",coverage:"Low probability",attribute:"-"},
@@ -131,24 +131,27 @@ angular.module('farmers.services', ['base64'])
   var warningList = [];
   var baseTime;
   Request.withoutAuth({url: '/data/notification'}, function(data, status, headers, config){
+      baseTime = new Date(data.baseTime);
       generateNotification(data.fog, warning_fogMap, 'Fog');
       generateNotification(data.frost, warning_frostMap, 'Frost');
       generateNotification(data.precipitation, warning_precipitationMap, 'Precipitation');
       //TODO: typo: frozen
-      generateNotification(data.frozenPrec, warning_frozenMap, 'Frozon');
+      generateNotification(data.frozenPrec, warning_frozenMap, 'Frozen');
       generateNotification(data.thunderstorm, warning_thunderstormMap, 'Thunderstorm');
   });
-
 
   var generateNotification= function(data, map, presence){
       for (var i = 0; i < data.length; i++){
           var code = parseInt(data[i].code);
           if (code > 0){
+             var time = new Date();
+             time.setTime(baseTime.getTime()+i*3*60*60*1000);
               warningList.push({
                   presence: presence,
                   intensity: map[code].intensity,
                   coverage: map[code].coverage,
-                  attribute: map[code].attribute
+                  attribute: map[code].attribute,
+                  time: time.toLocaleString(),
               })
           }
       }
@@ -158,6 +161,9 @@ angular.module('farmers.services', ['base64'])
       //TODO: add date parameter
     getWarningList: function(){
         return warningList;
+    },
+    getNumber: function(){
+        return warningList.length;
     },
     get: function(locationId) {
       // Simple index lookup
