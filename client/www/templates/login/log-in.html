@@ -4,14 +4,40 @@
     <div class="head-login">
          <h1 style="color:#FFFFFF;">Met</h1>
         </div>
+    <form name = "regForm">
         <div class="row responsive-md">
             <div class="col">
                 <div class="col col-center">
                     <label class="item item-input">
-                        <input type='text' placeholder="Email" ng-model="loginData.email">
+                        <input ng-pattern="/^[a-zA-Z0-9.-_]+?@([a-zA-Z0-9-_]+?\.?)+$/i" type="email" placeholder="Email" name='email' ng-model = "loginData.email" required>
+                            <span ng-show = "regForm.email.$dirty&&regForm.email.$invalid">
+			                      <span class='input-label' style="color: red" ng-show = "regForm.email.$error.required">
+			                         	Email is required
+		                          </span>
+			                      <span class='input-label' style="color: red" ng-show = "regForm.email.$error.pattern">
+				                        Email is invalid
+			                      </span>
+		                    </span>
                     </label>
                     <label class="item item-input">
-                        <input type="text" placeholder="Password" ng-model="loginData.password">
+               <!--         <input type="password" placeholder="Password" ng-model="loginData.password">
+                               <span ng-show="regForm.pwd1.$dirty">
+			                         <span style= "color: red" ng-show="regForm.pwd1.$error.required">
+				                          Password Required
+			                         </span>
+			                         <span style= "color: red" ng-show="regForm.pwd1.$error.minlength">
+			                              At Least 6 Characters
+			                         </span>
+		                        </span>-->
+                        <input ng-minlength=6 type="password" placeholder="Password" name='pwd1' ng-model = "loginData.password" required>
+                            	<span ng-show="regForm.pwd1.$dirty">
+                                     <span style= "color: red" ng-show="regForm.pwd1.$error.minlength">
+			                              At Least 6
+			                         </span>
+			                         <span style= "color: red" ng-show="regForm.pwd1.$error.required">
+				                          Password Required
+			                         </span>
+		                        </span>
                     </label>
                 </div>
                 <div class="col col-center">
@@ -21,6 +47,7 @@
                 </div>
             </div>
         </div>
+    </form>
     <div class="bottom-line">
     <a style="color:white;" class="button button-clear button-small" href="#/signup">Sign up for Met</a>
     <a style="color:white;" class="button button-clear button-small" href="#/">Skip Log-in</a>
