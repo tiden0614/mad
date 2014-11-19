@@ -1,4 +1,52 @@
 angular.module('farmers.services', ['base64'])
+.factory('DetailForecast', function(Request){
+var windList = [];
+var rainfallList = [];
+var tempList = [];
+var baseTime;
+
+      Request.withoutAuth({url: '/data/detail?date='+'&latitude='+'&longtitude='}, function (data, status, headers, config) {
+      baseTime = new Date(data.baseTime);
+      for( i in data.windSpeed){
+             var time = new Date();
+              time.setTime(baseTime.getTime()+i*60*60*1000);
+                 windList.push({
+                        speed: data.windSpeed[i],
+                        direction: data.windDirection[i],
+                        time:time.toLocaleString(),
+                 });
+       }
+       for( i in data.likelyRainfall){
+              rainfallList.push({
+                  likelyRainfall:data.likelyRainfall[i],
+                  chanceOfRain: data.chanceOfRain[i],
+              })
+         }
+        for( i in data.temp){
+           tempList.push({
+               temp: data.temp[i],
+           })
+        }
+      baseTime = data.baseTime;
+  });
+
+  return {
+      //TODO: add date parameter
+    getWindList: function(){
+        return windList;
+    },
+    getBaseTime: function(){
+         return baseTime;
+    },
+    getTempList: function(){
+        return tempList;
+    },
+    getRainfallList: function() {
+      return rainfallList;
+    }
+  }
+})
+
 .factory('WarningsList', function(Request) {
 
   var warning_precipitationMap = [{presence:"No precipitation",intensity:"-",coverage:"-",attribute:"-"},
@@ -140,6 +188,7 @@ angular.module('farmers.services', ['base64'])
       generateNotification(data.thunderstorm, warning_thunderstormMap, 'Thunderstorm');
   });
 
+
   var generateNotification= function(data, map, presence){
       for (var i = 0; i < data.length; i++){
           var code = parseInt(data[i].code);
@@ -176,7 +225,7 @@ angular.module('farmers.services', ['base64'])
 
             var forecastListFormer = [];
             return {
-                getData: function(callback, latitudeParam, longtitudeParam) {
+                    getData: function(callback, latitudeParam, longtitudeParam) {
                     var urlStr = "/data/brief?latitude=" + latitudeParam + "&longitude=" + longtitudeParam;
                     Request.withoutAuth({
                         url: urlStr
@@ -208,6 +257,10 @@ angular.module('farmers.services', ['base64'])
                 },
                 refresh: function () {
                     return forecastListFormer;
+                },
+                getDay: function(id){
+                    return forecastListFormer[id];
+                    console.log( forecastListFormer[id]);
                 }
             }
     })
@@ -317,41 +370,6 @@ angular.module('farmers.services', ['base64'])
    }
 })*/
 
-.factory('TempHourlyList',function(){
-
-   var TempDailyDetail=[{hour:'0',temp_hourly:8},{hour:'1',temp_hourly:9},{hour:'2',temp_hourly:9},{hour:'3',temp_hourly:11},{hour:'4',temp_hourly:12},{hour:'5',temp_hourly:13},
-    {hour:'6',temp_hourly:14},{hour:'7',temp_hourly:16},{hour:'8',temp_hourly:18},{hour:'9',temp_hourly:20},{hour:'10',temp_hourly:22},{hour:'11',temp_hourly:26},
-    {hour:'12',temp_hourly:28},{hour:'13',temp_hourly:27},{hour:'14',temp_hourly:26},{hour:'15',temp_hourly:24},{hour:'16',temp_hourly:21},{hour:'17',temp_hourly:21},
-    {hour:'18',temp_hourly:19},{hour:'19',temp_hourly:15},{hour:'20',temp_hourly:14},{hour:'21',temp_hourly:12},{hour:'22',temp_hourly:9},{hour:'23',temp_hourly:8},{hour:'24',temp_hourly:7}]
-
-   return{
-   all:function(){
-       return TempDailyDetail;
-      },
-
-     //TODO: max and min temp are available from data set, not need to check again
-   getMaxTemp: function(){
-       var temp = TempDailyDetail[0].temp_hourly;
-       for(i in TempDailyDetail){
-           if( TempDailyDetail[i].temp_hourly>temp)
-           {
-               temp = TempDailyDetail[i].temp_hourly;
-           }
-       }
-       return temp;
-      },
-   getMinTemp:function(){
-        var temp = TempDailyDetail[0].temp_hourly;
-               for(i in TempDailyDetail){
-                   if( TempDailyDetail[i].temp_hourly<temp)
-                   {
-                       temp = TempDailyDetail[i].temp_hourly;
-                   }
-               }
-               return temp;
-      }
-  }
-})
 
 .factory('LocationService', function(Request) {
   return {

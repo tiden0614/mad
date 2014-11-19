@@ -138,7 +138,37 @@ angular.module('farmers.controllers', [])
 
 
 
-  .controller('AlertCtrl', function ($scope, WarningsList) {
+  .controller('AlertCtrl', function ($scope, ForecastList,DetailForecast,WarningsList,$stateParams) {
+      var windList =  DetailForecast.getWindList();
+      var tempList = DetailForecast.getTempList();
+      var rainfallList = DetailForecast.getRainfallList();
+      var baseTime = DetailForecast.getBaseTime();
+        //it should be getDay(0), but we use Tues. to show demo
+      var Today = ForecastList.getDay(2);
+      var MaxWind ;
+
+      $scope.sprayList=[];
+      $scope.harvestList=[];
+
+          for( i in windList){
+                    if(tempList[i].temp<28 &&
+                         windList[i].speed>3 && windList[i].speed<15 &&
+                         parseInt(rainfallList[parseInt(i/3)].likelyRainfall)==0 &&
+                          Today.humidity < -0.0132 * tempList[i].temp * tempList[i].temp + 1.1308 * tempList[i].temp + 65.339 &&
+                          Today.humidity > -0.0319 * tempList[i].temp * tempList[i].temp + 3.0117* tempList[i].temp - 11.81
+                      ){
+                          $scope.sprayList.push({
+                          time:windList[i].time,
+                          });
+                      }
+                      if(-0.0026 * Today.humidity * Today.humidity+0.57377 * Today.humidity+23.3523< windList[i].speed){
+                          $scope.harvestList.push({
+                          time:windList[i].time,
+                          });
+                      }
+                      console.log("i:"+i+";"+windList[i].time);
+           }
+
         $scope.setColor = function(warn){
            if(warn.intensity =="Low")
               return {'background-color':'#ffc800',
@@ -217,7 +247,7 @@ angular.module('farmers.controllers', [])
     }
   })
 
-  .controller('ForecastDetailCtrl', function ($scope, $stateParams, RainfallThreeHourlyList, Request) {
+  .controller('ForecastDetailCtrl', function ($scope, $stateParams, DetailForecast,RainfallThreeHourlyList, Request) {
     var windSpeed = [{"key": "Wind", "values": []}];
     var tempDaily = [];
     var rainfallList = [];

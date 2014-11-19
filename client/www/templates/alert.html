@@ -6,9 +6,33 @@
   </ion-nav-bar>
   <ion-content has-header="true">
 
+      <div id="chemical" ng-repeat="spray in sprayList" class="alert-list" style="background-color:rgb(178,208,235)">
+          <div class="container">
+          <div class="icon-container">
+              <img ng-src="img/alert/spray.png" class="alert-icon"/>
+          </div>
+          <div class="warn-container" style="width:60%">
+              <div style="font-size: 14px;display: inline-block;" >{{spray.time}}  </div>
+              <div style="font-size: 14px; display: inline-block;" >GOOD to spray chemicals</div>
+          </div>
+              </div>
+      </div>
+      <div id="chemical" ng-repeat="harvest in harvestList" class="alert-list" style="background-color:rgb(178,208,235)">
+          <div class="container">
+              <div class="icon-container">
+                  <img ng-src="img/alert/harvest.png" class="alert-icon"/>
+              </div>
+              <div class="warn-container" style="width:60%">
+                  <div style="font-size: 14px;display: inline-block;" >{{harvest.time}}  </div>
+                  <div style="font-size: 14px; display: inline-block;" >DO NOT harvest grain</div>
+              </div>
+          </div>
+      </div>
+
     <div class="alert-list" ng-repeat="warn in warning"  ng-style="setColor(warn)" >
    <!--     <ion-scroll style="height:auto; width:auto;" direction="x" >-->
             <div class="container">
+
               <div class="icon-container">
                    <img ng-src="img/alert/{{warn.presence}}.png" class="alert-icon"/>
               </div>
