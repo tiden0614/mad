@@ -230,6 +230,7 @@ var baseTime;
                     Request.withoutAuth({
                         url: urlStr
                     }, function (data, status, headers, config) {
+                        forecastListFormer= [];
                         var skyList = ["cloudy", "sunny", "thunder", "rainy", "fog", "degree", "hurricane", "smallrain"];
                         var weekdayList = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
                         for (var i = 0; i < data.length; i++) {
