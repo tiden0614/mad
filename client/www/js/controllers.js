@@ -491,9 +491,9 @@ angular.module('farmers.controllers', [])
                     Request.withAuth(requestContent, function(data, status, headers, config){
                         $ionicLoading.hide();
                         if (status == '200'){
-                            $ionicPopup.alert({
-                                title: 'Post Succeeded'
-                            });
+                            //$ionicPopup.alert({
+                            //    title: 'Post Succeeded'
+                            //});
                             //console.log('post succeeded');
                             LocationService.all(function(list) {
                                 $rootScope.locationList = list;
