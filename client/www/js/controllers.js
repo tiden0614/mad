@@ -182,15 +182,20 @@ angular.module('farmers.controllers', [])
         $scope.warning = WarningsList.getWarningList();
   })
 
-  .controller('LoginCtrl', function ($scope, $rootScope, $state, Request, LocationService) {
+  .controller('LoginCtrl', function ($scope, $ionicLoading, $rootScope, $state, Request, LocationService) {
     $scope.loginData = {};
 
     // Perform the login action when the user submits the login form
     $scope.doLogin = function () {
+        $ionicLoading.show({
+            template: 'Logging in<br><i class="icon ion-load-a"></i>',
+            animation: 'fade-in'
+        });
       Request.login($scope.loginData, function (status, userEmail) {
         if (status != 200) {
           //TODO Do something when login failed
         } else {
+            $ionicLoading.hide();
           LocationService.all(function (list) {
             $rootScope.locationList = list;
             $state.go('app.forecasts');
@@ -364,7 +369,7 @@ angular.module('farmers.controllers', [])
   })
 
 
-    .controller('MapCtrl', function ($scope, Request, $rootScope, LocationService) {
+    .controller('MapCtrl', function ($scope, $state, $ionicPopup, $ionicLoading, Request, $rootScope, LocationService) {
 
         $scope.state = {
             isLoggedin: Request.isLoggedIn()
@@ -461,35 +466,50 @@ angular.module('farmers.controllers', [])
         $scope.addLocation = function(){
             var lat = marker.getPosition().lat();
             var lng = marker.getPosition().lng();
-            var locationName = window.prompt('Please enter a name for the farm');
-            if (locationName != null){
-                //alert(lat + ',' + lng + ',' + locationName);
-                var requestContent = {
-                    url: '/oauth/farm',
-                    method: 'POST',
-                    data: JSON.stringify({
-                        name: locationName,
-                        position: {
-                            la: lat,
-                            lo: lng
+            $ionicPopup.prompt({
+                title: 'Add location',
+                inputPlaceholder: 'Enter your location name'
+            }).then(function(resp){
+                if (resp != null){
+                    $ionicLoading.show({
+                        template: 'Adding Farm...<br><i class="icon ion-load-a"></i>'
+                    });
+                    var requestContent = {
+                        url: '/oauth/farm',
+                        method: 'POST',
+                        data: JSON.stringify({
+                            name: resp,
+                            position: {
+                                la: lat,
+                                lo: lng
+                            }
+                        }),
+                        headers: {
+                            'content-type': 'application/json'
                         }
-                    }),
-                    headers: {
-                        'content-type': 'application/json'
-                    }
-                };
-                Request.withAuth(requestContent, function(data, status, headers, config){
-                    if (status == '200'){
-                        console.log('post succeeded');
-                        LocationService.all(function(list) {
-                            $rootScope.locationList = list;
-                        });
-                    }
-                    else {
-                        console.log('post failed');
-                    }
-                })
-            }
+                    };
+                    Request.withAuth(requestContent, function(data, status, headers, config){
+                        $ionicLoading.hide();
+                        if (status == '200'){
+                            $ionicPopup.alert({
+                                title: 'Post Succeeded'
+                            });
+                            //console.log('post succeeded');
+                            LocationService.all(function(list) {
+                                $rootScope.locationList = list;
+                                $state.go('app.forecasts');
+                            });
+                        }
+                        else {
+                            //console.log('post failed');
+                            $ionicPopup.alert({
+                                title: 'Post Failed: ' + status
+                            });
+                        }
+                    })
+                }
+            });
+
         };
 
         google.maps.event.addDomListener(window, 'load', initialize());
